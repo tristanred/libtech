@@ -122,6 +122,25 @@ public:
             next = next->next;
         }
     }
+
+    T* GetLinear()
+    {
+        if(_first == NULL)
+            return NULL;
+
+        T* list = new T[this->Size()];
+
+        int index = 0;
+        LIST_NODE<T>* next = _first;
+        while(next != NULL)
+        {
+            list[index] = next->data;
+
+            next = next->next;
+        }
+
+        return list;
+    }
 private:
     LIST_NODE<T>* _first;
 };
