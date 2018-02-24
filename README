@@ -1,7 +1,7 @@
 ********************************************************************************
 Project : LibTech - A library of code to bootstrap projects
 Author : Tristan Dubé-Lepage
-
+Date : Feb 2018
 ********************************************************************************
 
 This is a project where I put a bunch of the code I did. General storage library
@@ -11,3 +11,11 @@ The project builds a static library and a DLL. It's the same code but allows the
 user to choose between static and shared libs.
 
 There is also a console project to debug the project and DLL loading techniques.
+
+Building : 
+To build the project, CMAKE is needed.
+
+From the src/ dir :
+mkdir build
+cd build
+cmake ..
