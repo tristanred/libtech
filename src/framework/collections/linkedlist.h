@@ -1,7 +1,7 @@
 #pragma once
 
 #include "libtech.h"
-#include "collections\linkedlist.h"
+#include "collections/linkedlist.h"
 
 template<class T>
 class LIST_NODE
@@ -9,16 +9,16 @@ class LIST_NODE
 public:
     T data;
     LIST_NODE* next;
-    
+
     LIST_NODE()
     {
         data = NULL;
         next = NULL;
     }
-    
+
     ~LIST_NODE()
     {
-        
+
     }
 };
 
@@ -30,10 +30,10 @@ public:
     {
         _first = NULL;
     }
-    
+
     ~LinkedList()
     {
-        
+
     }
 
     unsigned int Size()
@@ -63,7 +63,7 @@ public:
                 LIST_NODE<T>* newNode = new LIST_NODE<T>();
                 newNode->data = element;
                 newNode->next = NULL;
-                
+
                 next->next = newNode;
 
                 return;
@@ -77,30 +77,30 @@ public:
     {
         if(_first == NULL)
             return;
-        
+
         unsigned int count = 0;
         LIST_NODE<T>* previous = NULL;
         LIST_NODE<T>* current = _first;
-        
+
         while(count < index)
         {
             previous = current;
             current = current->next;
-            
+
             count++;
-            
+
             if(current == NULL)
                 return; // Index bigger than size
         }
-        
+
         T nextItem = current->next;
-        
+
         previous->next = nextItem;
     }
 
     void Remove(T element)
     {
-        
+
     }
 
     T Get(unsigned int index)

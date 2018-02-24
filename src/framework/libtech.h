@@ -1,5 +1,10 @@
-#ifdef LIBTECH_EXPORTS  
+
+#ifdef _WIN32
+#ifdef LIBTECH_EXPORTS
 #define LIBTECH_API __declspec(dllexport)
-#else  
+#else
 #define LIBTECH_API __declspec(dllimport)
-#endif  
+#endif
+#else
+#define LIBTECH_API
+#endif
