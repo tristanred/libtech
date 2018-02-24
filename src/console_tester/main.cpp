@@ -1,12 +1,12 @@
-#include <math/geometry.h>
-
 #include <stdio.h>
+
+#include <mytime/mytime.h>
 
 int main(int argc, char** argv)
 {
-    double x = deg2rad(30);
+    long x = get_a_ticks();
 
-    printf("%d\n", x);
+    printf("%li\n", x);
 
     return 0;
 }

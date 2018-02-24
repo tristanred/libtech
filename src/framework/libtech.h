@@ -1,4 +1,4 @@
-
+// Library export macro
 #ifdef _WIN32
 #ifdef LIBTECH_EXPORTS
 #define LIBTECH_API __declspec(dllexport)
@@ -8,3 +8,6 @@
 #else
 #define LIBTECH_API
 #endif
+
+// Common include
+#include "types/libtypes.h"
