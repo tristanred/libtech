@@ -44,7 +44,7 @@ target_compile_definitions(LIBTECHD PRIVATE LIBTECH_EXPORTS)
 
 
 add_executable(ConsoleTester ${CON_TESTER_HEADERS} ${CON_TESTER_SOURCES})
-target_link_libraries(ConsoleTester LIBTECH)
+target_link_libraries(ConsoleTester LIBTECHD)
 
 IF(WIN32)
 
