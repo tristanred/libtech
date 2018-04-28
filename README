@@ -13,9 +13,21 @@ user to choose between static and shared libs.
 There is also a console project to debug the project and DLL loading techniques.
 
 Building : 
-To build the project, CMAKE is needed.
+To build the project, CMake is needed.
 
 From the src/ dir :
 mkdir build
 cd build
 cmake ..
+
+
+Using in other projects :
+Thanks to CMake, importing the library in other projects is extremely easy.
+
+In your CMakeLists.txt add the lines
+
+add_subdirectory(libtech)
+include_directories(libtech/include)
+target_link_libraries(Scratch LIBTECH ${LIBTECH_LIBRARIES})
+
+That's it. I suggest getting a git submodule into your project and linking that checked out folder in your cmake libs.
