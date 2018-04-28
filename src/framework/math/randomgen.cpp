@@ -1,4 +1,4 @@
-#include "randomgen.h"
+#include "libtech/randomgen.h"
 
 RandomGen::RandomGen(int seed)
 {

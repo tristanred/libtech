@@ -11,7 +11,7 @@
 #endif
 
 #define LIBTECH_LOADDLL
-#include <mytime\mytime.h>
+#include <libtech/mytime.h>
 
 int main(int argc, char** argv)
 {

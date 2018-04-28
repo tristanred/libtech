@@ -1,4 +1,4 @@
-#include "tgafile.h"
+#include "libtech/tgafile.h"
 
 #include <fstream>
 

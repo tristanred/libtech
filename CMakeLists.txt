@@ -12,11 +12,11 @@ endif()
 
 set (CMAKE_CXX_STANDARD 11)
 
-file(GLOB_RECURSE LIBRARY_HEADERS "framework/*.h")
-file(GLOB_RECURSE LIBRARY_SOURCES "framework/*.cpp")
+file(GLOB_RECURSE LIBRARY_HEADERS "include/*.h")
+file(GLOB_RECURSE LIBRARY_SOURCES "src/framework/*.cpp")
 
-file(GLOB_RECURSE CON_TESTER_HEADERS "console_tester/*.h")
-file(GLOB_RECURSE CON_TESTER_SOURCES "console_tester/*.cpp")
+file(GLOB_RECURSE CON_TESTER_HEADERS "src/console_tester/*.h")
+file(GLOB_RECURSE CON_TESTER_SOURCES "src/console_tester/*.cpp")
 
 IF(WIN32)
     add_definitions("-D_WINDOWS")
@@ -31,8 +31,8 @@ IF(UNIX)
 
 ENDIF(UNIX)
 
-include_directories("framework")
-include_directories("console_tester")
+include_directories("include")
+include_directories("src/console_tester")
 
 
 add_library(LIBTECH STATIC ${LIBRARY_HEADERS} ${LIBRARY_SOURCES})

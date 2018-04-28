@@ -1,10 +1,10 @@
-#include "functions.h"
+#include "libtech/functions.h"
 
 #include <math.h>
 #include <assert.h>
 #include <string>
 
-#include "fileformats/tgafile.h"
+#include "libtech/tgafile.h"
 
 int avg(int one, int two)
 {

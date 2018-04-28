@@ -1,10 +1,11 @@
-#include "fsutils.h"
+#include "libtech/fsutils.h"
 
 #include <iostream>
 #include <fstream>
 #include <cstring>
 
-#include "collections/linkedlist.h"
+#include "libtech/linkedlist.h"
+
 
 char** get_lines_of_file(char* filePath, int* count)
 {

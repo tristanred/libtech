@@ -1,9 +1,9 @@
-#include "geometry.h"
+#include "libtech/geometry.h"
 
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#include "collections/linkedlist.h"
+#include "libtech/linkedlist.h"
 
 double deg2rad(double deg)
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "libtech.h"
-#include "collections/linkedlist.h"
+#include "libtech/linkedlist.h"
 
 template<class T>
 class LIST_NODE
