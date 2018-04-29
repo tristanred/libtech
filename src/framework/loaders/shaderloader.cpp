@@ -13,5 +13,5 @@ ShaderLoader::~ShaderLoader()
 
 char *ShaderLoader::LoadShader(char *path)
 {
-
+    return NULL;
 }
