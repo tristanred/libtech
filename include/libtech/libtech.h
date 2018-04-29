@@ -11,7 +11,7 @@
 
 #else
 
-#define LIBTECH_API
+#define LIBTECH_API extern "C"
 
 #endif
 

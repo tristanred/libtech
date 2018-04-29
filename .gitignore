@@ -2,3 +2,4 @@
 /src/build/*
 .idea
 cmake-build-*
+/build/*
