@@ -12,6 +12,8 @@ endif()
 
 set (CMAKE_CXX_STANDARD 11)
 
+option(LIBTECH_SUPPORT_OPENGL "blabla" ON)
+
 file(GLOB_RECURSE LIBRARY_HEADERS "include/*.h")
 file(GLOB_RECURSE LIBRARY_SOURCES "src/framework/*.cpp")
 
@@ -31,6 +33,21 @@ IF(UNIX)
 
 ENDIF(UNIX)
 
+IF(LIBTECH_SUPPORT_OPENGL)
+
+    add_definitions(-DLIBTECH_BUILD_OPENGL)
+
+    add_subdirectory("lib/glfw")
+    include_directories("lib/glfw/include")
+    include_directories("lib/glad/include")
+    
+    #file(GLOB APPEND LIBRARY_SOURCES "lib/glad/src/glad.c")
+    list(APPEND LIBRARY_SOURCES "lib/glad/src/glad.c")
+    list(APPEND LIBRARY_HEADERS "lib/glad/include/glad/glad.h")
+    list(APPEND LIBRARY_HEADERS "lib/glad/include/KHR/khrplatform.h")
+
+ENDIF(LIBTECH_SUPPORT_OPENGL)
+
 include_directories("include")
 include_directories("src/console_tester")
 
@@ -42,6 +59,10 @@ add_library(LIBTECHD SHARED ${LIBRARY_HEADERS} ${LIBRARY_SOURCES})
 target_compile_definitions(LIBTECH PRIVATE LIBTECH_EXPORTS)
 target_compile_definitions(LIBTECHD PRIVATE LIBTECH_EXPORTS)
 
+IF(LIBTECH_SUPPORT_OPENGL)
+    target_link_libraries(LIBTECH glfw)
+    target_link_libraries(LIBTECHD glfw)
+ENDIF(LIBTECH_SUPPORT_OPENGL)
 
 add_executable(ConsoleTester ${CON_TESTER_HEADERS} ${CON_TESTER_SOURCES})
 target_link_libraries(ConsoleTester LIBTECHD)
