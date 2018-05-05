@@ -9,10 +9,10 @@ class LIBTECH_API binreader
 {
 public:
     binreader();
-    explicit binreader(char* filepath);
+    explicit binreader(const char* filepath);
     ~binreader();
 
-    void Open(char* filepath);
+    void Open(const char* filepath);
     void Close();
 
     char* ReadBytes();
@@ -24,4 +24,4 @@ private:
     FILE* fp;
 };
 
-
+LIBTECH_API char* getfilebytes(char* filepath, size_t* length);

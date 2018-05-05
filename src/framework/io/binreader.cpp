@@ -8,7 +8,7 @@ binreader::binreader()
     loadedPath = NULL;
 }
 
-binreader::binreader(char *filepath) : binreader()
+binreader::binreader(const char *filepath) : binreader()
 {
     this->Open(filepath);
 }
@@ -18,7 +18,7 @@ binreader::~binreader()
     this->Close();
 }
 
-void binreader::Open(char *filepath)
+void binreader::Open(const char *filepath)
 {
     if(loadedPath != NULL && strcmp(loadedPath, filepath) == 0)
         return;
@@ -91,3 +91,21 @@ size_t binreader::GetSize()
     return 0;
 }
 
+LIBTECH_API char* getfilebytes(char* filepath, size_t* length)
+{
+    binreader reader(filepath);
+
+    if(reader.GetSize() > 0)
+    {
+        char* buf = reader.ReadBytes();
+
+        *length = reader.GetSize();
+        return buf;
+
+    }
+    else
+    {
+        *length = 0;
+        return NULL;
+    }
+}
