@@ -7,7 +7,7 @@ public:
 
     ~ShaderLoader();
 
-    char* LoadShader(char* path);
+    static char* LoadShader(char* path);
 
 private:
 };

@@ -55,10 +55,10 @@ void binreader::Close()
 
 char *binreader::ReadBytes()
 {
-    char* output = new char[GetSize()];
-
     if(fp != NULL)
     {
+        char* output = new char[GetSize()];
+
         int offset = 0;
         int c;
         while((c = fgetc(fp)) != EOF)
@@ -66,18 +66,24 @@ char *binreader::ReadBytes()
             output[offset] = (char)c;
             offset++;
         }
+
+        return output;
     }
 
-    return output;
+    return NULL;
 }
 
 size_t binreader::GetSize()
 {
     if(fp != NULL)
     {
+        long curpos = ftell(fp);
+
         fseek(fp, 0, SEEK_SET);
 
         long size = ftell(fp);
+
+        fseek(fp, curpos, SEEK_SET);
 
         return (size_t)size;
     }
