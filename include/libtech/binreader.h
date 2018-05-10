@@ -5,7 +5,7 @@
 
 #include "libtech.h"
 
-class LIBTECH_API binreader
+class LIBTECH_CLASS binreader
 {
 public:
     binreader();
