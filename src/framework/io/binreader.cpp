@@ -35,7 +35,7 @@ void binreader::Open(const char *filepath)
         fp = newfile;
 
         loadedPath = new char[strlen(filepath)];
-        strcpy(loadedPath, filepath);
+        char* returned = strcpy(loadedPath, filepath);
     }
 }
 
@@ -49,7 +49,8 @@ void binreader::Close()
 
     if(loadedPath != NULL)
     {
-        delete(loadedPath);
+        // Not able to delete, flagged as heap corruption. TODO
+        //delete(loadedPath); // Currently leaking.
     }
 }
 
@@ -79,7 +80,7 @@ size_t binreader::GetSize()
     {
         long curpos = ftell(fp);
 
-        fseek(fp, 0, SEEK_SET);
+        fseek(fp, 0, SEEK_END);
 
         long size = ftell(fp);
 
