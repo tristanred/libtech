@@ -14,7 +14,7 @@
 #else
 
 #define LIBTECH_API extern "C"
-#define LIBTECH_CLASS __declspec(dllimport)
+#define LIBTECH_CLASS
 
 #endif
 
