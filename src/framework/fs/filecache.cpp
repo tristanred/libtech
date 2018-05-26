@@ -1,6 +1,8 @@
 #include "libtech/filecache.h"
 
 #include <string>
+#include <string.h>
+
 #include "libtech/binreader.h"
 
 FileCache::FileCache(bool writeThrough)

@@ -3,6 +3,8 @@
 #include <cstdint>
 #include "libtech.h"
 
+using namespace std;
+
 enum PixType
 {
     RGBA,
