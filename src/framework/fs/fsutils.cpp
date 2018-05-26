@@ -20,7 +20,7 @@ char** get_lines_of_file(char* filePath, int* count)
         char lineResult[1024];
         reader.getline(lineResult, 1024, '\n');
 
-        int readSize = reader.gcount();
+        auto readSize = reader.gcount();
 
         char* lineBytes = new char[readSize];
         std::strncpy(lineBytes, lineResult, reader.gcount());
