@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <list>
 
+using namespace std;
+
 // The entry owns the file_name but not 'contents'. The content must be managed by the caller.
 class FileCache_Entry
 {
