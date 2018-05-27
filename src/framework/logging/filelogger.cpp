@@ -16,6 +16,14 @@ void RegisterLogger(FileLogger* logger)
     _globalLogger = logger;
 }
 
+void LogTrace(const char* message)
+{
+    if(_globalLogger != NULL)
+    {
+        _globalLogger->LogTrace(message);
+    }
+}
+
 void LogMessage(const char* message)
 {
     if(_globalLogger != NULL)
@@ -47,14 +55,17 @@ FileLogger::FileLogger()
 
     levelNames = new char*[LOG_LEVELCOUNT];
 
+    const char* log_trace_name = "[TRACE]";
     const char* log_msg_name = "[MSG]";
     const char* log_warn_name = "[WARN]";
     const char* log_err_name = "[ERROR]";
 
+    levelNames[LOG_TRACE] = new char[strlen(log_trace_name)];
     levelNames[LOG_MSG] = new char[strlen(log_msg_name)];
     levelNames[LOG_WARN] = new char[strlen(log_warn_name)];
     levelNames[LOG_ERROR] = new char[strlen(log_err_name)];
 
+    strcpy(levelNames[LOG_TRACE], log_trace_name);
     strcpy(levelNames[LOG_MSG], log_msg_name);
     strcpy(levelNames[LOG_WARN], log_warn_name);
     strcpy(levelNames[LOG_ERROR], log_err_name);
@@ -83,7 +94,10 @@ void FileLogger::Log(enum LOG_LEVEL level, const char* message)
         if(result == EOF)
         {
             // Error
+            fprintf(stderr, "Error printing log to file. %d", result);
         }
+
+        printf("%s", msg.c_str());
     }
 }
 
@@ -119,4 +133,9 @@ void FileLogger::LogWarning(const char* message)
 void FileLogger::LogError(const char* message)
 {
     this->Log(LOG_ERROR, message);
+}
+
+void FileLogger::LogTrace(const char *message)
+{
+    this->Log(LOG_TRACE, message);
 }
