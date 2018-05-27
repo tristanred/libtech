@@ -9,13 +9,10 @@ enum LOG_LEVEL{
     LOG_MSG,
     LOG_WARN,
     LOG_ERROR,
-    LOG_ALL,
-
     LOG_LEVELCOUNT
 };
 
 class FileLogger;
-FileLogger* _globalLogger = NULL;
 LIBTECH_API void RegisterLogger(FileLogger* logger);
 LIBTECH_API void LogMessage(const char* message);
 LIBTECH_API void LogWarning(const char* message);
@@ -38,7 +35,7 @@ public:
 
 private:
     enum LOG_LEVEL currentLevel;
-    char* levelNames[LOG_LEVELCOUNT];
+    char** levelNames;
 
     FILE* logFile;
 

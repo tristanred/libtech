@@ -1,8 +1,10 @@
 #include "libtech/filelogger.h"
 
-
 #include <string>
 #include <cstring>
+
+FileLogger* _globalLogger = NULL;
+
 
 void RegisterLogger(FileLogger* logger)
 {
@@ -42,7 +44,20 @@ void LogError(const char* message)
 FileLogger::FileLogger()
 {
     enabled = true;
-    currentLevel = LOG_ALL;
+
+    levelNames = new char*[LOG_LEVELCOUNT];
+
+    const char* log_msg_name = "[MSG]";
+    const char* log_warn_name = "[WARN]";
+    const char* log_err_name = "[ERROR]";
+
+    levelNames[LOG_MSG] = new char[strlen(log_msg_name)];
+    levelNames[LOG_WARN] = new char[strlen(log_warn_name)];
+    levelNames[LOG_ERROR] = new char[strlen(log_err_name)];
+
+    strcpy(levelNames[LOG_MSG], log_msg_name);
+    strcpy(levelNames[LOG_WARN], log_warn_name);
+    strcpy(levelNames[LOG_ERROR], log_err_name);
 }
 
 FileLogger::~FileLogger()
@@ -61,6 +76,7 @@ void FileLogger::Log(enum LOG_LEVEL level, const char* message)
         msg.append(levelNames[level]);
         msg.append(" ");
         msg.append(message);
+        msg.append("\n");
 
         int result = fputs(msg.c_str(), logFile);
 
