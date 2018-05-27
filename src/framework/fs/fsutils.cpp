@@ -7,7 +7,7 @@
 #include "libtech/linkedlist.h"
 
 
-char** get_lines_of_file(char* filePath, int* count)
+char** get_lines_of_file(const char* filePath, int* count)
 {
     LinkedList<char*>* lines = new LinkedList<char*>();
 
@@ -34,7 +34,7 @@ char** get_lines_of_file(char* filePath, int* count)
     return lines->GetLinear();
 }
 
-LIBTECH_API char* read_characters(char * filePath, size_t * length)
+LIBTECH_API char* read_characters(const char * filePath, size_t * length)
 {
     std::ifstream reader(filePath, std::ios::binary | std::ios::ate);
 
@@ -48,7 +48,7 @@ LIBTECH_API char* read_characters(char * filePath, size_t * length)
     return contents;
 }
 
-void write_characters(char* filePath, char* data, size_t length)
+void write_characters(const char* filePath, char* data, size_t length)
 {
     std::ofstream writer(filePath);
 

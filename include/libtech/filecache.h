@@ -21,9 +21,9 @@ public:
     FileCache(bool writeThrough = false);
     ~FileCache();
     
-    uint8_t* ReadFileContents(char* filepath, size_t*  length);
-    void WriteFileContents(char* filepath, size_t length, uint8_t* content);
-    void RemoveFromCache(char* filepath);
+    uint8_t* ReadFileContents(const char* filepath, size_t*  length);
+    void WriteFileContents(const char* filepath, size_t length, uint8_t* content);
+    void RemoveFromCache(const char* filepath);
     void ClearCache();
 
 private:
@@ -31,6 +31,6 @@ private:
 
     bool update_filesystem;
 
-    FileCache_Entry* findFileInCache(char* filename);
+    FileCache_Entry* findFileInCache(const char* filename);
 
 };

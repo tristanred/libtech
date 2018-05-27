@@ -27,7 +27,7 @@ FileCache::~FileCache()
     cache_entries->clear();
 }
 
-uint8_t* FileCache::ReadFileContents(char* filepath, size_t* length)
+uint8_t* FileCache::ReadFileContents(const char* filepath, size_t* length)
 {
     FileCache_Entry* found = findFileInCache(filepath);
 
@@ -61,7 +61,7 @@ uint8_t* FileCache::ReadFileContents(char* filepath, size_t* length)
     return content;
 }
 
-void FileCache::WriteFileContents(char* filepath, size_t length, uint8_t* content)
+void FileCache::WriteFileContents(const char* filepath, size_t length, uint8_t* content)
 {
     FileCache_Entry* found = findFileInCache(filepath);
 
@@ -87,7 +87,7 @@ void FileCache::WriteFileContents(char* filepath, size_t length, uint8_t* conten
     }
 }
 
-void FileCache::RemoveFromCache(char* filepath)
+void FileCache::RemoveFromCache(const char* filepath)
 {
     auto begin = cache_entries->begin();
     auto end = cache_entries->end();
@@ -122,7 +122,7 @@ void FileCache::ClearCache()
     cache_entries->clear();
 }
 
-FileCache_Entry* FileCache::findFileInCache(char* filename)
+FileCache_Entry* FileCache::findFileInCache(const char* filename)
 {
     auto begin = cache_entries->begin();
     auto end = cache_entries->end();

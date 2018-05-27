@@ -92,7 +92,7 @@ size_t binreader::GetSize()
     return 0;
 }
 
-LIBTECH_API char* getfilebytes(char* filepath, size_t* length)
+LIBTECH_API char* getfilebytes(const char* filepath, size_t* length)
 {
     binreader reader(filepath);
 
