@@ -20,10 +20,10 @@ char** get_lines_of_file(const char* filePath, int* count)
         char lineResult[1024];
         reader.getline(lineResult, 1024, '\n');
 
-        auto readSize = reader.gcount();
+        unsigned int readSize = (unsigned int)reader.gcount();
 
         char* lineBytes = new char[readSize];
-        std::strncpy(lineBytes, lineResult, reader.gcount());
+        std::strncpy(lineBytes, lineResult, readSize);
 
         lines->Add(lineBytes);
     }
@@ -34,11 +34,11 @@ char** get_lines_of_file(const char* filePath, int* count)
     return lines->GetLinear();
 }
 
-LIBTECH_API char* read_characters(const char * filePath, size_t * length)
+char* read_characters(const char * filePath, size_t * length)
 {
     std::ifstream reader(filePath, std::ios::binary | std::ios::ate);
 
-    auto size = reader.tellg();
+    unsigned int size = (unsigned int)reader.tellg();
     
     char* contents = new char[size];
     reader.seekg(0);
