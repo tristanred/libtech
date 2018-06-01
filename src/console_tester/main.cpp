@@ -13,8 +13,21 @@
 #define LIBTECH_LOADDLL
 #include <libtech/mytime.h>
 
+
+#include <libtech/games/blackjack/blackjack.h>
+
 int main(int argc, char** argv)
 {
+    BlackjackGame game;
+
+    while(true)
+    {
+        game.UpdateGame();
+    }
+
+
+
+
 #if defined(WIN32) && defined(DYNAMIC_DLL)
     HMODULE libtech_mod = LoadLibrary(TEXT("libtechd.dll"));
 
