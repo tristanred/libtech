@@ -18,6 +18,7 @@
 
 int main(int argc, char** argv)
 {
+    printf("Starting blackjack run");
     {
         BlackjackGame game;
 
