@@ -139,7 +139,7 @@ void BlackjackGame::UpdateGame()
             }
 
             // If player wants to hit
-            if(rng->GetRandomPercentage() > 0.5)
+            if(rng->GetRandomPercentage() > 0.5 && this->Player->card_amount < MAX_CARD_NB)
             {
                 SetState(BLJK_PLAYER_HIT);
                 break;
@@ -237,7 +237,7 @@ void BlackjackGame::UpdateGame()
         }
         case BLJK_DEALER_CHOICE:
         {
-            if(count_cards(Dealer) < DEALER_SOFT_STOP)
+            if(count_cards(Dealer) < DEALER_SOFT_STOP && Dealer->card_amount < MAX_CARD_NB)
             {
                 SetState(BLJK_DEALER_HIT);
             }
@@ -337,9 +337,7 @@ void BlackjackGame::UpdateGame()
 
 void BlackjackGame::SetState(enum blackjack_states newState)
 {
-#ifdef _DEBUG
-    //printf("%s -> %s\n", blackjack_states_names[this->CurrentState], blackjack_states_names[newState]);
-#endif
+    printf("%s -> %s\n", blackjack_states_names[this->CurrentState], blackjack_states_names[newState]);
 
     this->PreviousState = this->CurrentState;
     this->CurrentState = newState;

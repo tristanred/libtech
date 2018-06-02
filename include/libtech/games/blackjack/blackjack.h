@@ -32,7 +32,7 @@ enum blackjack_states
     BLJK_STATES_COUNT
 };
 
-char* blackjack_states_names[BLJK_STATES_COUNT] = {
+const char* blackjack_states_names[BLJK_STATES_COUNT] = {
     "GAME_START",
     "BET_SELECT",
     "PLAYER_DRAW_STARTING_HAND",
@@ -66,7 +66,7 @@ enum card_suits
     CARD_SUITS_COUNT
 };
 
-char* card_suits_names[CARD_SUITS_COUNT] = {
+const char* card_suits_names[CARD_SUITS_COUNT] = {
     "HEART",
     "SPADE",
     "DIAMOND",
@@ -93,7 +93,7 @@ enum card_names
     CARD_NAMES_COUNT
 };
 
-char* card_values_names[CARD_NAMES_COUNT] = {
+const char* card_values_names[CARD_NAMES_COUNT] = {
     "ACE",
     "ONE",
     "TWO",
@@ -161,7 +161,7 @@ enum blackjack_meters
     BLJK_METERS_COUNT
 };
 
-char* blackjack_meters_names[BLJK_METERS_COUNT] = {
+const char* blackjack_meters_names[BLJK_METERS_COUNT] = {
     "PLAYER_WIN",
     "DEALER_WIN",
 
