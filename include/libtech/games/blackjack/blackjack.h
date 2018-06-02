@@ -2,6 +2,7 @@
 
 #include "libtech/libtech.h"
 #include "libtech/randomgen.h"
+#include <stack>
 
 #define DEALER_SOFT_STOP 17
 #define BLACKJACK_AMOUNT 21
@@ -179,11 +180,12 @@ const char* blackjack_meters_names[BLJK_METERS_COUNT] = {
 };
 
 
-struct card_info* draw_card();
 bool has_blackjack(struct blackjack_player* target);
 int count_cards(struct blackjack_player* target);
 bool offer_insurance(struct blackjack_player* target);
 bool can_split(struct blackjack_player* target);
+
+#define INITIAL_DECK_COUNT 4
 
 class LIBTECH_CLASS BlackjackGame
 {
@@ -194,11 +196,16 @@ public:
     void UpdateGame();
     void SetState(enum blackjack_states newState);
 
+    struct card_info* DrawCard();
+    void RegenerateDecks();
+
     void DeleteHands();
     void DeletePlayers();
 
+
     void SaveMeters();
-    
+
+    // Game State
     int CountGames;
     int Gamebet;
     enum blackjack_states PreviousState;
@@ -206,7 +213,12 @@ public:
     struct blackjack_player* Dealer;
     struct blackjack_player* Player;
 
+    // Card & decks
+    std::stack<card_info*>* cards;
+
+    // Random
     RandomGen* rng;
 
+    // Meters
     int meters[BLJK_METERS_COUNT];
 };

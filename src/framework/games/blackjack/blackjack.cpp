@@ -19,6 +19,9 @@ BlackjackGame::BlackjackGame()
 
     rng = new RandomGen();
 
+    cards = new std::stack<card_info*>();
+    this->RegenerateDecks();
+
     for (int i = 0; i < BLJK_METERS_COUNT; i++)
     {
         this->meters[i] = 0;
@@ -31,6 +34,14 @@ BlackjackGame::~BlackjackGame()
 
     this->DeleteHands();
     this->DeletePlayers();
+
+    while(cards->empty() == false)
+    {
+        card_info* topCard = cards->top();
+        cards->pop();
+        delete(topCard);
+    }
+    delete(cards);
 }
 
 void BlackjackGame::UpdateGame()
@@ -55,8 +66,8 @@ void BlackjackGame::UpdateGame()
         }
         case BLJK_PLAYER_DRAW_STARTING_HAND:
         {
-            this->Player->cards[0] = draw_card();
-            this->Player->cards[1] = draw_card();
+            this->Player->cards[0] = this->DrawCard();
+            this->Player->cards[1] = this->DrawCard();
 
             this->Player->card_amount = 2;
 
@@ -66,8 +77,8 @@ void BlackjackGame::UpdateGame()
         }
         case BLJK_DEALER_DRAW_STARTING_HAND:
         {
-            this->Dealer->cards[0] = draw_card();
-            this->Dealer->cards[1] = draw_card();
+            this->Dealer->cards[0] = this->DrawCard();
+            this->Dealer->cards[1] = this->DrawCard();
 
             this->Dealer->card_amount = 2;
 
@@ -161,7 +172,7 @@ void BlackjackGame::UpdateGame()
         {
             meters[METER_PLAYER_HIT]++;
 
-            this->Player->cards[this->Player->card_amount] = draw_card();
+            this->Player->cards[this->Player->card_amount] = this->DrawCard();
             this->Player->card_amount++;
 
             if(count_cards(Player) > BLACKJACK_AMOUNT)
@@ -183,7 +194,7 @@ void BlackjackGame::UpdateGame()
         {
             meters[METER_PLAYER_DOUBLE]++;
 
-            this->Player->cards[this->Player->card_amount] = draw_card();
+            this->Player->cards[this->Player->card_amount] = this->DrawCard();
             this->Player->card_amount++;
 
             if(count_cards(Player) > BLACKJACK_AMOUNT)
@@ -252,7 +263,7 @@ void BlackjackGame::UpdateGame()
         {
             meters[METER_DEALER_HIT]++;
 
-            this->Dealer->cards[this->Dealer->card_amount] = draw_card();
+            this->Dealer->cards[this->Dealer->card_amount] = this->DrawCard();
             this->Dealer->card_amount++;
 
             if(count_cards(Dealer) > BLACKJACK_AMOUNT)
@@ -396,16 +407,36 @@ void BlackjackGame::SaveMeters()
     fclose(meterfile);
 }
 
-struct card_info* draw_card()
+void BlackjackGame::RegenerateDecks()
 {
-    RandomGen rng;
+    for(int v = 0; v < INITIAL_DECK_COUNT; v++)
+    {
+        for(int i = 0; i < CARD_SUITS_COUNT; i++)
+        {
+            for(int k = 0; k < CARD_NAMES_COUNT; k++)
+            {
+                card_info* newCard = new card_info();
+                newCard->suit = (enum card_suits)i;
+                newCard->name = (enum card_names)k;
+                newCard->count_value = card_values[k];
 
-    struct card_info* newCard = new struct card_info();
-    newCard->count_value = card_values[rng.GetRandom(CARD_NAMES_COUNT)];
-    newCard->name = (enum card_names)newCard->count_value;
-    newCard->suit = (enum card_suits)rng.GetRandom(CARD_SUITS_COUNT);
-    
-    return newCard;
+                cards->push(newCard);
+            }
+        }
+    }
+}
+
+struct card_info* BlackjackGame::DrawCard()
+{
+    card_info* topCard = cards->top();
+    cards->pop();
+
+    if(cards->size() == 0)
+    {
+        RegenerateDecks();
+    }
+
+    return topCard;
 }
 
 bool has_blackjack(struct blackjack_player* target)
@@ -435,4 +466,26 @@ bool offer_insurance(struct blackjack_player* target)
 bool can_split(struct blackjack_player* target)
 {
     return target->cards[0]->count_value == target->cards[1]->count_value;
+}
+
+card_info** create_deck()
+{
+    card_info** deck = new card_info*[CARD_SUITS_COUNT * CARD_NAMES_COUNT];
+
+    for(int i = 0; i < CARD_SUITS_COUNT; i++)
+    {
+        for(int k = 0; k < CARD_NAMES_COUNT; k++)
+        {
+            int nextIndex = (i * CARD_NAMES_COUNT) + k;
+
+            card_info* newCard = new card_info();
+            newCard->count_value = card_values[k];
+            newCard->name = (enum card_names)k;
+            newCard->suit = (enum card_suits)i;
+
+            deck[nextIndex] = newCard;
+        }
+    }
+
+    return deck;
 }
