@@ -27,7 +27,9 @@ int main(int argc, char** argv)
         }
     }
 
+    printf("Finished running blackjack runs.");
 
+    return 0;
 
 
 #if defined(WIN32) && defined(DYNAMIC_DLL)

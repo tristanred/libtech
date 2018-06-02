@@ -337,8 +337,9 @@ void BlackjackGame::UpdateGame()
 
 void BlackjackGame::SetState(enum blackjack_states newState)
 {
+#ifdef _DEBUG
     printf("%s -> %s\n", blackjack_states_names[this->CurrentState], blackjack_states_names[newState]);
-
+#endif
     this->PreviousState = this->CurrentState;
     this->CurrentState = newState;
 }
