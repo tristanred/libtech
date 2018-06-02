@@ -77,7 +77,6 @@ const char* card_suits_names[CARD_SUITS_COUNT] = {
 enum card_names
 {
     CARD_ACE,
-    CARD_ONE,
     CARD_TWO,
     CARD_THREE,
     CARD_FOUR,
@@ -96,7 +95,6 @@ enum card_names
 
 const char* card_values_names[CARD_NAMES_COUNT] = {
     "ACE",
-    "ONE",
     "TWO",
     "THREE",
     "FOUR",
@@ -113,7 +111,6 @@ const char* card_values_names[CARD_NAMES_COUNT] = {
 
 int card_values[CARD_NAMES_COUNT] = {
     11, // Can also count for 1
-    1,
     2,
     3,
     4,
