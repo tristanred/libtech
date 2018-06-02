@@ -1,10 +1,11 @@
 #include "libtech/randomgen.h"
+#include "libtech/mytime.h"
 
 RandomGen::RandomGen(int seed)
 {
     if (seed == 0)
     {
-        //srand(GetTicks());
+        srand(get_a_ticks());
     }
     else
     {

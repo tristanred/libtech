@@ -24,6 +24,16 @@
 
 #endif
 
+#ifdef linux
+
+// NDEBUG is set by GCC when in release mode
+#if !defined(NDEBUG)
+#define _DEBUG
+#endif
+
+
+#endif
+
 
 // Common include
 #include "libtypes.h"

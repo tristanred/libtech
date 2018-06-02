@@ -4,6 +4,10 @@
 
 #include <sys/time.h>
 
+#elif WIN32
+
+#include <windows.h>
+
 #endif
 
 long get_a_ticks()
@@ -15,7 +19,7 @@ long get_a_ticks()
 
     return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 #elif WIN32
-    return 99;
+    return GetTickCount();
 
 #else
     return 0;
