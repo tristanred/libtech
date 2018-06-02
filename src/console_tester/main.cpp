@@ -18,11 +18,13 @@
 
 int main(int argc, char** argv)
 {
-    BlackjackGame game;
-
-    while(true)
     {
-        game.UpdateGame();
+        BlackjackGame game;
+
+        while(game.CountGames < 20000)
+        {
+            game.UpdateGame();
+        }
     }
 
 

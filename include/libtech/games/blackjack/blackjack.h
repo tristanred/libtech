@@ -1,6 +1,7 @@
 #pragma once
 
 #include "libtech/libtech.h"
+#include "libtech/randomgen.h"
 
 #define DEALER_SOFT_STOP 17
 #define BLACKJACK_AMOUNT 21
@@ -144,7 +145,37 @@ enum blackjack_meters
 {
     METER_PLAYER_WIN,
     METER_DEALER_WIN,
+
+    METER_PLAYER_HIT,
+    METER_PLAYER_STAND,
+    METER_PLAYER_SPLIT,
+    METER_PLAYER_DOUBLE,
+    METER_PLAYER_BLACKJACK,
+    METER_PLAYER_BUST,
+
+    METER_DEALER_HIT,
+    METER_DEALER_STAND,
+    METER_DEALER_BLACKJACK,
+    METER_DEALER_BUST,
+
     BLJK_METERS_COUNT
+};
+
+char* blackjack_meters_names[BLJK_METERS_COUNT] = {
+    "PLAYER_WIN",
+    "DEALER_WIN",
+
+    "METER_PLAYER_HIT",
+    "METER_PLAYER_STAND",
+    "METER_PLAYER_SPLIT",
+    "METER_PLAYER_DOUBLE",
+    "METER_PLAYER_BLACKJACK",
+    "METER_PLAYER_BUST",
+
+    "METER_DEALER_HIT",
+    "METER_DEALER_STAND",
+    "METER_DEALER_BLACKJACK",
+    "METER_DEALER_BUST",
 };
 
 
@@ -165,12 +196,17 @@ public:
 
     void DeleteHands();
     void DeletePlayers();
+
+    void SaveMeters();
     
+    int CountGames;
     int Gamebet;
     enum blackjack_states PreviousState;
     enum blackjack_states CurrentState;
     struct blackjack_player* Dealer;
     struct blackjack_player* Player;
+
+    RandomGen* rng;
 
     int meters[BLJK_METERS_COUNT];
 };
