@@ -6,6 +6,8 @@
 
 #endif
 
+#include <string.h>
+
 char* get_working_directory()
 {
 #ifdef _WIN32
@@ -21,7 +23,7 @@ char* get_working_directory()
     {
         return "";
     }
-#elif
+#else
     char* path = new char[1];
     strcpy(path, "");
     
