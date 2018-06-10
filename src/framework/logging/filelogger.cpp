@@ -21,7 +21,7 @@ void LogTrace(const char* message, ...)
 {
     if(_globalLogger != NULL)
     {
-        char msg[2048];
+        char msg[MSG_MAXBUF];
         va_list argptr;
         va_start(argptr, message);
         vsprintf(msg, message, argptr);
@@ -35,7 +35,7 @@ void LogMessage(const char* message, ...)
 {
     if(_globalLogger != NULL)
     {
-        char msg[2048];
+        char msg[MSG_MAXBUF];
         va_list argptr;
         va_start(argptr, message);
         vsprintf(msg, message, argptr);
@@ -49,7 +49,7 @@ void LogWarning(const char* message, ...)
 {
     if(_globalLogger != NULL)
     {
-        char msg[2048];
+        char msg[MSG_MAXBUF];
         va_list argptr;
         va_start(argptr, message);
         vsprintf(msg, message, argptr);
@@ -63,7 +63,7 @@ void LogError(const char* message, ...)
 {
     if(_globalLogger != NULL)
     {
-        char msg[2048];
+        char msg[MSG_MAXBUF];
         va_list argptr;
         va_start(argptr, message);
         vsprintf(msg, message, argptr);
@@ -146,7 +146,7 @@ void FileLogger::Close()
 
 void FileLogger::LogMessage(const char* message, ...)
 {
-    char msg[2048];
+    char msg[MSG_MAXBUF];
     va_list argptr;
     va_start(argptr, message);
     vsprintf(msg, message, argptr);
@@ -157,7 +157,7 @@ void FileLogger::LogMessage(const char* message, ...)
 
 void FileLogger::LogWarning(const char* message, ...)
 {
-    char msg[2048];
+    char msg[MSG_MAXBUF];
     va_list argptr;
     va_start(argptr, message);
     vsprintf(msg, message, argptr);
@@ -168,7 +168,7 @@ void FileLogger::LogWarning(const char* message, ...)
 
 void FileLogger::LogError(const char* message, ...)
 {
-    char msg[2048];
+    char msg[MSG_MAXBUF];
     va_list argptr;
     va_start(argptr, message);
     vsprintf(msg, message, argptr);
@@ -179,7 +179,7 @@ void FileLogger::LogError(const char* message, ...)
 
 void FileLogger::LogTrace(const char *message, ...)
 {
-    char msg[2048];
+    char msg[MSG_MAXBUF];
     va_list argptr;
     va_start(argptr, message);
     vsprintf(msg, message, argptr);

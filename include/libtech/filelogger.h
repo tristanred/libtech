@@ -6,6 +6,8 @@
 #include <cstdio>
 using namespace std;
 
+#define MSG_MAXBUF 2048
+
 enum LOG_LEVEL{
     LOG_TRACE,
     LOG_MSG,
