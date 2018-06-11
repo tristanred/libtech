@@ -1,4 +1,4 @@
-#include "libtech/Geometry.h"
+#include "libtech/geometry.h"
 
 #define _USE_MATH_DEFINES
 #include <cmath>
