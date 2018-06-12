@@ -13,7 +13,6 @@ RandomGen::RandomGen(int seed)
     }
 }
 
-
 RandomGen::~RandomGen()
 {
 }
@@ -26,4 +25,18 @@ int RandomGen::GetRandom(int min, int outerMax)
 float RandomGen::GetRandomPercentage()
 {
     return (float)((rand() % 100) / 100.0);
+}
+
+int get_random_int(int min, int outerMax)
+{
+    RandomGen rng;
+    
+    return rng.GetRandom(min, outerMax);
+}
+
+float get_random_percent()
+{
+    RandomGen rng;
+
+    return rng.GetRandomPercentage();
 }

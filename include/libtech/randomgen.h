@@ -16,3 +16,5 @@ private:
 
 };
 
+int get_random_int(int min = 0, int outerMax = RAND_MAX);
+float get_random_percent();
