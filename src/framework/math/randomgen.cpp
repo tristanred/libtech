@@ -18,9 +18,9 @@ RandomGen::~RandomGen()
 {
 }
 
-int RandomGen::GetRandom(int max)
+int RandomGen::GetRandom(int min, int outerMax)
 {
-    return rand() % max;
+    return rand() % (outerMax - min) + min;
 }
 
 float RandomGen::GetRandomPercentage()

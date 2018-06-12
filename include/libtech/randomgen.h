@@ -9,7 +9,7 @@ public:
     RandomGen(int seed = 0);
     ~RandomGen();
 
-    int GetRandom(int max = RAND_MAX);
+    int GetRandom(int min = 0, int outerMax = RAND_MAX);
 
     float GetRandomPercentage();
 private:
