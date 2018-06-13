@@ -26,8 +26,6 @@ void binreader::Open(const char *filepath)
     errno = 0;
     FILE* newfile = fopen(filepath, "rb");
 
-    int err = errno;
-
     if(newfile != NULL)
     {
         this->Close();
@@ -35,7 +33,7 @@ void binreader::Open(const char *filepath)
         fp = newfile;
 
         loadedPath = new char[strlen(filepath)];
-        char* returned = strcpy(loadedPath, filepath);
+        strcpy(loadedPath, filepath);
     }
 }
 

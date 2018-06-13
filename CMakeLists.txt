@@ -70,6 +70,13 @@ target_link_libraries(ConsoleTester LIBTECHD)
 IF(WIN32)
 
 set_target_properties(LIBTECH PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
+set_target_properties(LIBTECHD PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
 set_target_properties(ConsoleTester PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
+
+ELSEIF(UNIX)
+
+target_compile_options(LIBTECH PRIVATE -Wall)
+target_compile_options(LIBTECHD PRIVATE -Wall)
+target_compile_options(ConsoleTester PRIVATE -Wall)
 
 ENDIF(WIN32)

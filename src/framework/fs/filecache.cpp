@@ -19,7 +19,7 @@ FileCache::~FileCache()
     {
         FileCache_Entry* entry = *begin;
         //delete(entry->file_name); // Leaking. TODO
-        delete(*begin);
+        delete(entry);
 
         begin++;
     }

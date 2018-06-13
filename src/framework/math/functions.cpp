@@ -46,7 +46,7 @@ TgaFile* PlotSequenceToImage(float* curve, int curveLength)
     for (int i = 0; i < curveLength; i++)
     {
         int pt = (int)curve[i] * -1;
-        int baseLine = i + (curveLength * imageHeight / 2);
+        //int baseLine = i + (curveLength * imageHeight / 2);
 
         TgaPix* px = image->Get(i, (imageHeight / 2) + pt);
         px->a = 255;
