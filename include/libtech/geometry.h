@@ -41,3 +41,27 @@ struct LIBTECH_CLASS FSize
         Height = h;
     }
 };
+
+struct LIBTECH_CLASS FRectangle
+{
+    float X;
+    float Y;
+    float Width;
+    float Height;
+    
+    FRectangle()
+    {
+        X = 0;
+        Y = 0;
+        Width = 0;
+        Height = 0;
+    }
+    
+    FRectangle(float x, float y, float w, float h)
+    {
+        X = x;
+        Y = y;
+        Width = w;
+        Height = h;
+    }
+};
