@@ -64,4 +64,31 @@ struct LIBTECH_CLASS FRectangle
         Width = w;
         Height = h;
     }
+
+    FRectangle(FPosition pos, FSize size)
+    {
+        this->X = pos.X;
+        this->Y = pos.Y;
+        this->Width = size.Width;
+        this->Height = size.Height;
+    }
+
+    float Left();
+    float Top();
+    float Right();
+    float Bottom();
+
+    FPosition GetCenter();
+    void AlignCenterOn(FRectangle* target);
+    void PushInside(FRectangle* bounds);
+
+    bool operator==(const FRectangle& other)
+    {
+        return this->X == other.X && this->Y == other.Y && this->Width == other.Width && this->Height == other.Height;
+    }
+
+    bool operator!=(const FRectangle& other)
+    {
+        return (*this == other) == false;
+    }
 };
