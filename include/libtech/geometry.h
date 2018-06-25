@@ -22,6 +22,16 @@ struct LIBTECH_CLASS FPosition
         X = x;
         Y = y;
     }
+
+    bool operator==(const FPosition& other)
+    {
+        return this->X == other.X && this->Y == other.Y;
+    }
+
+    bool operator!=(const FPosition& other)
+    {
+        return (*this == other) == false;
+    }
 };
 
 struct LIBTECH_CLASS FSize
@@ -39,6 +49,16 @@ struct LIBTECH_CLASS FSize
     {
         Width = w;
         Height = h;
+    }
+
+    bool operator==(const FSize& other)
+    {
+        return this->Width == other.Width && this->Height == other.Height;
+    }
+
+    bool operator!=(const FSize& other)
+    {
+        return (*this == other) == false;
     }
 };
 
