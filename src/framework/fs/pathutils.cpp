@@ -7,7 +7,7 @@ char* get_file_name(const char* path)
 {
     const char* ret = strrchr(path, '/');
     
-    int substrlen = strlen(ret) + 1;
+    size_t substrlen = strlen(ret) + 1;
     
     char* namestr = new char[substrlen];
     strcpy(namestr, ret + 1);
@@ -20,7 +20,7 @@ char* get_file_name_noext(const char* path)
     const char* extPtr = strrchr(path, '.') + 1;
     const char* lastSlash = strrchr(path, '/') + 1;
     
-    int substrlen = extPtr - lastSlash - 1;
+    size_t substrlen = extPtr - lastSlash - 1;
     
     char* namestr = new char[substrlen];
     namestr[substrlen] = '\0';
@@ -33,7 +33,7 @@ char* get_file_extension(const char* path)
 {
     const char* extPtr = strrchr(path, '.');
     
-    int extlen = strlen(extPtr) + 1;
+    size_t extlen = strlen(extPtr) + 1;
     
     char* extstr = new char[extlen];
     strcpy(extstr, extPtr);
@@ -44,7 +44,7 @@ char* get_file_extension(const char* path)
 char* get_parent_directory_path(const char* path)
 {
     const char* substr = strrchr(path, '/');
-    int substrlen = substr - path;
+    size_t substrlen = substr - path;
     
     char* parentstr = new char[substrlen];
     parentstr[substrlen] = '\0';
@@ -76,7 +76,7 @@ std::list<char*>* get_path_parts(const char* path)
 
 void replace_path_slashes(char* path)
 {
-    int pathLength = strlen(path) + 1;
+    size_t pathLength = strlen(path) + 1;
     
     for (int i = 0; i < pathLength; i++)
     {
