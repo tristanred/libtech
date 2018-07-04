@@ -11,6 +11,7 @@
 #endif
 
 #include <string.h>
+#include <stdio.h>
 
 char* get_working_directory()
 {
@@ -19,12 +20,16 @@ char* get_working_directory()
     char* path = new char[MAX_PATH];
     DWORD res = GetCurrentDirectoryA(buflen, path);
 
-    if(SUCCEEDED(res))
+    if(res > 0)
     {
         return path;
     }
     else
     {
+        DWORD err = GetLastError();
+
+        print_win32_error(err);
+
         return "";
     }
 #elif linux
@@ -38,3 +43,37 @@ char* get_working_directory()
     return path;
 #endif
 }
+
+
+#ifdef WIN32
+
+LIBTECH_API void print_last_win32_error()
+{
+    DWORD err = GetLastError();
+    print_win32_error(err);
+}
+
+LIBTECH_API void print_win32_error(DWORD errorCode)
+{
+    char* errMsg = get_win32_error_text(errorCode);
+    fprintf(stderr, errMsg);
+    delete(errMsg);
+}
+
+char* get_win32_error_text(DWORD errorCode)
+{
+    char* msg = new char[512];
+
+    FormatMessage(
+        FORMAT_MESSAGE_FROM_SYSTEM |
+        FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        errorCode,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR)msg,
+        0, NULL);
+
+    return msg;
+}
+
+#endif
