@@ -112,7 +112,6 @@ int ReelManager::CalculateWins()
 
     for(int i = 0; i < this->Lines->PatternsCount; i++)
     {
-
         for(int k = 0; k < this->Reels; k++)
         {
             int offset = this->Lines->LinePatterns[i][k];
@@ -125,7 +124,21 @@ int ReelManager::CalculateWins()
         {
             totalWin += wins->winAmount;
 
-            printf("WinLine %d : Length = %d, Won = %d\n", i, wins->count, wins->winAmount);
+            printf("WinLine %d : Length = %d, Won = %d", i, wins->count, wins->winAmount);
+
+            printf(" (");
+            for (int k = 0; k < this->Reels; k++)
+            {
+                printf("%d ", symbolsOnLine[k]->id);
+            }
+            printf(")\n");
+            /*int* winPattern = this->Lines->LinePatterns[i];
+            for (int k = 0; k < this->Reels; k++)
+            {
+                Symbol* winSymbol = this->ReelSymbols[k][winPattern[k]];
+
+                printf("%d ");
+            }*/
         }
 
 
@@ -150,6 +163,12 @@ LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
     // Start with the first symbol on the line
     Symbol* lineWinSymbol = lineSymbols[0];
 
+    // Lines can't start with a scatter
+    if (lineWinSymbol->isScatter)
+    {
+        return NULL;
+    }
+
     // Win info
     int winLength = -1;
     int winSymbol = -1;
@@ -159,6 +178,12 @@ LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
     for(int i = 1; i < this->Reels; i++)
     {
         Symbol* sym = lineSymbols[i];
+
+        // Scatters break lines
+        if (sym->isScatter)
+        {
+            break;
+        }
 
         // If the current line identity is Wild
         // Take the next symbol as the new line identity
