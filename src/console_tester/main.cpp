@@ -13,7 +13,6 @@
 #define LIBTECH_LOADDLL
 #include <libtech/mytime.h>
 
-
 #include <libtech/games/blackjack/blackjack.h>
 
 #include <libtech/ReelManager.h>
@@ -24,6 +23,10 @@ int main(int argc, char** argv)
     rm->CreateDefaultObjects();
     rm->Spin();
     rm->PrintCurrentCombination();
+
+    int res = rm->CalculateWins();
+
+    printf("Won: %d", res);
 
     delete(rm);
 

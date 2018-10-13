@@ -4,6 +4,10 @@ class ReelStrip;
 class Paytable;
 class LineSet;
 class SymbolSet;
+class Symbol;
+class LineWin;
+
+//#define FAKE_SPIN
 
 class ReelManager
 {
@@ -16,7 +20,7 @@ public:
 
     int* ReelStops;
 
-    int** ReelSymbols; // int[Reels][Rows]
+    Symbol*** ReelSymbols; // Symbol*[Reels][Rows]
 
     ReelStrip** reelstrips;
 
@@ -36,5 +40,7 @@ public:
     void PrintCurrentCombination();
 
     int CalculateWins();
+
+    LineWin* CalculateLineWin(Symbol** lineSymbols);
 
 };

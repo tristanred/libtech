@@ -4,6 +4,7 @@ class Symbol
 {
 public:
     Symbol();
+    Symbol(int id);
     ~Symbol();
 
     int id;

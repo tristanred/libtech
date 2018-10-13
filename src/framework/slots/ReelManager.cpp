@@ -8,6 +8,7 @@
 #include <libtech/ReelStrip.h>
 #include <libtech/Paytable.h>
 #include <libtech/SymbolSet.h>
+#include <libtech/SlotWins.h>
 
 ReelManager::ReelManager(int reels, int rows)
 {
@@ -15,10 +16,10 @@ ReelManager::ReelManager(int reels, int rows)
     this->Rows = rows;
 
     this->ReelStops = new int[reels];
-    this->ReelSymbols = new int*[reels];
+    this->ReelSymbols = new Symbol**[reels];
     for (int i = 0; i < reels; i++)
     {
-        this->ReelSymbols[i] = new int[rows];
+        this->ReelSymbols[i] = new Symbol*[rows];
     }
 
     this->reelstrips = NULL;
@@ -30,17 +31,11 @@ ReelManager::ReelManager(int reels, int rows)
 ReelManager::~ReelManager()
 {
     delete[] this->ReelStops;
-    for (int i = 0; i < this->Reels; i++)
-    {
-        delete[] this->ReelSymbols[i];
-    }
-    delete[] this->ReelSymbols;
 
     delete(this->reelstrips);
     delete(this->paytable);
     delete(this->Lines);
     delete(this->Symbols);
-
 }
 
 void ReelManager::CreateDefaultObjects()
@@ -56,11 +51,34 @@ void ReelManager::CreateDefaultObjects()
     this->paytable = Paytable::GetDefaultPaytable(this->Symbols);
 
     this->Lines = LineSet::Generate10Lines();
-
 }
 
 void ReelManager::Spin()
 {
+#ifdef FAKE_SPIN
+    this->ReelSymbols[0][0] = new Symbol(6);
+    this->ReelSymbols[0][1] = new Symbol(1);
+    this->ReelSymbols[0][2] = new Symbol(6);
+
+    this->ReelSymbols[1][0] = new Symbol(6);
+    this->ReelSymbols[1][1] = new Symbol(1);
+    this->ReelSymbols[1][2] = new Symbol(6);
+
+    this->ReelSymbols[2][0] = new Symbol(6);
+    this->ReelSymbols[2][1] = new Symbol(0);
+    this->ReelSymbols[2][2] = new Symbol(6);
+
+    this->ReelSymbols[3][0] = new Symbol(6);
+    this->ReelSymbols[3][1] = new Symbol(1);
+    this->ReelSymbols[3][2] = new Symbol(6);
+
+    this->ReelSymbols[4][0] = new Symbol(6);
+    this->ReelSymbols[4][1] = new Symbol(1);
+    this->ReelSymbols[4][2] = new Symbol(6);
+
+    return;
+#endif
+
     srand(time(0));
     for (int i = 0; i < this->Reels; i++)
     {
@@ -69,7 +87,7 @@ void ReelManager::Spin()
 
         for(int k = 0; k < this->Rows; k++)
         {
-            this->ReelSymbols[i][k] = this->reelstrips[i]->Symbols[(this->ReelStops[i] + k) % rsLen]->id;
+            this->ReelSymbols[i][k] = this->reelstrips[i]->Symbols[(this->ReelStops[i] + k) % rsLen];
         }
     }
 }
@@ -78,16 +96,106 @@ void ReelManager::PrintCurrentCombination()
 {
     for(int i = 0; i < this->Rows; i++)
     {
-        printf("[%d, %d, %d, %d, %d]\n", this->ReelSymbols[0][i],
-                                         this->ReelSymbols[1][i],
-                                         this->ReelSymbols[2][i],
-                                         this->ReelSymbols[3][i],
-                                         this->ReelSymbols[4][i]);
+        printf("[%d, %d, %d, %d, %d]\n", this->ReelSymbols[0][i]->id,
+                                         this->ReelSymbols[1][i]->id,
+                                         this->ReelSymbols[2][i]->id,
+                                         this->ReelSymbols[3][i]->id,
+                                         this->ReelSymbols[4][i]->id);
     }
 }
 
 int ReelManager::CalculateWins()
 {
+    int totalWin = 0;
 
-    return 0;
+    Symbol** symbolsOnLine = new Symbol*[this->Reels];
+
+    for(int i = 0; i < this->Lines->PatternsCount; i++)
+    {
+
+        for(int k = 0; k < this->Reels; k++)
+        {
+            int offset = this->Lines->LinePatterns[i][k];
+            symbolsOnLine[k] = this->ReelSymbols[k][offset];
+        }
+
+        LineWin* wins = this->CalculateLineWin(symbolsOnLine);
+
+        if(wins != NULL)
+        {
+            totalWin += wins->winAmount;
+        }
+
+        delete(wins);
+    }
+
+    delete(symbolsOnLine);
+
+    return totalWin;
+}
+
+LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
+{
+    // Start with the first symbol on the line
+    Symbol* lineWinSymbol = lineSymbols[0];
+
+    // Win info
+    int winLength = -1;
+    int winSymbol = -1;
+    int winAmount = -1;
+
+    // Go through each symbol on the rest of the line
+    for(int i = 1; i < this->Reels; i++)
+    {
+        Symbol* sym = lineSymbols[i];
+
+        // If the current line identity is Wild
+        // Take the next symbol as the new line identity
+        if(lineWinSymbol->isWild)
+        {
+            lineWinSymbol = sym;
+
+            winLength = i + 1;
+
+            continue;
+        }
+
+        // If the line has a symbol sequence but the next one is a wild
+        // Increment the line length but do not change the identity of the winline to Wild.
+        if(sym->isWild)
+        {
+            winLength = i + 1;
+
+            continue;
+        }
+
+        // If we are the same symbol ID as the current sequence
+        if(sym->id == lineWinSymbol->id)
+        {
+            winLength = i + 1;
+
+            continue;
+        }
+
+        break;
+    }
+
+    // Check each win against the paytable
+
+    for(int i = 0; i < this->paytable->PrizeCount; i++)
+    {
+        PaytablePrize* prize = this->paytable->Prizes[i];
+        if(prize->SymbolCount == winLength && prize->SymbolID == lineWinSymbol->id)
+        {
+            LineWin* win = new LineWin();
+            win->count = winLength;
+            win->winAmount = prize->PrizeWins;
+            win->WinningSymbol = lineWinSymbol;
+            win->winLineIndex = -1; // Don't know from here.
+
+            return win;
+        }
+    }
+
+    return NULL;
 }

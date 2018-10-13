@@ -15,6 +15,18 @@ Symbol::~Symbol()
     //delete(this->name);
 }
 
+Symbol::Symbol(int id)
+{
+    this->id = id;
+    this->name = "";
+
+    // Set to wild if ID is 0
+    this->isWild = id == 0;
+
+    // Set to wild id ID is 6
+    this->isScatter = id == 6;
+}
+
 SymbolSet::SymbolSet()
 {
     this->SymbolCount = 0;
