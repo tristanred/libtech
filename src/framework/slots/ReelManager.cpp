@@ -135,15 +135,7 @@ int ReelManager::CalculateWins()
                 printf("%d ", symbolsOnLine[k]->id);
             }
             printf(")\n");
-            /*int* winPattern = this->Lines->LinePatterns[i];
-            for (int k = 0; k < this->Reels; k++)
-            {
-                Symbol* winSymbol = this->ReelSymbols[k][winPattern[k]];
-
-                printf("%d ");
-            }*/
         }
-
 
         delete(wins);
     }

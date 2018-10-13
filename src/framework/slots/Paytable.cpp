@@ -14,7 +14,7 @@ Paytable::~Paytable()
 {
     for (int i = 0; i < this->PrizeCount; i++)
     {
-        delete this->Prizes[i];
+        delete(this->Prizes[i]);
     }
 
     delete(this->Prizes);
@@ -26,7 +26,7 @@ Paytable* Paytable::GetDefaultPaytable(SymbolSet* symbols)
 
     Paytable* pt = new Paytable();
     pt->PrizeCount = 21;
-    pt->Prizes = (PaytablePrize**)malloc(sizeof(PaytablePrize*) * pt->PrizeCount);
+    pt->Prizes = new PaytablePrize*[pt->PrizeCount];
 
     // Symbol 0
     pt->Prizes[0] = new PaytablePrize();
@@ -152,5 +152,4 @@ PaytablePrize::PaytablePrize()
 
 PaytablePrize::~PaytablePrize()
 {
-
 }

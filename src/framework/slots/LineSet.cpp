@@ -10,22 +10,15 @@ LineSet::LineSet()
 
 LineSet::LineSet(int** linePatterns, int patternCount)
 {
-    for (int i = 0; i < patternCount; i++)
-    {
-        this->LinePatterns[i] = (int*)malloc(sizeof(int) * 5);
-
-        for (int k = 0; k < 5; k++)
-        {
-            this->LinePatterns[i][k] = linePatterns[i][k];
-        }
-    }
+    this->LinePatterns = linePatterns;
+    this->PatternsCount = patternCount;
 }
 
 LineSet::~LineSet()
 {
     for (int i = 0; i < this->PatternsCount; i++)
     {
-        free(this->LinePatterns[i]);
+        delete(this->LinePatterns[i]);
     }
 }
 
@@ -34,11 +27,11 @@ LineSet* LineSet::Generate10Lines()
     LineSet* newSet = new LineSet();
     newSet->PatternsCount = 10;
 
-    newSet->LinePatterns = (int**)malloc(sizeof(int*) * 10);
+    newSet->LinePatterns = new int*[10];
 
     for (int i = 0; i < newSet->PatternsCount; i++)
     {
-        newSet->LinePatterns[i] = (int*)malloc(sizeof(int) * 5);
+        newSet->LinePatterns[i] = new int[5];
     }
     
     // Line 1
@@ -113,4 +106,3 @@ LineSet* LineSet::Generate10Lines()
 
     return newSet;
 }
-
