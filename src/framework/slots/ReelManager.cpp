@@ -124,12 +124,23 @@ int ReelManager::CalculateWins()
         if(wins != NULL)
         {
             totalWin += wins->winAmount;
+
+            printf("WinLine %d : Length = %d, Won = %d\n", i, wins->count, wins->winAmount);
         }
+
 
         delete(wins);
     }
 
     delete(symbolsOnLine);
+
+    ScatterWin* scatterWin = this->CalculateScatterWins();
+    if(scatterWin != NULL)
+    {
+        totalWin += scatterWin->winAmount;
+
+        printf("Scatter Win : Length = %d, Won %d\n", scatterWin->count, scatterWin->winAmount);
+    }
 
     return totalWin;
 }
@@ -181,7 +192,6 @@ LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
     }
 
     // Check each win against the paytable
-
     for(int i = 0; i < this->paytable->PrizeCount; i++)
     {
         PaytablePrize* prize = this->paytable->Prizes[i];
@@ -194,6 +204,48 @@ LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
             win->winLineIndex = -1; // Don't know from here.
 
             return win;
+        }
+    }
+
+    return NULL;
+}
+
+ScatterWin* ReelManager::CalculateScatterWins()
+{
+    ScatterWin* wins = new ScatterWin();
+
+    Symbol* scatterSymbol = NULL;
+
+    int scatterCount = 0;
+    for(int i = 0; i < this->Reels; i++)
+    {
+        for(int k = 0; k < this->Rows; k++)
+        {
+            if(this->ReelSymbols[i][k]->isScatter)
+            {
+                scatterCount++;
+                scatterSymbol = this->ReelSymbols[i][k];
+            }
+        }
+    }
+
+    if(scatterSymbol == NULL)
+    {
+        return NULL;
+    }
+
+    for(int i = 0; i < this->paytable->PrizeCount; i++)
+    {
+        PaytablePrize* prize = this->paytable->Prizes[i];
+
+        if(prize->SymbolID == scatterSymbol->isScatter && prize->SymbolCount == scatterCount)
+        {
+            wins->winAmount = prize->PrizeWins;
+            wins->count = scatterCount;
+            wins->WinningScatter = scatterSymbol;
+            wins->winPositions = NULL; // Fuck it
+
+            return wins;
         }
     }
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SlotWins.h"
+
 class ReelStrip;
 class Paytable;
 class LineSet;
@@ -42,5 +44,7 @@ public:
     int CalculateWins();
 
     LineWin* CalculateLineWin(Symbol** lineSymbols);
+
+    ScatterWin* CalculateScatterWins();
 
 };
