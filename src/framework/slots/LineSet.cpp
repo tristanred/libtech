@@ -1,4 +1,4 @@
-#include "LineSet.h"
+#include <libtech/LineSet.h>
 
 #include <stdlib.h>
 

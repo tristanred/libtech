@@ -1,6 +1,8 @@
-#include "Paytable.h"
+#include <libtech/Paytable.h>
 
 #include <stdlib.h>
+
+#include <libtech/SymbolSet.h>
 
 Paytable::Paytable()
 {
@@ -18,30 +20,32 @@ Paytable::~Paytable()
     delete(this->Prizes);
 }
 
-Paytable* Paytable::GetDefaultPaytable(int* symbols, int symbolCount)
+Paytable* Paytable::GetDefaultPaytable(SymbolSet* symbols)
 {
+    int initialPaytablePrizeSymbolsCount = 3;
+
     Paytable* pt = new Paytable();
-    pt->PrizeCount = symbolCount * 3;
+    pt->PrizeCount = initialPaytablePrizeSymbolsCount * 3;
     pt->Prizes = (PaytablePrize**)malloc(sizeof(PaytablePrize*) * pt->PrizeCount);
 
     int nextPrizeIndex = 0;
     int startingPrize = 5;
-    for (int i = 0; i < symbolCount; i++)
+    for (int i = 0; i < initialPaytablePrizeSymbolsCount; i++)
     {
         PaytablePrize* prize = new PaytablePrize();
-        prize->SymbolID = symbols[i];
+        prize->SymbolID = symbols->SymbolList[i]->id;
         prize->SymbolCount = 3;
         prize->PrizeWins = startingPrize;
         pt->Prizes[nextPrizeIndex++] = prize;
 
         prize = new PaytablePrize();
-        prize->SymbolID = symbols[i];
+        prize->SymbolID = symbols->SymbolList[i]->id;
         prize->SymbolCount = 4;
         prize->PrizeWins = startingPrize * 2;
         pt->Prizes[nextPrizeIndex++] = prize;
 
         prize = new PaytablePrize();
-        prize->SymbolID = symbols[i];
+        prize->SymbolID = symbols->SymbolList[i]->id;
         prize->SymbolCount = 5;
         prize->PrizeWins = startingPrize * 3;
         pt->Prizes[nextPrizeIndex++] = prize;

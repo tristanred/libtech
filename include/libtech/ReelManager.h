@@ -3,13 +3,13 @@
 class ReelStrip;
 class Paytable;
 class LineSet;
+class SymbolSet;
 
 class ReelManager
 {
 public:
     ReelManager(int reels, int rows);
     ~ReelManager();
-
 
     int Reels;
     int Rows;
@@ -24,6 +24,8 @@ public:
 
     LineSet* Lines;
 
+    SymbolSet* Symbols;
+
     // Initialisation Methods
 
     void CreateDefaultObjects();
@@ -32,5 +34,7 @@ public:
     void Spin();
 
     void PrintCurrentCombination();
+
+    int CalculateWins();
 
 };

@@ -1,5 +1,8 @@
 #pragma once
 
+class Symbol;
+class SymbolSet;
+
 class PaytablePrize
 {
 public:
@@ -17,7 +20,7 @@ public:
     Paytable();
     ~Paytable();
 
-    static Paytable* GetDefaultPaytable(int* symbols, int symbolCount);
+    static Paytable* GetDefaultPaytable(SymbolSet* symbols);
 
     int PrizeCount;
     PaytablePrize** Prizes;

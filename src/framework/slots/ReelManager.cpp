@@ -1,12 +1,13 @@
-#include "ReelManager.h"
+#include <libtech/ReelManager.h>
 
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
 
-#include "LineSet.h"
-#include "ReelStrip.h"
-#include "Paytable.h"
+#include <libtech/LineSet.h>
+#include <libtech/ReelStrip.h>
+#include <libtech/Paytable.h>
+#include <libtech/SymbolSet.h>
 
 ReelManager::ReelManager(int reels, int rows)
 {
@@ -23,6 +24,7 @@ ReelManager::ReelManager(int reels, int rows)
     this->reelstrips = NULL;
     this->paytable = NULL;
     this->Lines = NULL;
+    this->Symbols = NULL;
 }
 
 ReelManager::~ReelManager()
@@ -37,21 +39,24 @@ ReelManager::~ReelManager()
     delete(this->reelstrips);
     delete(this->paytable);
     delete(this->Lines);
+    delete(this->Symbols);
 
 }
 
 void ReelManager::CreateDefaultObjects()
 {
-    int symbols[6] = { 0, 1, 2, 3, 4, 5 };
+    this->Symbols = SymbolSet::CreateDefaultSet();
+
     this->reelstrips = new ReelStrip*[this->Reels];
     for (int i = 0; i < this->Reels; i++)
     {
-        this->reelstrips[i] = ReelStrip::GenerateRandomReelstrip(20, 6);
+        this->reelstrips[i] = ReelStrip::GenerateRandomReelstrip(20, this->Symbols);
     }
 
-    this->paytable = Paytable::GetDefaultPaytable(symbols, 6);
+    this->paytable = Paytable::GetDefaultPaytable(this->Symbols);
 
     this->Lines = LineSet::Generate10Lines();
+
 }
 
 void ReelManager::Spin()
@@ -60,11 +65,11 @@ void ReelManager::Spin()
     for (int i = 0; i < this->Reels; i++)
     {
         int rsLen = this->reelstrips[i]->Length;
-        this->ReelStops[i] = this->reelstrips[i]->Symbols[rand() % rsLen];
+        this->ReelStops[i] = this->reelstrips[i]->Symbols[rand() % rsLen]->id;
 
         for(int k = 0; k < this->Rows; k++)
         {
-            this->ReelSymbols[i][k] = this->reelstrips[i]->Symbols[(this->ReelStops[i] + k) % rsLen];
+            this->ReelSymbols[i][k] = this->reelstrips[i]->Symbols[(this->ReelStops[i] + k) % rsLen]->id;
         }
     }
 }
@@ -79,4 +84,10 @@ void ReelManager::PrintCurrentCombination()
                                          this->ReelSymbols[3][i],
                                          this->ReelSymbols[4][i]);
     }
+}
+
+int ReelManager::CalculateWins()
+{
+
+    return 0;
 }
