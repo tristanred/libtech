@@ -2,9 +2,10 @@
 
 #include <string>
 #include <cstring>
+#include <cstdarg>
+using namespace std;
 
 FileLogger* _globalLogger = NULL;
-
 
 void RegisterLogger(FileLogger* logger)
 {
@@ -16,38 +17,61 @@ void RegisterLogger(FileLogger* logger)
     _globalLogger = logger;
 }
 
-void LogTrace(const char* message)
+void LogTrace(const char* message, ...)
 {
     if(_globalLogger != NULL)
     {
-        _globalLogger->LogTrace(message);
+        char msg[MSG_MAXBUF];
+        va_list argptr;
+        va_start(argptr, message);
+        vsprintf(msg, message, argptr);
+        va_end(argptr);
+
+        _globalLogger->LogTrace(msg);
     }
 }
 
-void LogMessage(const char* message)
+void LogMessage(const char* message, ...)
 {
     if(_globalLogger != NULL)
     {
+        char msg[MSG_MAXBUF];
+        va_list argptr;
+        va_start(argptr, message);
+        vsprintf(msg, message, argptr);
+        va_end(argptr);
+
         _globalLogger->LogMessage(message);
     }
 }
 
-void LogWarning(const char* message)
+void LogWarning(const char* message, ...)
 {
     if(_globalLogger != NULL)
     {
+        char msg[MSG_MAXBUF];
+        va_list argptr;
+        va_start(argptr, message);
+        vsprintf(msg, message, argptr);
+        va_end(argptr);
+
         _globalLogger->LogWarning(message);
     }
 }
 
-void LogError(const char* message)
+void LogError(const char* message, ...)
 {
     if(_globalLogger != NULL)
     {
+        char msg[MSG_MAXBUF];
+        va_list argptr;
+        va_start(argptr, message);
+        vsprintf(msg, message, argptr);
+        va_end(argptr);
+
         _globalLogger->LogError(message);
     }
 }
-
 
 FileLogger::FileLogger()
 {
@@ -120,22 +144,46 @@ void FileLogger::Close()
     }
 }
 
-void FileLogger::LogMessage(const char* message)
+void FileLogger::LogMessage(const char* message, ...)
 {
-    this->Log(LOG_MSG, message);
+    char msg[MSG_MAXBUF];
+    va_list argptr;
+    va_start(argptr, message);
+    vsprintf(msg, message, argptr);
+    va_end(argptr);
+
+    this->Log(LOG_MSG, msg);
 }
 
-void FileLogger::LogWarning(const char* message)
+void FileLogger::LogWarning(const char* message, ...)
 {
-    this->Log(LOG_WARN, message);
+    char msg[MSG_MAXBUF];
+    va_list argptr;
+    va_start(argptr, message);
+    vsprintf(msg, message, argptr);
+    va_end(argptr);
+
+    this->Log(LOG_WARN, msg);
 }
 
-void FileLogger::LogError(const char* message)
+void FileLogger::LogError(const char* message, ...)
 {
-    this->Log(LOG_ERROR, message);
+    char msg[MSG_MAXBUF];
+    va_list argptr;
+    va_start(argptr, message);
+    vsprintf(msg, message, argptr);
+    va_end(argptr);
+
+    this->Log(LOG_ERROR, msg);
 }
 
-void FileLogger::LogTrace(const char *message)
+void FileLogger::LogTrace(const char *message, ...)
 {
-    this->Log(LOG_TRACE, message);
+    char msg[MSG_MAXBUF];
+    va_list argptr;
+    va_start(argptr, message);
+    vsprintf(msg, message, argptr);
+    va_end(argptr);
+
+    this->Log(LOG_TRACE, msg);
 }

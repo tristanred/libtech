@@ -359,7 +359,7 @@ void BlackjackGame::DeleteHands()
 {
     if(this->Player != NULL)
     {
-        for(int i = 0; i < this->Player->card_amount; i++)
+        for(size_t i = 0; i < this->Player->card_amount; i++)
         {
             delete(this->Player->cards[i]);
         }
@@ -367,7 +367,7 @@ void BlackjackGame::DeleteHands()
 
     if(this->Dealer != NULL)
     {
-        for(int i = 0; i < this->Dealer->card_amount; i++)
+        for(size_t i = 0; i < this->Dealer->card_amount; i++)
         {
             delete(this->Dealer->cards[i]);
         }
@@ -447,7 +447,7 @@ bool has_blackjack(struct blackjack_player* target)
 int count_cards(struct blackjack_player* target)
 {
     int total = 0;
-    for(int i = 0; i < target->card_amount; i++)
+    for(size_t i = 0; i < target->card_amount; i++)
     {
         total += target->cards[i]->count_value;
     }
