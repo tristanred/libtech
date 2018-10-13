@@ -12,14 +12,20 @@ user to choose between static and shared libs.
 
 There is also a console project to debug the project and DLL loading techniques.
 
-Building : 
+Building :
+
+The project depends on a few git submodules, GLFW for example if the LIBTECH_SUPPORT_OPENGL is selected. Before
+initializing the CMAKE project, don't forget to init and update the submodules first.
+
+git submodule init
+git submodule update --recursive
+
 To build the project, CMake is needed.
 
 From the src/ dir :
 mkdir build
 cd build
 cmake ..
-
 
 Using in other projects :
 Thanks to CMake, importing the library in other projects is extremely easy.
