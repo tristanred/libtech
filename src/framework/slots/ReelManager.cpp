@@ -26,6 +26,9 @@ ReelManager::ReelManager(int reels, int rows)
     this->paytable = NULL;
     this->Lines = NULL;
     this->Symbols = NULL;
+
+    this->reelManagerSeed = (unsigned int)time(0);
+    printf("Created ReelManager with seed %ld\n", this->reelManagerSeed);
 }
 
 ReelManager::~ReelManager()
@@ -79,7 +82,7 @@ void ReelManager::Spin()
     return;
 #endif
 
-    srand(time(0));
+    srand(this->reelManagerSeed);
     for (int i = 0; i < this->Reels; i++)
     {
         int rsLen = this->reelstrips[i]->Length;
@@ -263,7 +266,7 @@ ScatterWin* ReelManager::CalculateScatterWins()
     {
         PaytablePrize* prize = this->paytable->Prizes[i];
 
-        if(prize->SymbolID == scatterSymbol->isScatter && prize->SymbolCount == scatterCount)
+        if(prize->SymbolID == scatterSymbol->id && prize->SymbolCount == scatterCount)
         {
             wins->winAmount = prize->PrizeWins;
             wins->count = scatterCount;

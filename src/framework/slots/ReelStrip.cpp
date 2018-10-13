@@ -23,8 +23,6 @@ ReelStrip::~ReelStrip()
 
 ReelStrip* ReelStrip::GenerateRandomReelstrip(int length, SymbolSet* symbols)
 {
-    srand(time(0));
-
     ReelStrip* rs = new ReelStrip();
 
     rs->Length = length;

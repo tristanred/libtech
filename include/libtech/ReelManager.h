@@ -32,6 +32,8 @@ public:
 
     SymbolSet* Symbols;
 
+    unsigned int reelManagerSeed;
+
     // Initialisation Methods
 
     void CreateDefaultObjects();
