@@ -78,7 +78,7 @@ void replace_path_slashes(char* path)
 {
     size_t pathLength = strlen(path) + 1;
     
-    for (int i = 0; i < pathLength; i++)
+    for (size_t i = 0; i < pathLength; i++)
     {
         if (path[i] == '\\')
         {
