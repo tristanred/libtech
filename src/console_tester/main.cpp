@@ -15,33 +15,19 @@
 
 #include <libtech/games/blackjack/blackjack.h>
 
-#include <libtech/ReelManager.h>
-
 int main(int argc, char** argv)
 {
-    ReelManager* rm = new ReelManager(5, 3);
-    rm->CreateDefaultObjects();
-    rm->Spin();
-    rm->PrintCurrentCombination();
+    printf("Starting blackjack run");
+    {
+        BlackjackGame game;
 
-    int res = rm->CalculateWins();
+        while(game.CountGames < 20000)
+        {
+            game.UpdateGame();
+        }
+    }
 
-    printf("Won: %d", res);
-
-    delete(rm);
-
-
-//    printf("Starting blackjack run");
-//    {
-//        BlackjackGame game;
-//
-//        while(game.CountGames < 20000)
-//        {
-//            game.UpdateGame();
-//        }
-//    }
-//
-//    printf("Finished running blackjack runs.");
+    printf("Finished running blackjack runs.");
 
     return 0;
 
