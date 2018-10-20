@@ -15,7 +15,7 @@ public:
         _container = new std::vector<T>();
     };
 
-    ArrayList(int initialSize)
+    ArrayList(uint64_t initialSize)
     {
         _container = new std::vector<T>();
 
@@ -47,17 +47,17 @@ public:
         }
     };
 
-    T Get(int index)
+    T Get(uint64_t index)
     {
         if (index < _container->size())
         {
             return _container->at(index);
         }
-
-        return NULL;
+        
+        return 0;
     };
 
-    T& operator[] (int index)
+    T& operator[] (uint64_t index)
     {
         return _container->at(index);
     }
@@ -74,7 +74,7 @@ public:
             }
         }
 
-        return NULL;
+        return 0;
     };
 
     T First()
@@ -169,9 +169,9 @@ public:
         }
     };
 
-    int IndexOf(T item)
+    uint64_t IndexOf(T item)
     {
-        int i = 0;
+        uint64_t i = 0;
 
         for (typename std::list<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
         {
@@ -183,10 +183,10 @@ public:
             }
         }
 
-        return NULL;
+        return 0;
     };
 
-    void Swap(int indexA, int indexB)
+    void Swap(uint64_t indexA, uint64_t indexB)
     {
         auto x = _container->begin();
         auto y = _container->begin();
@@ -210,7 +210,7 @@ public:
     //     }
     // };
 
-    void RemoveAt(int index)
+    void RemoveAt(uint64_t index)
     {
         auto it = _container->begin();
 
@@ -244,18 +244,18 @@ public:
         return _container->size();
     };
 
-    T** GetListAs2dArray(int width)
+    T** GetListAs2dArray(uint64_t width)
     {
         assert(width > 0);
 
         uint64_t totalItems = this->Count();
 
         if (totalItems % width != 0)
-            return NULL;
+            return 0;
 
 
-        int columnIndex = 0;
-        int rowIndex = 0;
+        uint64_t columnIndex = 0;
+        uint64_t rowIndex = 0;
 
         T** resultList = new T*[totalItems];
         T* row = new T[width];
