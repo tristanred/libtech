@@ -243,6 +243,18 @@ public:
     {
         return _container->size();
     };
+    
+    T* GetListData()
+    {
+        T* data = new T[this->Count()];
+        
+        for(uint64_t i = 0; i < this->Count(); i++)
+        {
+            data[i] = this->Get(i);
+        }
+        
+        return data;
+    }
 
     T** GetListAs2dArray(uint64_t width)
     {
