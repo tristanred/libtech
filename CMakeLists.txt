@@ -12,7 +12,7 @@ endif()
 
 set (CMAKE_CXX_STANDARD 11)
 
-option(LIBTECH_SUPPORT_OPENGL "blabla" ON)
+option(LIBTECH_SUPPORT_OPENGL ON "Build OpenGL Components")
 
 file(GLOB_RECURSE LIBRARY_HEADERS "include/*.h")
 file(GLOB_RECURSE LIBRARY_SOURCES "src/framework/*.cpp")
@@ -40,7 +40,7 @@ IF(LIBTECH_SUPPORT_OPENGL)
     add_subdirectory("lib/glfw")
     include_directories("lib/glfw/include")
     include_directories("lib/glad/include")
-    
+
     #file(GLOB APPEND LIBRARY_SOURCES "lib/glad/src/glad.c")
     list(APPEND LIBRARY_SOURCES "lib/glad/src/glad.c")
     list(APPEND LIBRARY_HEADERS "lib/glad/include/glad/glad.h")
