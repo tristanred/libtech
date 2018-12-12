@@ -51,6 +51,9 @@ ENDIF(LIBTECH_SUPPORT_OPENGL)
 include_directories("include")
 include_directories("src/console_tester")
 
+add_subdirectory("lib/pugixml")
+include_directories("lib/pugixml/src")
+
 
 add_library(LIBTECH STATIC ${LIBRARY_HEADERS} ${LIBRARY_SOURCES})
 add_library(LIBTECHD SHARED ${LIBRARY_HEADERS} ${LIBRARY_SOURCES})

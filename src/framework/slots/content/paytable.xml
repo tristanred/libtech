@@ -1,0 +1,31 @@
+<paytableConfig>
+    <prizes>
+        <symbolPrize id="0" symId="0" wins="1000" count="5" />
+        <symbolPrize id="1" symId="0" wins="500"  count="4" />
+        <symbolPrize id="2" symId="0" wins="100"  count="3" />
+
+        <symbolPrize id="3" symId="1" wins="800" count="5" />
+        <symbolPrize id="4" symId="1" wins="500" count="4" />
+        <symbolPrize id="5" symId="1" wins="200" count="3" />
+
+        <symbolPrize id="6" symId="2" wins="500" count="5" />
+        <symbolPrize id="7" symId="2" wins="350" count="4" />
+        <symbolPrize id="8" symId="2" wins="100" count="3" />
+
+        <symbolPrize id="9"  symId="3" wins="300" count="5" />
+        <symbolPrize id="10" symId="3" wins="200" count="4" />
+        <symbolPrize id="11" symId="3" wins="100" count="3" />
+
+        <symbolPrize id="12" symId="4" wins="50" count="5" />
+        <symbolPrize id="13" symId="4" wins="30" count="4" />
+        <symbolPrize id="14" symId="4" wins="15" count="3" />
+
+        <symbolPrize id="15" symId="5" wins="20" count="5" />
+        <symbolPrize id="16" symId="5" wins="10" count="4" />
+        <symbolPrize id="17" symId="5" wins="5"  count="3" />
+
+        <symbolPrize id="18" symId="6" wins="2000" count="5" />
+        <symbolPrize id="19" symId="6" wins="1000" count="4" />
+        <symbolPrize id="20" symId="6" wins="500"  count="3" />
+    </prizes>
+</paytableConfig>

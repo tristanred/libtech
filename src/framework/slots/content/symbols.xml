@@ -1,0 +1,11 @@
+<symbolsetConfig>
+    <symbolset id="0">
+        <symbol id="0" name="WILD"      isWild="true"   isScatter="false" />
+        <symbol id="1" name="TOPSYM"    isWild="false"  isScatter="false" />
+        <symbol id="2" name="ACE"       isWild="false"  isScatter="false" />
+        <symbol id="3" name="KING"      isWild="false"  isScatter="false" />
+        <symbol id="4" name="QUEEN"     isWild="false"  isScatter="false" />
+        <symbol id="5" name="JACK"      isWild="false"  isScatter="false" />
+        <symbol id="6" name="SCATTER"   isWild="false"  isScatter="true" />
+    </symbolset>
+</symbolsetConfig>
