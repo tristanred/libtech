@@ -1,16 +1,5 @@
 #include <stdio.h>
 
-// Use this to dynamically load the libTech DLL
-#define DYNAMIC_DLL
-
-#if defined(WIN32) && defined(DYNAMIC_DLL)
-#include <Windows.h>
-
- typedef long (WINAPI *get_a_ticks_proc)();
-
-#endif
-
-#define LIBTECH_LOADDLL
 #include <libtech/mytime.h>
 
 #include <libtech/slots/ReelManager.h>

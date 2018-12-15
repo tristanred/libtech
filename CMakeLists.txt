@@ -56,30 +56,24 @@ include_directories("lib/pugixml/src")
 
 
 add_library(LIBTECH STATIC ${LIBRARY_HEADERS} ${LIBRARY_SOURCES})
-add_library(LIBTECHD SHARED ${LIBRARY_HEADERS} ${LIBRARY_SOURCES})
-
 
 target_compile_definitions(LIBTECH PRIVATE LIBTECH_EXPORTS)
-target_compile_definitions(LIBTECHD PRIVATE LIBTECH_EXPORTS)
 
 IF(LIBTECH_SUPPORT_OPENGL)
     target_link_libraries(LIBTECH glfw)
-    target_link_libraries(LIBTECHD glfw)
 ENDIF(LIBTECH_SUPPORT_OPENGL)
 
 add_executable(ConsoleTester ${CON_TESTER_HEADERS} ${CON_TESTER_SOURCES})
-target_link_libraries(ConsoleTester LIBTECHD)
+target_link_libraries(ConsoleTester LIBTECH)
 
 IF(WIN32)
 
 set_target_properties(LIBTECH PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
-set_target_properties(LIBTECHD PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
 set_target_properties(ConsoleTester PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
 
 ELSEIF(UNIX)
 
 target_compile_options(LIBTECH PRIVATE -Wall)
-target_compile_options(LIBTECHD PRIVATE -Wall)
 target_compile_options(ConsoleTester PRIVATE -Wall)
 
 ENDIF(WIN32)
