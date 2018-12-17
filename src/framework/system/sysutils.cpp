@@ -64,16 +64,24 @@ char* get_win32_error_text(DWORD errorCode)
 {
     char* msg = new char[512];
 
-    FormatMessage(
+    FormatMessageA(
         FORMAT_MESSAGE_FROM_SYSTEM |
         FORMAT_MESSAGE_IGNORE_INSERTS,
         NULL,
         errorCode,
         MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        (LPTSTR)msg,
+        msg,
         0, NULL);
 
     return msg;
+}
+
+LIBTECH_API bool IsDotFile(WIN32_FIND_DATAA dir)
+{
+    int res1 = strcmp(".", dir.cFileName);
+    int res2 = strcmp("..", dir.cFileName);
+    
+    return (res1 == 0) || (res2 == 0);
 }
 
 #endif
