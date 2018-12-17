@@ -6,11 +6,17 @@
 #include <list>
 
 #include "libtech/linkedlist.h"
+#include "libtech/filelogger.h"
 
 #ifdef _WIN32
 
 #include <Windows.h>
 #include "libtech/sysutils.h"
+
+#elif linux
+
+#include <sys/types.h>
+#include <dirent.h>
 
 #endif
 
@@ -46,7 +52,7 @@ char* read_characters(const char * filePath, size_t * length)
     std::ifstream reader(filePath, std::ios::binary | std::ios::ate);
 
     unsigned int size = (unsigned int)reader.tellg();
-    
+
     char* contents = new char[size];
     reader.seekg(0);
     reader.read(contents, size);
@@ -60,7 +66,7 @@ void write_characters(const char* filePath, char* data, size_t length)
     std::ofstream writer(filePath);
 
     writer.write(data, length);
-    
+
     writer.flush();
 }
 
@@ -74,45 +80,84 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
     {
         files = new ArrayList<char*>();
     }
-    
+
     std::string directorySearchAlias = std::string(folderPath);
     directorySearchAlias.append("\\*");
-    
+
     HANDLE hFind = FindFirstFileA(directorySearchAlias.c_str(), &ffd);
-    
+
     if(hFind == INVALID_HANDLE_VALUE)
     {
         DWORD err = GetLastError();
         return;
     }
-    
+
     do
     {
         if(IsDotFile(ffd))
             continue;
-        
+
         bool isDirectory = ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY;
-        
+
         if(isDirectory && recursive)
         {
             std::string subDirectoryPath;
             subDirectoryPath.append(folderPath);
             subDirectoryPath.append("\\");
             subDirectoryPath.append(ffd.cFileName);
-            
+
             get_directory_files(subDirectoryPath.c_str(), recursive, aggregate);
         }
         else
         {
             char* filePath = new char[MAX_PATH];
             sprintf(filePath, "%s\\%s", folderPath, ffd.cFileName);
-            
+
             aggregate->Add(filePath);
         }
-        
+
     } while(FindNextFileA(hFind, &ffd) != 0);
-    
+
     FindClose(hFind);
+#elif linux
+
+    DIR *dp;
+    struct dirent *ep;
+
+    dp = opendir(folderPath);
+    if (dp != NULL)
+    {
+        while (ep = readdir(dp))
+        {
+            if(ep->d_type == DT_DIR)
+            {
+                // Is directory
+                std::string subDirectoryPath;
+                subDirectoryPath.append(folderPath);
+                subDirectoryPath.append("\\");
+                subDirectoryPath.append(ep->d_name);
+            }
+            else if(ep->d_type == DT_REG)
+            {
+                char* filePath = new char[256];
+                sprintf(filePath, "%s\\%s", folderPath, ep->d_name);
+
+                // Is file
+                aggregate->Add(filePath);
+            }
+            else
+            {
+                // File type not regocnized
+            }
+        }
+
+        closedir (dp);
+    }
+    else
+    {
+        LogError("Couldn't open the directory");
+    }
+
 #endif
 }
 
@@ -120,16 +165,16 @@ char* find_subdir_file(const char* fileName, const char* folder)
 {
     ArrayList<char*> filesList;
     get_directory_files(folder, true, &filesList);
-    
+
     for(uint64_t i = 0; i < filesList.Count(); i++)
     {
         char* element = filesList.Get(i);
-        
+
         if(strstr(element, fileName) != NULL)
         {
             return element;
         }
     }
-    
+
     return NULL;
 }
