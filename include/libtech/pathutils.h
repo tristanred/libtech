@@ -33,4 +33,4 @@ LIBTECH_API std::list<char*>* get_path_parts(const char* path);
 /**
  * Replace backslashes with forward slashes.
  */
-LIBTECH_API void replace_path_slashes(char* path);
+LIBTECH_API void sanitize_path_slashes(const char* original, char* sanitized);
