@@ -8,6 +8,10 @@
 
 #include <windows.h>
 
+#elif __APPLE__
+
+#include <sys/time.h>
+
 #endif
 
 long get_a_ticks()
@@ -21,8 +25,11 @@ long get_a_ticks()
 #elif WIN32
     return GetTickCount();
 
-#else
-    return 0;
+#elif __APPLE__
+    timeval time;
+    gettimeofday(&time, NULL);
+    long millis = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 
+    return millis;
 #endif
 }
