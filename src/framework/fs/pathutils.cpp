@@ -90,8 +90,10 @@ void sanitize_path_slashes(const char* original, char* sanitized)
             sanitized[i] = original[i];
         }
     }
+    
+    sanitized[len] = '\0';
 
-#elif linux
+#else
     int len = strlen(original);
 
     for(int i = 0; i < len; i++)
@@ -105,6 +107,8 @@ void sanitize_path_slashes(const char* original, char* sanitized)
             sanitized[i] = original[i];
         }
     }
+    
+    sanitized[len] = '\0';
 
 #endif
 }

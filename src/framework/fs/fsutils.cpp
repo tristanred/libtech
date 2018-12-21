@@ -7,6 +7,7 @@
 
 #include "libtech/linkedlist.h"
 #include "libtech/filelogger.h"
+#include "libtech/sysutils.h"
 
 #ifdef _WIN32
 
@@ -14,6 +15,11 @@
 #include "libtech/sysutils.h"
 
 #elif linux
+
+#include <sys/types.h>
+#include <dirent.h>
+
+#elif __APPLE__
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -129,6 +135,9 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
     {
         while (ep = readdir(dp))
         {
+            if(is_dot_file(ep->d_name))
+                continue;
+            
             if(ep->d_type == DT_DIR)
             {
                 // Is directory
@@ -136,6 +145,8 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
                 subDirectoryPath.append(folderPath);
                 subDirectoryPath.append("\\");
                 subDirectoryPath.append(ep->d_name);
+                
+                get_directory_files(subDirectoryPath.c_str(), recursive, aggregate);
             }
             else if(ep->d_type == DT_REG)
             {
@@ -157,7 +168,48 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
     {
         LogError("Couldn't open the directory");
     }
+#elif __APPLE__
+    struct dirent** namelist;
+    int n = scandir(folderPath, &namelist, 0, alphasort);
+    if (n < 0)
+    {
+        perror("scandir");
+    }
+    else
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if(is_dot_file(namelist[i]->d_name))
+                continue;
+            
+            if(namelist[i]->d_type == DT_DIR)
+            {
+                std::string subDirectoryPath;
+                subDirectoryPath.append(folderPath);
+                subDirectoryPath.append("\\");
+                subDirectoryPath.append(namelist[i]->d_name);
 
+                get_directory_files(subDirectoryPath.c_str(), recursive, aggregate);
+            }
+            else if(namelist[i]->d_type == DT_REG)
+            {
+                char* filePath = new char[256];
+                sprintf(filePath, "%s/%s", folderPath, namelist[i]->d_name);
+
+                aggregate->Add(filePath);
+            }
+            else
+            {
+                // File type not regocnized
+            }
+            
+            free(namelist[i]);
+            printf("%s\n", namelist[i]->d_name);
+            
+        }
+    }
+    
+    free(namelist);
 #endif
 }
 

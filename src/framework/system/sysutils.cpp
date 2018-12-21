@@ -53,6 +53,13 @@ char* get_working_directory()
 #endif
 }
 
+LIBTECH_API bool is_dot_file(char* dirName)
+{
+    int res1 = strcmp(".", dirName);
+    int res2 = strcmp("..", dirName);
+    
+    return (res1 == 0) || (res2 == 0);
+}
 
 #ifdef WIN32
 
