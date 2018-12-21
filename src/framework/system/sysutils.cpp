@@ -8,6 +8,10 @@
 
 #include <unistd.h>
 
+#elif __APPLE__
+
+#include <unistd.h>
+
 #endif
 
 #include <string.h>
@@ -35,6 +39,11 @@ char* get_working_directory()
 #elif linux
 
     return get_current_dir_name();
+#elif __APPLE__
+
+    char* pathbuf = new char[256];
+
+    return getcwd(pathbuf, 256);
 
 #else
     char* path = new char[1];
@@ -80,7 +89,7 @@ LIBTECH_API bool IsDotFile(WIN32_FIND_DATAA dir)
 {
     int res1 = strcmp(".", dir.cFileName);
     int res2 = strcmp("..", dir.cFileName);
-    
+
     return (res1 == 0) || (res2 == 0);
 }
 
