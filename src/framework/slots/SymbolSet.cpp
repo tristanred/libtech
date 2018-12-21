@@ -1,6 +1,7 @@
 #include "libtech/slots/SymbolSet.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #define PUGIXML_HEADER_ONLY
 #include "pugixml.hpp"
@@ -21,7 +22,7 @@ Symbol::~Symbol()
 Symbol::Symbol(int id)
 {
     this->id = id;
-    this->name = "";
+    this->name = NULL;
 
     // Set to wild if ID is 0
     this->isWild = id == 0;
@@ -97,43 +98,50 @@ SymbolSet *SymbolSet::CreateDefaultSet()
 
     Symbol* symWild = new Symbol();
     symWild->id = 0;
-    symWild->name = "WILD";
+    symWild->name = new char[SYMBOL_NAME_MAXLEN];
+    strcpy(symWild->name, "WILD");
     symWild->isWild = true;
     symWild->isScatter = false;
 
     Symbol* symTop = new Symbol();
     symTop->id = 1;
-    symTop->name = "TOPSYM";
+    symTop->name = new char[SYMBOL_NAME_MAXLEN];
+    strcpy(symTop->name, "TOPSYM");
     symTop->isWild = false;
     symTop->isScatter = false;
 
     Symbol* symA = new Symbol();
     symA->id = 2;
-    symA->name = "ACE";
+    symA->name = new char[SYMBOL_NAME_MAXLEN];
+    strcpy(symA->name, "ACE");
     symA->isWild = false;
     symA->isScatter = false;
 
     Symbol* symK = new Symbol();
     symK->id = 3;
-    symK->name = "KING";
+    symK->name = new char[SYMBOL_NAME_MAXLEN];
+    strcpy(symK->name, "KING");
     symK->isWild = false;
     symK->isScatter = false;
 
     Symbol* symQ = new Symbol();
     symQ->id = 4;
-    symQ->name = "QUEEN";
+    symQ->name = new char[SYMBOL_NAME_MAXLEN];
+    strcpy(symQ->name, "QUEEN");
     symQ->isWild = false;
     symQ->isScatter = false;
 
     Symbol* symJ = new Symbol();
     symJ->id = 5;
-    symJ->name = "JACK";
+    symJ->name = new char[SYMBOL_NAME_MAXLEN];
+    strcpy(symJ->name, "JACK");
     symJ->isWild = false;
     symJ->isScatter = false;
 
     Symbol* symScatter = new Symbol();
     symScatter->id = 6;
-    symScatter->name = "SCATTER";
+    symScatter->name = new char[SYMBOL_NAME_MAXLEN];
+    strcpy(symScatter->name, "SCATTER");
     symScatter->isWild = false;
     symScatter->isScatter = true;
 

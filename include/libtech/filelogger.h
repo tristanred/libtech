@@ -40,7 +40,6 @@ public:
     void LogError(const char* message, ...);
 
 private:
-    enum LOG_LEVEL currentLevel;
     char** levelNames;
 
     FILE* logFile;

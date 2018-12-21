@@ -1,6 +1,7 @@
 #pragma once
 
 #include <libtech/libtech.h>
+#define SYMBOL_NAME_MAXLEN 255
 
 class LIBTECH_CLASS Symbol
 {

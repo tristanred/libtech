@@ -70,7 +70,7 @@ std::list<char*>* get_path_parts(const char* path)
         token = strtok(NULL, "/");
     }
 
-    delete(pathCopy);
+    delete[] pathCopy;
     return parts;
 }
 
