@@ -1,10 +1,7 @@
 #pragma once
 
 #include "libtech.h"
-
-LIBTECH_API double deg2rad(double deg);
-
-LIBTECH_API double rad2deg(double deg);
+#include "vec.h"
 
 struct LIBTECH_CLASS FPosition
 {
@@ -21,6 +18,12 @@ struct LIBTECH_CLASS FPosition
     {
         X = x;
         Y = y;
+    }
+    
+    FPosition(vec2 vec)
+    {
+        X = vec.x;
+        Y = vec.y;
     }
 
     bool operator==(const FPosition& other)
@@ -101,6 +104,9 @@ struct LIBTECH_CLASS FRectangle
     FPosition GetCenter();
     void AlignCenterOn(FRectangle* target);
     void PushInside(FRectangle* bounds);
+    
+    bool PointIsInside(FPosition point);
+    bool PointIsInside(vec2 point);
 
     bool operator==(const FRectangle& other)
     {
@@ -112,3 +118,10 @@ struct LIBTECH_CLASS FRectangle
         return (*this == other) == false;
     }
 };
+
+// Angles
+LIBTECH_API double deg2rad(double deg);
+LIBTECH_API double rad2deg(double deg);
+
+// Area
+LIBTECH_API bool point_in_rect(FRectangle rect, FPosition point);

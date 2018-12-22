@@ -69,3 +69,30 @@ void FRectangle::PushInside(FRectangle* bounds)
     if (this->Bottom() > bounds->Bottom())
         this->Y = this->Y - (this->Bottom() - bounds->Bottom());
 }
+
+bool FRectangle::PointIsInside(FPosition point)
+{
+    return point_in_rect(*this, point);
+}
+
+bool FRectangle::PointIsInside(vec2 point)
+{
+    FPosition pos = FPosition(point);
+    
+    return point_in_rect(*this, pos);
+}
+
+bool point_in_rect(FRectangle rect, FPosition point)
+{
+    if(point.X >= rect.Left() &&
+       point.Y >= rect.Top() &&
+       point.X <= rect.Right() &&
+       point.Y <= rect.Bottom())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
