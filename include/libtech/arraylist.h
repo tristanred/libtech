@@ -239,6 +239,25 @@ public:
         _container->clear();
     };
 
+    void DeleteElements(bool autoClear = true)
+    {
+        auto begin = this->_container->begin();
+        auto end = this->_container->end();
+        while (begin != end)
+        {
+            T data = *begin;
+
+            delete(data);
+
+            begin++;
+        }
+
+        if (autoClear == true)
+        {
+            this->Clear();
+        }
+    };
+
     uint64_t Count()
     {
         return _container->size();
