@@ -6,7 +6,7 @@ LIBTECH_API char* get_working_directory();
 
 LIBTECH_API bool is_dot_file(char* dirName);
 
-#ifdef WIN32
+#ifdef _WIN32
 
 #include "Windows.h"
 
