@@ -15,3 +15,5 @@ LIBTECH_API void write_characters(const char* filePath, char* data, size_t lengt
 LIBTECH_API void get_directory_files(const char* filePath, bool recursive, ArrayList<char*>* aggregate);
 
 LIBTECH_API char* find_subdir_file(const char* fileName, const char* folder);
+
+LIBTECH_API bool path_is_directory(const char* path);

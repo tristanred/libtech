@@ -8,6 +8,7 @@
 #include "libtech/linkedlist.h"
 #include "libtech/filelogger.h"
 #include "libtech/sysutils.h"
+#include "libtech/stdutils.h"
 
 #ifdef _WIN32
 
@@ -224,9 +225,42 @@ char* find_subdir_file(const char* fileName, const char* folder)
 
         if(strstr(element, fileName) != NULL)
         {
-            return element;
+            char* returnCopy = new char[strlen(element) + 1];
+            strcpy(returnCopy, element);
+            
+            filesList.DeleteElements();
+            
+            return returnCopy;
         }
     }
 
+    filesList.DeleteElements();
+
     return NULL;
+}
+
+LIBTECH_API bool path_is_directory(const char* path)
+{
+#ifdef _WIN32
+
+    DWORD result = GetFileAttributesA(path);
+    
+    if(result == INVALID_FILE_ATTRIBUTES)
+    {
+        // Error
+        print_last_win32_error();
+        
+        return false;
+    }
+    
+    if(result & FILE_ATTRIBUTE_DIRECTORY)
+    {
+        return true;
+    }
+    
+    
+#elif defined(linux) || defined(APPLE)
+#endif
+
+    return false;
 }
