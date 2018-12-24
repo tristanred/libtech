@@ -19,11 +19,13 @@
 
 #include <sys/types.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 #elif __APPLE__
 
 #include <sys/types.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 #endif
 
@@ -259,7 +261,21 @@ LIBTECH_API bool path_is_directory(const char* path)
     }
     
     
-#elif defined(linux) || defined(APPLE)
+#elif defined(linux) || defined(__APPLE__)
+    
+    struct stat s;
+    if( stat(path,&s) == 0 )
+    {
+        if(s.st_mode & S_IFREG)
+        {
+            return false;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 #endif
 
     return false;
