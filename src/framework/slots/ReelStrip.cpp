@@ -7,7 +7,6 @@
 
 #include "libtech/slots/SymbolSet.h"
 
-#define PUGIXML_HEADER_ONLY
 #include "pugixml.hpp"
 
 ReelStrip::ReelStrip()

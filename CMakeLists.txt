@@ -16,6 +16,7 @@ option(LIBTECH_SUPPORT_OPENGL ON "Build OpenGL Components")
 
 file(GLOB_RECURSE LIBRARY_HEADERS "include/*.h")
 file(GLOB_RECURSE LIBRARY_SOURCES "src/framework/*.cpp")
+file(GLOB PUGI_SRC "lib/pugixml/src/pugixml.cpp")
 
 file(GLOB_RECURSE CON_TESTER_HEADERS "src/console_tester/*.h")
 file(GLOB_RECURSE CON_TESTER_SOURCES "src/console_tester/*.cpp")
@@ -55,7 +56,7 @@ add_subdirectory("lib/pugixml")
 include_directories("lib/pugixml/src")
 
 
-add_library(LIBTECH STATIC ${LIBRARY_HEADERS} ${LIBRARY_SOURCES})
+add_library(LIBTECH STATIC ${LIBRARY_HEADERS} ${LIBRARY_SOURCES} ${PUGI_SRC})
 
 target_compile_definitions(LIBTECH PRIVATE LIBTECH_EXPORTS)
 

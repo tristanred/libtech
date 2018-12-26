@@ -4,7 +4,6 @@
 
 #include <libtech/stringtools.h>
 
-#define PUGIXML_HEADER_ONLY
 #include "pugixml.hpp"
 
 LineSet::LineSet()

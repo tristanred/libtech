@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define PUGIXML_HEADER_ONLY
 #include "pugixml.hpp"
 
 Symbol::Symbol()
