@@ -12,7 +12,8 @@ endif()
 
 set (CMAKE_CXX_STANDARD 11)
 
-option(LIBTECH_SUPPORT_OPENGL ON "Build OpenGL Components")
+option(LIBTECH_SUPPORT_OPENGL "Build OpenGL Components" OFF)
+option(LIBTECH_BUILD_TOOLS "Builds libtech test projects" ON)
 
 file(GLOB_RECURSE LIBRARY_HEADERS "include/*.h")
 file(GLOB_RECURSE LIBRARY_SOURCES "src/framework/*.cpp")
@@ -27,7 +28,6 @@ IF(WIN32)
     add_definitions("/Zc:strictStrings-")
 
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-
 ENDIF(WIN32)
 
 IF(UNIX)
@@ -64,17 +64,19 @@ IF(LIBTECH_SUPPORT_OPENGL)
     target_link_libraries(LIBTECH glfw)
 ENDIF(LIBTECH_SUPPORT_OPENGL)
 
-add_executable(ConsoleTester ${CON_TESTER_HEADERS} ${CON_TESTER_SOURCES})
-target_link_libraries(ConsoleTester LIBTECH)
-
 IF(WIN32)
-
-set_target_properties(LIBTECH PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
-set_target_properties(ConsoleTester PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
-
+    set_target_properties(LIBTECH PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
 ELSEIF(UNIX)
-
-target_compile_options(LIBTECH PRIVATE -Wall)
-target_compile_options(ConsoleTester PRIVATE -Wall)
-
+    target_compile_options(LIBTECH PRIVATE -Wall)
 ENDIF(WIN32)
+
+IF(LIBTECH_BUILD_TOOLS)
+    add_executable(ConsoleTester ${CON_TESTER_HEADERS} ${CON_TESTER_SOURCES})
+    target_link_libraries(ConsoleTester LIBTECH)
+
+    IF(WIN32)
+        set_target_properties(ConsoleTester PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
+    ELSEIF(UNIX)
+        target_compile_options(ConsoleTester PRIVATE -Wall)
+    ENDIF(WIN32)
+ENDIF(LIBTECH_BUILD_TOOLS)
