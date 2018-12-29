@@ -60,7 +60,7 @@ public:
     T& operator[] (uint64_t index)
     {
         return _container->at(index);
-    }
+    };
 
     T GetBy(std::function<bool(T)> predicate)
     {
@@ -157,7 +157,7 @@ public:
         }
 
         return false;
-    }
+    };
 
     void ForEach(std::function<void(T)> func)
     {
@@ -273,7 +273,7 @@ public:
         }
         
         return data;
-    }
+    };
 
     T** GetListAs2dArray(uint64_t width)
     {
@@ -319,8 +319,6 @@ public:
         return _container;
     };
 
-
-
 protected:
     std::vector<T>* _container;
 
@@ -356,4 +354,4 @@ Agg ListAggregate(ArrayList<T>* input, Agg initial, std::function<Agg(Agg, T)> f
     }
 
     return aggregateValue;
-}
+};

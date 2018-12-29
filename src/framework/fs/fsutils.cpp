@@ -56,7 +56,7 @@ char** get_lines_of_file(const char* filePath, int* count)
     return lines->GetLinear();
 }
 
-char* read_characters(const char * filePath, size_t * length)
+char* read_characters(const char * filePath, size_t* length)
 {
     std::ifstream reader(filePath, std::ios::binary | std::ios::ate);
 

@@ -3,8 +3,7 @@
 #include "libtech.h"
 #include "arraylist.h"
 
-#include <cstdint>
-using namespace std;
+#include <stdint.h>
 
 LIBTECH_API char** get_lines_of_file(const char* filePath, int* count);
 
