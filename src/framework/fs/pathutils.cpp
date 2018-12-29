@@ -33,6 +33,14 @@ char* get_file_extension(const char* path)
 {
     const char* extPtr = strrchr(path, '.');
 
+    if (extPtr == NULL) // No dots found
+    {
+        char* emptyString = new char[1];
+        strcpy(emptyString, "");
+
+        return emptyString;
+    }
+
     size_t extlen = strlen(extPtr) + 1;
 
     char* extstr = new char[extlen];
@@ -76,24 +84,6 @@ std::list<char*>* get_path_parts(const char* path)
 
 void sanitize_path_slashes(const char* original, char* sanitized)
 {
-#ifdef _WIN32
-    int len = strlen(original);
-
-    for(int i = 0; i < len; i++)
-    {
-        if(original[i] == '/')
-        {
-            sanitized[i] = '\\';
-        }
-        else
-        {
-            sanitized[i] = original[i];
-        }
-    }
-    
-    sanitized[len] = '\0';
-
-#else
     int len = strlen(original);
 
     for(int i = 0; i < len; i++)
@@ -109,6 +99,4 @@ void sanitize_path_slashes(const char* original, char* sanitized)
     }
     
     sanitized[len] = '\0';
-
-#endif
 }
