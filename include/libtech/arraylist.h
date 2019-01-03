@@ -64,7 +64,7 @@ public:
 
     T GetBy(std::function<bool(T)> predicate)
     {
-        for (typename std::list<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
         {
             T element = *it;
 
@@ -97,7 +97,7 @@ public:
     {
         ArrayList<T>* retList = new ArrayList<T>();
 
-        for (typename std::list<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
         {
             auto test = predicate(*it);
 
@@ -114,7 +114,7 @@ public:
     {
         T retValue = NULL;
 
-        for (typename std::list<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
         {
             T val = *it;
 
@@ -131,7 +131,7 @@ public:
 
     bool Contains(std::function<bool(T)> predicate)
     {
-        for (typename std::list<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
         {
             T element = *it;
 
@@ -146,7 +146,7 @@ public:
 
     bool ContainsItem(T item)
     {
-        for (typename std::list<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
         {
             T element = *it;
 
@@ -161,7 +161,7 @@ public:
 
     void ForEach(std::function<void(T)> func)
     {
-        for (typename std::list<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
         {
             T val = *it;
 
@@ -173,7 +173,7 @@ public:
     {
         uint64_t i = 0;
 
-        for (typename std::list<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
         {
             T current = (*it);
 
@@ -221,7 +221,7 @@ public:
 
     void RemoveObject(T object)
     {
-        for (typename std::list<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
         {
             T current = (*it);
 
