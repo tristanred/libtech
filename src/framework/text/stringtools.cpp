@@ -47,6 +47,6 @@ LIBTECH_API int* convert_string_to_int_list(const char* line, long int* count)
         number_list.Add(read_num);
     }
 
-    *count = number_list.Count();
+    *count = (long)number_list.Count();
     return number_list.GetListData();
 }

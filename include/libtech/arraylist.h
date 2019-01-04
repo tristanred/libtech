@@ -51,7 +51,7 @@ public:
     {
         if (index < _container->size())
         {
-            return _container->at(index);
+            return _container->at((const unsigned int)index);
         }
         
         return 0;
@@ -265,7 +265,7 @@ public:
     
     T* GetListData()
     {
-        T* data = new T[this->Count()];
+        T* data = new T[(unsigned int)this->Count()];
         
         for(uint64_t i = 0; i < this->Count(); i++)
         {
