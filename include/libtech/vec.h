@@ -1,12 +1,18 @@
 #pragma once
 
-struct vec2
+#include "libtech.h"
+
+struct LIBTECH_CLASS vec2
 {
+    vec2();
+    vec2(float scale);
+    vec2(float x, float y);
+
     float x;
     float y;
 };
 
-struct vec3
+struct LIBTECH_CLASS vec3
 {
     float x;
     float y;

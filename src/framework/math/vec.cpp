@@ -2,6 +2,22 @@
 
 #include <cmath>
 
+vec2::vec2()
+{
+}
+
+vec2::vec2(float scale)
+{
+    this->x = scale;
+    this->y = scale;
+}
+
+vec2::vec2(float x, float y)
+{
+    this->x = x;
+    this->y = y;
+}
+
 float vec3_len(vec3* v)
 {
     return sqrt(pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2));
