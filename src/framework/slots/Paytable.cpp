@@ -34,7 +34,7 @@ Paytable* Paytable::GetPaytableFromConfig(const char* configPath, SymbolSet* sym
     pugi::xpath_node_set prizesNodes = doc.select_nodes("/paytableConfig/prizes/symbolPrize");
 
     Paytable* pt = new Paytable();
-    pt->PrizeCount = prizesNodes.size();
+    pt->PrizeCount = (int)prizesNodes.size();
     pt->Prizes = new PaytablePrize*[pt->PrizeCount];
 
     for(pugi::xpath_node node: prizesNodes)

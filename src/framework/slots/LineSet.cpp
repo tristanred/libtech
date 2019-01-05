@@ -41,7 +41,7 @@ LineSet* LineSet::CreateLinesetFromConfig(const char* configPath)
     pugi::xpath_node_set lineNodes = doc.select_nodes("/linesetConfig/lineset[@id='0']/line");
 
     LineSet* newSet = new LineSet();
-    newSet->PatternsCount = lineNodes.size();
+    newSet->PatternsCount = (int)lineNodes.size();
     newSet->LinePatterns = new int*[newSet->PatternsCount];
 
     for(pugi::xpath_node node: lineNodes)

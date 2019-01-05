@@ -84,7 +84,7 @@ std::list<char*>* get_path_parts(const char* path)
 
 void sanitize_path_slashes(const char* original, char* sanitized)
 {
-    int len = strlen(original);
+    int len = (int)strlen(original);
 
     for(int i = 0; i < len; i++)
     {

@@ -59,7 +59,7 @@ SymbolSet* SymbolSet::CreateFromConfig(const char* configPath)
     pugi::xpath_node_set symbolNodes = doc.select_nodes("/symbolsetConfig/symbolset[@id='0']/symbol");
 
     SymbolSet* set = new SymbolSet();
-    set->SymbolCount = symbolNodes.size();
+    set->SymbolCount = (int)symbolNodes.size();
     set->SymbolList = new Symbol*[set->SymbolCount];
 
     for (pugi::xpath_node node : symbolNodes)
