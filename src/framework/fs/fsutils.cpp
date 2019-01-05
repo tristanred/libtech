@@ -112,7 +112,7 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
         {
             std::string subDirectoryPath;
             subDirectoryPath.append(folderPath);
-            subDirectoryPath.append("\\");
+            subDirectoryPath.append("/");
             subDirectoryPath.append(ffd.cFileName);
 
             get_directory_files(subDirectoryPath.c_str(), recursive, aggregate);
@@ -120,7 +120,7 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
         else
         {
             char* filePath = new char[MAX_PATH];
-            sprintf(filePath, "%s\\%s", folderPath, ffd.cFileName);
+            sprintf(filePath, "%s/%s", folderPath, ffd.cFileName);
 
             aggregate->Add(filePath);
         }
@@ -146,7 +146,7 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
                 // Is directory
                 std::string subDirectoryPath;
                 subDirectoryPath.append(folderPath);
-                subDirectoryPath.append("\\");
+                subDirectoryPath.append("/");
                 subDirectoryPath.append(ep->d_name);
                 
                 get_directory_files(subDirectoryPath.c_str(), recursive, aggregate);
@@ -154,7 +154,7 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
             else if(ep->d_type == DT_REG)
             {
                 char* filePath = new char[256];
-                sprintf(filePath, "%s\\%s", folderPath, ep->d_name);
+                sprintf(filePath, "%s/%s", folderPath, ep->d_name);
 
                 // Is file
                 aggregate->Add(filePath);
@@ -189,7 +189,7 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
             {
                 std::string subDirectoryPath;
                 subDirectoryPath.append(folderPath);
-                subDirectoryPath.append("\\");
+                subDirectoryPath.append("/");
                 subDirectoryPath.append(namelist[i]->d_name);
 
                 get_directory_files(subDirectoryPath.c_str(), recursive, aggregate);
