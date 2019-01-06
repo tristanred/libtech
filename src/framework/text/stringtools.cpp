@@ -1,5 +1,6 @@
 #include "libtech/stringtools.h"
 
+#include <string>
 #include <string.h>
 #include <ctype.h>
 #include "libtech/arraylist.h"

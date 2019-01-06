@@ -1,6 +1,7 @@
 #include "libtech/slots/SymbolSet.h"
 
 #include <stdlib.h>
+#include <string>
 #include <string.h>
 
 #include "pugixml.hpp"

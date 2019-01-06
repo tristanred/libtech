@@ -1,7 +1,7 @@
 #include "libtech/filelogger.h"
 
 #include <string>
-#include <cstring>
+#include <string.h>
 #include <cstdarg>
 using namespace std;
 

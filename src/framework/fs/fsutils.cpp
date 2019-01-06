@@ -2,7 +2,8 @@
 
 #include <iostream>
 #include <fstream>
-#include <cstring>
+#include <string>
+#include <string.h>
 #include <list>
 
 #include "libtech/linkedlist.h"

@@ -1,6 +1,8 @@
-#include <cstring>
-#include <errno.h>
 #include "libtech/binreader.h"
+
+#include <string>
+#include <string.h>
+#include <errno.h>
 
 binreader::binreader()
 {
