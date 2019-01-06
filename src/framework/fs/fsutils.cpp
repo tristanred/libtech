@@ -46,7 +46,7 @@ char** get_lines_of_file(const char* filePath, int* count)
         unsigned int readSize = (unsigned int)reader.gcount();
 
         char* lineBytes = new char[readSize];
-        std::strncpy(lineBytes, lineResult, readSize);
+        strncpy(lineBytes, lineResult, readSize);
 
         lines->Add(lineBytes);
     }
