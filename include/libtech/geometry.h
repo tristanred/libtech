@@ -63,6 +63,11 @@ struct LIBTECH_CLASS FSize
     {
         return (*this == other) == false;
     }
+    
+    bool Zero()
+    {
+        return this->Width == 0 && this->Height == 0;
+    }
 };
 
 struct LIBTECH_CLASS FRectangle
