@@ -208,7 +208,6 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
             }
             
             free(namelist[i]);
-            printf("%s\n", namelist[i]->d_name);
             
         }
     }
