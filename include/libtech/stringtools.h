@@ -9,3 +9,5 @@
  * Supported whitespaces are : spaces, tabs, newlines
  */
 LIBTECH_API int* convert_string_to_int_list(const char* line, long int* count);
+
+LIBTECH_API char** string_split(const char* source, const char* delim, int* result_count);
