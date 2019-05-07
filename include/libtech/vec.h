@@ -12,6 +12,14 @@ struct LIBTECH_CLASS vec2
     float y;
 };
 
+float vec2_len(vec2* v);
+vec2 vec2_normalize(vec2* v);
+void vec2_add_scalar(vec2* v, float scalar);
+void vec2_sub_scalar(vec2* v, float scalar);
+void vec2_mul_scalar(vec2* v, float scalar);
+void vec2_div_scalar(vec2* v, float scalar);
+float vec2_dot_product(vec2* v, vec2* r);
+
 struct LIBTECH_CLASS vec3
 {
     float x;
@@ -25,5 +33,4 @@ void vec3_add_scalar(vec3* v, float scalar);
 void vec3_sub_scalar(vec3* v, float scalar);
 void vec3_mul_scalar(vec3* v, float scalar);
 void vec3_div_scalar(vec3* v, float scalar);
-
 float vec3_dot_product(vec3* v, vec3* r);

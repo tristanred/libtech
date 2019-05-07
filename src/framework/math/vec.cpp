@@ -18,6 +18,50 @@ vec2::vec2(float x, float y)
     this->y = y;
 }
 
+float vec2_len(vec2* v)
+{
+    return sqrt(pow(v->x, 2) + pow(v->y, 2));
+}
+
+vec2 vec2_normalize(vec2 * v)
+{
+    vec2 res = *v;
+    float length = vec2_len(v);
+
+    vec2_div_scalar(&res, length);
+
+    return res;
+}
+
+void vec2_add_scalar(vec2* v, float scalar)
+{
+    v->x += scalar;
+    v->y += scalar;
+}
+
+void vec2_sub_scalar(vec2* v, float scalar)
+{
+    v->x -= scalar;
+    v->y -= scalar;
+}
+
+void vec2_mul_scalar(vec2* v, float scalar)
+{
+    v->x *= scalar;
+    v->y *= scalar;
+}
+
+void vec2_div_scalar(vec2* v, float scalar)
+{
+    v->x /= scalar;
+    v->y /= scalar;
+}
+
+float vec2_dot_product(vec2* v, vec2* r)
+{
+    return (v->x * r->x) + (v->y * r->y);
+}
+
 float vec3_len(vec3* v)
 {
     return sqrt(pow(v->x, 2) + pow(v->y, 2) + pow(v->z, 2));
