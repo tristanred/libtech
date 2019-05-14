@@ -113,6 +113,8 @@ struct LIBTECH_CLASS FRectangle
     bool PointIsInside(FPosition point);
     bool PointIsInside(vec2 point);
 
+    bool Intersect(FRectangle* other);
+
     bool operator==(const FRectangle& other)
     {
         return this->X == other.X && this->Y == other.Y && this->Width == other.Width && this->Height == other.Height;

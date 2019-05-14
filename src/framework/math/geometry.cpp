@@ -82,6 +82,24 @@ bool FRectangle::PointIsInside(vec2 point)
     return point_in_rect(*this, pos);
 }
 
+bool FRectangle::Intersect(FRectangle* other)
+{
+    FPosition top_left = FPosition(other->Left(), other->Top());
+    FPosition top_right = FPosition(other->Right(), other->Top());
+    FPosition bottom_right = FPosition(other->Right(), other->Bottom());
+    FPosition bottom_left = FPosition(other->Left(), other->Bottom());
+
+    if (this->PointIsInside(top_left) ||
+        this->PointIsInside(top_right) ||
+        this->PointIsInside(bottom_right) ||
+        this->PointIsInside(bottom_left))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 bool point_in_rect(FRectangle rect, FPosition point)
 {
     if(point.X >= rect.Left() &&
