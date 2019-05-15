@@ -89,10 +89,10 @@ bool FRectangle::Intersect(FRectangle* other)
     FPosition bottom_right = FPosition(other->Right(), other->Bottom());
     FPosition bottom_left = FPosition(other->Left(), other->Bottom());
 
-    if (this->PointIsInside(top_left) ||
-        this->PointIsInside(top_right) ||
-        this->PointIsInside(bottom_right) ||
-        this->PointIsInside(bottom_left))
+    if (this->Left() < other->Right() &&
+        this->Right() > other->Left() &&
+        this->Top() < other->Bottom() &&
+        this->Bottom() > other->Top())
     {
         return true;
     }
