@@ -12,3 +12,10 @@
         begin++;                    \
     }                               \
     lst->clear();
+
+#define DELETE_XDIM_ARRAY(lst, dim)\
+    for(int i = 0; i < dim; i++)   \
+    {                              \
+        delete(lst[i]);            \
+    }                              \
+    delete(lst);
