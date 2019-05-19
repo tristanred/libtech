@@ -19,7 +19,7 @@ struct LIBTECH_CLASS FPosition
         X = x;
         Y = y;
     }
-    
+
     FPosition(vec2 vec)
     {
         X = vec.x;
@@ -34,6 +34,11 @@ struct LIBTECH_CLASS FPosition
     bool operator!=(const FPosition& other)
     {
         return (*this == other) == false;
+    }
+
+    FPosition operator+(const FPosition& other)
+    {
+        return FPosition(this->X + other.X, this->Y + other.Y);
     }
 };
 
@@ -63,7 +68,7 @@ struct LIBTECH_CLASS FSize
     {
         return (*this == other) == false;
     }
-    
+
     bool Zero()
     {
         return this->Width == 0 && this->Height == 0;
@@ -76,7 +81,7 @@ struct LIBTECH_CLASS FRectangle
     float Y;
     float Width;
     float Height;
-    
+
     FRectangle()
     {
         X = 0;
@@ -84,7 +89,7 @@ struct LIBTECH_CLASS FRectangle
         Width = 0;
         Height = 0;
     }
-    
+
     FRectangle(float x, float y, float w, float h)
     {
         X = x;
@@ -107,9 +112,11 @@ struct LIBTECH_CLASS FRectangle
     float Bottom();
 
     FPosition GetCenter();
+    FPosition GetPosition();
+    
     void AlignCenterOn(FRectangle* target);
     void PushInside(FRectangle* bounds);
-    
+
     bool PointIsInside(FPosition point);
     bool PointIsInside(vec2 point);
 

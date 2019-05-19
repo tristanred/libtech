@@ -40,6 +40,11 @@ FPosition FRectangle::GetCenter()
     return FPosition(this->X + (this->Width / 2), this->Y + (this->Height / 2));
 }
 
+FPosition FRectangle::GetPosition()
+{
+    return FPosition(this->X, this->Y);
+}
+
 void FRectangle::AlignCenterOn(FRectangle* target)
 {
     FPosition centerPos = target->GetCenter();
