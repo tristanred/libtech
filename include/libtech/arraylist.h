@@ -46,6 +46,25 @@ public:
             it++;
         }
     };
+    
+    void Insert(T item, uint64_t pos)
+    {
+        _container->insert(_container->begin() + pos, item);
+    };
+    
+    void AddRangeFront(ArrayList<T>* items)
+    {
+        auto it = items->GetContainer()->begin();
+        
+        while (it != items->GetContainer()->end())
+        {
+            T listItem = *it;
+            
+            _container->insert(_container->begin(), listItem);
+            
+            it++;
+        }
+    };
 
     T Get(uint64_t index)
     {
