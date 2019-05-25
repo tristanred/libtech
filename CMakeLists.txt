@@ -70,6 +70,10 @@ ELSEIF(UNIX)
     target_compile_options(LIBTECH PRIVATE -Wall)
 ENDIF(WIN32)
 
+IF(APPLE)
+    SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -x objective-c++")
+ENDIF(APPLE)
+
 IF(LIBTECH_BUILD_TOOLS)
     add_executable(ConsoleTester ${CON_TESTER_HEADERS} ${CON_TESTER_SOURCES})
     target_link_libraries(ConsoleTester LIBTECH)
