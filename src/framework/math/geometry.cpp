@@ -2,6 +2,7 @@
 
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <cstdarg>
 
 #include "libtech/linkedlist.h"
 
@@ -83,7 +84,7 @@ bool FRectangle::PointIsInside(FPosition point)
 bool FRectangle::PointIsInside(vec2 point)
 {
     FPosition pos = FPosition(point);
-    
+
     return point_in_rect(*this, pos);
 }
 
@@ -103,6 +104,79 @@ bool FRectangle::Intersect(FRectangle* other)
     }
 
     return false;
+}
+
+FPolygon::FPolygon()
+{
+    this->vertices = NULL;
+    this->vertCount = 0;
+}
+
+FPolygon::~FPolygon()
+{
+
+}
+
+void FPolygon::Set(int polyCount, vec2* one, vec2* two, vec2* three...)
+{
+    this->Clear();
+
+    this->vertices = new struct vec2*[polyCount];
+    this->vertices[0] = one;
+    this->vertices[1] = two;
+    this->vertices[2] = three;
+
+    va_list vecs;
+    va_start(vecs, three);
+
+    int vectexToAdd = polyCount - 3;
+    int index = 3;
+    while(vectexToAdd > 0)
+    {
+        vec2* next = va_arg(vecs, vec2*);
+        this->vertices[index] = next;
+        index++;
+    }
+
+    va_end(vecs);
+}
+
+void FPolygon::Clear()
+{
+    if(vertices != NULL)
+    {
+        for(int i = 0; i < vertCount; i++)
+        {
+            delete(vertices[i]);
+        }
+
+        delete(vertices);
+    }
+}
+
+FRectangle FPolygon::GetRectBounds()
+{
+    FRectangle result;
+
+    for(int i = 0; i < this->vertCount; i++)
+    {
+        if(this->vertices[i]->x < result.X)
+        {
+            result.X = this->vertices[i]->x;
+        }
+        if(this->vertices[i]->y < result.Y)
+        {
+            result.Y = this->vertices[i]->y;
+        }
+        if(this->vertices[i]->x > result.X + result.Width)
+        {
+            result.Width = this->vertices[i]->x;
+        }
+        if(this->vertices[i]->y > result.Y + result.Height)
+        {
+            result.Height = this->vertices[i]->y;
+        }
+    }
 }
 
 bool point_in_rect(FRectangle rect, FPosition point)

@@ -113,7 +113,7 @@ struct LIBTECH_CLASS FRectangle
 
     FPosition GetCenter();
     FPosition GetPosition();
-    
+
     void AlignCenterOn(FRectangle* target);
     void PushInside(FRectangle* bounds);
 
@@ -131,6 +131,23 @@ struct LIBTECH_CLASS FRectangle
     {
         return (*this == other) == false;
     }
+};
+
+class LIBTECH_CLASS FPolygon
+{
+public:
+    FPolygon();
+    ~FPolygon();
+
+    void Set(int polyCount, vec2* one, vec2* two, vec2* three...);
+
+    void Clear();
+
+    FRectangle GetRectBounds();
+
+private:
+    int vertCount;
+    vec2** vertices;
 };
 
 // Angles

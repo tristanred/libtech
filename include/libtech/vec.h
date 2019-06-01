@@ -2,14 +2,25 @@
 
 #include "libtech.h"
 
-struct LIBTECH_CLASS vec2
+class LIBTECH_CLASS vec2
 {
+public:
     vec2();
     vec2(float scale);
     vec2(float x, float y);
 
     float x;
     float y;
+
+    float Length();
+    vec2 Normalize();
+
+    void Add(float scalar);
+    void Subtract(float scalar);
+    void Multiply(float scalar);
+    void Divide(float scalar);
+
+    float DotProduct(vec2* other);
 };
 
 float vec2_len(vec2* v);

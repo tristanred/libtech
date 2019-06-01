@@ -18,6 +18,48 @@ vec2::vec2(float x, float y)
     this->y = y;
 }
 
+float vec2::Length()
+{
+    return sqrt(pow(this->x, 2) + pow(this->y, 2));
+}
+
+vec2 vec2::Normalize()
+{
+    vec2 normalized = vec2(*this);
+    normalized.Divide(normalized.Length());
+
+    return normalized;
+}
+
+void vec2::Add(float scalar)
+{
+    this->x += scalar;
+    this->y += scalar;
+}
+
+void vec2::Subtract(float scalar)
+{
+    this->x -= scalar;
+    this->y -= scalar;
+}
+
+void vec2::Multiply(float scalar)
+{
+    this->x *= scalar;
+    this->y *= scalar;
+}
+
+void vec2::Divide(float scalar)
+{
+    this->x /= scalar;
+    this->y /= scalar;
+}
+
+float vec2::DotProduct(vec2* other)
+{
+    return (this->x * other->x) + (this->y * other->y);
+}
+
 float vec2_len(vec2* v)
 {
     return sqrt(pow(v->x, 2) + pow(v->y, 2));
