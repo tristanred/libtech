@@ -90,11 +90,6 @@ bool FRectangle::PointIsInside(vec2 point)
 
 bool FRectangle::Intersect(FRectangle* other)
 {
-    FPosition top_left = FPosition(other->Left(), other->Top());
-    FPosition top_right = FPosition(other->Right(), other->Top());
-    FPosition bottom_right = FPosition(other->Right(), other->Bottom());
-    FPosition bottom_left = FPosition(other->Left(), other->Bottom());
-
     if (this->Left() < other->Right() &&
         this->Right() > other->Left() &&
         this->Top() < other->Bottom() &&
@@ -104,6 +99,31 @@ bool FRectangle::Intersect(FRectangle* other)
     }
 
     return false;
+}
+
+FPolygon FRectangle::AsPolygon()
+{
+    vec2* p1 = new vec2();
+    vec2* p2 = new vec2();
+    vec2* p3 = new vec2();
+    vec2* p4 = new vec2();
+    
+    p1->x = this->GetPosition().X;
+    p1->y = this->GetPosition().Y;
+    
+    p2->x = this->GetPosition().X + this->Width;
+    p2->y = this->GetPosition().Y;
+    
+    p3->x = this->GetPosition().X + this->Width;
+    p3->y = this->GetPosition().Y + this->Height;
+    
+    p4->x = this->GetPosition().X;
+    p4->y = this->GetPosition().Y + this->Height;
+    
+    FPolygon poly;
+    poly.Set(4, p1, p2, p3, p4);
+    
+    return poly;
 }
 
 FPolygon::FPolygon()
@@ -119,9 +139,12 @@ FPolygon::~FPolygon()
 
 void FPolygon::Set(int polyCount, vec2* one, vec2* two, vec2* three...)
 {
+    // TODO : Currently taking vec pointers and adding them to the list
+    // but they are not managed properly. FIX !!!!!!!!!!!!!!!!!!!!!!!!!
+    
     this->Clear();
 
-    this->vertices = new struct vec2*[polyCount];
+    this->vertices = new vec2*[polyCount];
     this->vertices[0] = one;
     this->vertices[1] = two;
     this->vertices[2] = three;
@@ -177,6 +200,115 @@ FRectangle FPolygon::GetRectBounds()
             result.Height = this->vertices[i]->y;
         }
     }
+
+    return result;
+}
+
+vec2** FPolygon::GetVertices(int* length)
+{
+    *length = this->vertCount;
+
+    vec2** vertsCopy = new vec2*[this->vertCount];
+
+    for(int i = 0; i < this->vertCount; i++)
+    {
+        vertsCopy[i] = new vec2(*this->vertices[i]);
+    }
+
+    return this->vertices;
+}
+
+vec2** FPolygon::GetEdges(int* length)
+{
+    *length = this->vertCount - 1;
+
+    vec2** edgesList = new vec2*[*length];
+
+    for(int i = 1; i < this->vertCount; i++)
+    {
+        vec2* previous = this->vertices[i - 1];
+        vec2* current = this->vertices[i];
+
+        vec2* edge = new vec2();
+        *edge = current - previous;
+
+        edgesList[i - 1] = edge;
+    }
+
+    vec2* previous = this->vertices[this->vertCount - 1];
+    vec2* current = this->vertices[0];
+
+    vec2* edge = new vec2();
+    *edge = current - previous;
+
+    edgesList[(*length) - 1] = edge;
+
+    return edgesList;
+}
+
+bool FPolygon::IsCollision(FPolygon* other)
+{
+    int myEdgesCount = 0;
+    vec2** myEdges = this->GetEdges(&myEdgesCount);
+
+    int otherEdgesCount = 0;
+    vec2** otherEdges = other->GetEdges(&otherEdgesCount);
+
+    vec2* selectedEdge = NULL;
+    for(int i = 0; i < myEdgesCount + otherEdgesCount; i++)
+    {
+        if(i < myEdgesCount)
+        {
+            selectedEdge = myEdges[i];
+        }
+        else
+        {
+            selectedEdge = otherEdges[i - myEdgesCount];
+        }
+
+        vec2 axis = selectedEdge->Perpendiculate();
+        axis = axis.Normalize();
+
+        std::pair<float, float> thisPoly_Projected = this->Project(&axis);
+        std::pair<float, float> otherPoly_Projected = other->Project(&axis);
+
+        float intervalDistance = 0;
+        if (thisPoly_Projected.first < otherPoly_Projected.first) {
+            intervalDistance =  otherPoly_Projected.first - thisPoly_Projected.second;
+        } else {
+            intervalDistance =  thisPoly_Projected.first - otherPoly_Projected.second;
+        }
+
+        if(intervalDistance > 0)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+std::pair<float, float> FPolygon::Project(vec2* axis)
+{
+    std::pair<float, float> res;
+    res.first = 0;
+    res.second = 0;
+
+    for(int i = 0; i < this->vertCount; i++)
+    {
+        float test = this->vertices[i]->DotProduct(axis);
+
+        if(test < res.first)
+        {
+            res.first = test;
+        }
+        else if(test > res.second)
+        {
+            res.second = test;
+        }
+    }
+
+    return res;
 }
 
 bool point_in_rect(FRectangle rect, FPosition point)

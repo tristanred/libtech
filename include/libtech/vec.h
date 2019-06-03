@@ -8,6 +8,7 @@ public:
     vec2();
     vec2(float scale);
     vec2(float x, float y);
+    vec2(const vec2 & other);
 
     float x;
     float y;
@@ -20,7 +21,28 @@ public:
     void Multiply(float scalar);
     void Divide(float scalar);
 
+    void Add(vec2* other);
+    void Subtract(vec2* other);
+    void Multiply(vec2* other);
+
     float DotProduct(vec2* other);
+
+    vec2 Perpendiculate();
+
+    vec2 operator+(const vec2& other)
+    {
+        return vec2(this->x + other.x, this->y + other.y);
+    }
+
+    vec2 operator-(const vec2& other)
+    {
+        return vec2(this->x - other.x, this->y - other.y);
+    }
+
+    vec2 operator*(const vec2& other)
+    {
+        return vec2(this->x * other.x, this->y * other.y);
+    }
 };
 
 float vec2_len(vec2* v);

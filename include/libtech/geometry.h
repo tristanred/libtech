@@ -2,6 +2,9 @@
 
 #include "libtech.h"
 #include "vec.h"
+#include <utility>
+
+class FPolygon;
 
 struct LIBTECH_CLASS FPosition
 {
@@ -121,6 +124,8 @@ struct LIBTECH_CLASS FRectangle
     bool PointIsInside(vec2 point);
 
     bool Intersect(FRectangle* other);
+    
+    FPolygon AsPolygon();
 
     bool operator==(const FRectangle& other)
     {
@@ -144,6 +149,13 @@ public:
     void Clear();
 
     FRectangle GetRectBounds();
+
+    vec2** GetVertices(int* length);
+    vec2** GetEdges(int* length);
+
+    bool IsCollision(FPolygon* other);
+
+    std::pair<float, float> Project(vec2* axis);
 
 private:
     int vertCount;

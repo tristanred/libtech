@@ -18,6 +18,12 @@ vec2::vec2(float x, float y)
     this->y = y;
 }
 
+vec2::vec2(const vec2& other)
+{
+    this->x = other.x;
+    this->y = other.y;
+}
+
 float vec2::Length()
 {
     return sqrt(pow(this->x, 2) + pow(this->y, 2));
@@ -58,6 +64,11 @@ void vec2::Divide(float scalar)
 float vec2::DotProduct(vec2* other)
 {
     return (this->x * other->x) + (this->y * other->y);
+}
+
+vec2 vec2::Perpendiculate()
+{
+    return vec2(-(this->y), this->x);
 }
 
 float vec2_len(vec2* v)
