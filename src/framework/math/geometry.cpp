@@ -144,6 +144,7 @@ void FPolygon::Set(int polyCount, vec2* one, vec2* two, vec2* three...)
     
     this->Clear();
 
+    this->vertCount = polyCount;
     this->vertices = new vec2*[polyCount];
     this->vertices[0] = new vec2(*one);
     this->vertices[1] = new vec2(*two);
@@ -159,6 +160,7 @@ void FPolygon::Set(int polyCount, vec2* one, vec2* two, vec2* three...)
         vec2* next = va_arg(vecs, vec2*);
         this->vertices[index] = new vec2(*next);
         index++;
+        vectexToAdd--;
     }
 
     va_end(vecs);
@@ -220,7 +222,7 @@ vec2** FPolygon::GetVertices(int* length)
 
 vec2** FPolygon::GetEdges(int* length)
 {
-    *length = this->vertCount - 1;
+    *length = this->vertCount;
 
     vec2** edgesList = new vec2*[*length];
 

@@ -39,7 +39,7 @@ public:
         return vec2(this->x - other.x, this->y - other.y);
     }
 
-    vec2 operator*(const vec2& other)
+    vec2 operator * (const vec2& other)
     {
         return vec2(this->x * other.x, this->y * other.y);
     }
