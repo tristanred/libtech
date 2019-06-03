@@ -103,25 +103,25 @@ bool FRectangle::Intersect(FRectangle* other)
 
 FPolygon FRectangle::AsPolygon()
 {
-    vec2* p1 = new vec2();
-    vec2* p2 = new vec2();
-    vec2* p3 = new vec2();
-    vec2* p4 = new vec2();
+    vec2 p1;
+    vec2 p2;
+    vec2 p3;
+    vec2 p4;
     
-    p1->x = this->GetPosition().X;
-    p1->y = this->GetPosition().Y;
+    p1.x = this->GetPosition().X;
+    p1.y = this->GetPosition().Y;
     
-    p2->x = this->GetPosition().X + this->Width;
-    p2->y = this->GetPosition().Y;
+    p2.x = this->GetPosition().X + this->Width;
+    p2.y = this->GetPosition().Y;
     
-    p3->x = this->GetPosition().X + this->Width;
-    p3->y = this->GetPosition().Y + this->Height;
+    p3.x = this->GetPosition().X + this->Width;
+    p3.y = this->GetPosition().Y + this->Height;
     
-    p4->x = this->GetPosition().X;
-    p4->y = this->GetPosition().Y + this->Height;
+    p4.x = this->GetPosition().X;
+    p4.y = this->GetPosition().Y + this->Height;
     
     FPolygon poly;
-    poly.Set(4, p1, p2, p3, p4);
+    poly.Set(4, &p1, &p2, &p3, &p4);
     
     return poly;
 }
@@ -145,9 +145,9 @@ void FPolygon::Set(int polyCount, vec2* one, vec2* two, vec2* three...)
     this->Clear();
 
     this->vertices = new vec2*[polyCount];
-    this->vertices[0] = one;
-    this->vertices[1] = two;
-    this->vertices[2] = three;
+    this->vertices[0] = new vec2(*one);
+    this->vertices[1] = new vec2(*two);
+    this->vertices[2] = new vec2(*three);
 
     va_list vecs;
     va_start(vecs, three);
@@ -157,7 +157,7 @@ void FPolygon::Set(int polyCount, vec2* one, vec2* two, vec2* three...)
     while(vectexToAdd > 0)
     {
         vec2* next = va_arg(vecs, vec2*);
-        this->vertices[index] = next;
+        this->vertices[index] = new vec2(*next);
         index++;
     }
 
