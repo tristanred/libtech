@@ -1,7 +1,7 @@
 #include "libtech/geometry.h"
 
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include <math.h>
 #include <cstdarg>
 
 #include "libtech/linkedlist.h"
@@ -232,7 +232,7 @@ vec2** FPolygon::GetEdges(int* length)
         vec2* current = this->vertices[i];
 
         vec2* edge = new vec2();
-        *edge = current - previous;
+        *edge = Sub_Vectors(current, previous);
 
         edgesList[i - 1] = edge;
     }
@@ -241,7 +241,7 @@ vec2** FPolygon::GetEdges(int* length)
     vec2* current = this->vertices[0];
 
     vec2* edge = new vec2();
-    *edge = current - previous;
+    *edge = Sub_Vectors(current, previous);
 
     edgesList[(*length) - 1] = edge;
 
@@ -283,7 +283,7 @@ bool FPolygon::IsCollision(FPolygon* other)
 
         if(intervalDistance > 0)
         {
-            return false;
+            return false; // No collision is possible
         }
     }
 
@@ -293,8 +293,10 @@ bool FPolygon::IsCollision(FPolygon* other)
 std::pair<float, float> FPolygon::Project(vec2* axis)
 {
     std::pair<float, float> res;
-    res.first = 0;
-    res.second = 0;
+
+    float initialValue = axis->DotProduct(this->vertices[0]);
+    res.first = initialValue;
+    res.second = initialValue;
 
     for(int i = 0; i < this->vertCount; i++)
     {

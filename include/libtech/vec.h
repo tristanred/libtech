@@ -45,6 +45,11 @@ public:
     }
 };
 
+vec2 Add_Vectors(vec2* first, vec2* second);
+vec2 Sub_Vectors(vec2* first, vec2* second);
+vec2 Mul_Vectors(vec2* first, vec2* second);
+
+
 float vec2_len(vec2* v);
 vec2 vec2_normalize(vec2* v);
 void vec2_add_scalar(vec2* v, float scalar);
