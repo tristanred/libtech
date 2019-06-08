@@ -116,6 +116,7 @@ struct LIBTECH_CLASS FRectangle
 
     FPosition GetCenter();
     FPosition GetPosition();
+    FSize GetSize();
 
     void AlignCenterOn(FRectangle* target);
     void PushInside(FRectangle* bounds);
@@ -124,7 +125,7 @@ struct LIBTECH_CLASS FRectangle
     bool PointIsInside(vec2 point);
 
     bool Intersect(FRectangle* other);
-    
+
     FPolygon AsPolygon();
 
     bool operator==(const FRectangle& other)
@@ -142,12 +143,17 @@ class LIBTECH_CLASS FPolygon
 {
 public:
     FPolygon();
+    FPolygon(const FPolygon &copy);
     ~FPolygon();
 
     void Set(int polyCount, vec2* one, vec2* two, vec2* three...);
 
     void Clear();
 
+    /**
+     * \brief Get the bounds of the polygon in a rectangular bounding box
+     * \return Rectangular box containing this polygon.
+     */
     FRectangle GetRectBounds();
 
     vec2** GetVertices(int* length);

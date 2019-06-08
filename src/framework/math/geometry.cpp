@@ -101,28 +101,33 @@ bool FRectangle::Intersect(FRectangle* other)
     return false;
 }
 
+FSize FRectangle::GetSize()
+{
+    return FSize(this->Width, this->Height);
+}
+
 FPolygon FRectangle::AsPolygon()
 {
     vec2 p1;
     vec2 p2;
     vec2 p3;
     vec2 p4;
-    
+
     p1.x = this->GetPosition().X;
     p1.y = this->GetPosition().Y;
-    
+
     p2.x = this->GetPosition().X + this->Width;
     p2.y = this->GetPosition().Y;
-    
+
     p3.x = this->GetPosition().X + this->Width;
     p3.y = this->GetPosition().Y + this->Height;
-    
+
     p4.x = this->GetPosition().X;
     p4.y = this->GetPosition().Y + this->Height;
-    
+
     FPolygon poly;
     poly.Set(4, &p1, &p2, &p3, &p4);
-    
+
     return poly;
 }
 
@@ -132,16 +137,32 @@ FPolygon::FPolygon()
     this->vertCount = 0;
 }
 
+FPolygon::FPolygon(const FPolygon &copy)
+{
+    this->vertCount = copy.vertCount;
+    this->vertices = new vec2*[this->vertCount];
+
+    for(int i = 0; i < this->vertCount; i++)
+    {
+        // TODO : Does that really work ?
+        *this->vertices[i] = *copy.vertices[i];
+    }
+}
+
 FPolygon::~FPolygon()
 {
-
+    for(int i = 0; i < this->vertCount; i++)
+    {
+        delete(this->vertices[i]);
+    }
+    delete(this->vertices);
 }
 
 void FPolygon::Set(int polyCount, vec2* one, vec2* two, vec2* three...)
 {
     // TODO : Currently taking vec pointers and adding them to the list
     // but they are not managed properly. FIX !!!!!!!!!!!!!!!!!!!!!!!!!
-    
+
     this->Clear();
 
     this->vertCount = polyCount;

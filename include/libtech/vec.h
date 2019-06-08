@@ -27,28 +27,18 @@ public:
 
     float DotProduct(vec2* other);
 
+    /**
+     * \brief Return a vector perpendicular to this one.
+     *
+     * \return A vector perpendicular to this object.
+     */
     vec2 Perpendiculate();
-
-    vec2 operator+(const vec2& other)
-    {
-        return vec2(this->x + other.x, this->y + other.y);
-    }
-
-    vec2 operator-(const vec2& other)
-    {
-        return vec2(this->x - other.x, this->y - other.y);
-    }
-
-    vec2 operator * (const vec2& other)
-    {
-        return vec2(this->x * other.x, this->y * other.y);
-    }
 };
 
+// Alternate functions while the vec2's operator overloading are fixed.
 vec2 Add_Vectors(vec2* first, vec2* second);
 vec2 Sub_Vectors(vec2* first, vec2* second);
 vec2 Mul_Vectors(vec2* first, vec2* second);
-
 
 float vec2_len(vec2* v);
 vec2 vec2_normalize(vec2* v);
