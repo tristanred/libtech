@@ -37,28 +37,60 @@ vec2 vec2::Normalize()
     return normalized;
 }
 
-void vec2::Add(float scalar)
+vec2* vec2::Add(float scalar)
 {
     this->x += scalar;
     this->y += scalar;
+
+    return this;
 }
 
-void vec2::Subtract(float scalar)
+vec2* vec2::Subtract(float scalar)
 {
     this->x -= scalar;
     this->y -= scalar;
+
+    return this;
 }
 
-void vec2::Multiply(float scalar)
+vec2* vec2::Multiply(float scalar)
 {
     this->x *= scalar;
     this->y *= scalar;
+
+    return this;
 }
 
-void vec2::Divide(float scalar)
+vec2* vec2::Divide(float scalar)
 {
     this->x /= scalar;
     this->y /= scalar;
+
+    return this;
+}
+
+vec2* vec2::Add(vec2* other)
+{
+    this->x += other->x;
+    this->y += other->y;
+
+    return this;
+}
+
+vec2* vec2::Subtract(vec2* other)
+{
+    this->x -= other->x;
+    this->y -= other->y;
+
+    return this;
+}
+
+vec2* vec2::Multiply(vec2* other)
+{
+    this->x *= other->x;
+    this->y *= other->y;
+
+    return this;
 }
 
 float vec2::DotProduct(vec2* other)
@@ -176,4 +208,14 @@ void vec3_div_scalar(vec3* v, float scalar)
 float vec3_dot_product(vec3* v, vec3* r)
 {
     return (v->x * r->x) + (v->y * r->y) + (v->z * r->z);
+}
+
+vec2* operator+(vec2* lhs, const vec2& rhs)
+{
+    return new vec2(lhs->x + rhs.x, lhs->y + rhs.y);
+}
+
+vec2 operator+(vec2& lhs, const vec2& rhs)
+{
+    return vec2(lhs.x + rhs.x, lhs.y + rhs.y);
 }

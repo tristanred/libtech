@@ -135,6 +135,8 @@ FPolygon::FPolygon()
 {
     this->vertices = NULL;
     this->vertCount = 0;
+
+    this->Offset = vec2(0, 0);
 }
 
 FPolygon::FPolygon(const FPolygon &copy)
@@ -227,6 +229,34 @@ FRectangle FPolygon::GetRectBounds()
     return result;
 }
 
+FPolygon FPolygon::ZeroOffset()
+{
+    FPolygon result = FPolygon(*this);
+
+    float xMin = result.vertices[0]->x;
+    float yMin = result.vertices[0]->y;
+
+    for(int i = 1; i < result.vertCount; i++)
+    {
+        if(result.vertices[i]->x < xMin)
+        {
+            xMin = result.vertices[i]->x;
+        }
+        if(result.vertices[i]->y < yMin)
+        {
+            yMin = result.vertices[i]->y;
+        }
+    }
+
+    for(int i = 0; i < result.vertCount; i++)
+    {
+        result.vertices[i]->x -= xMin;
+        result.vertices[i]->y -= yMin;
+    }
+
+    return result;
+}
+
 vec2** FPolygon::GetVertices(int* length)
 {
     *length = this->vertCount;
@@ -235,7 +265,8 @@ vec2** FPolygon::GetVertices(int* length)
 
     for(int i = 0; i < this->vertCount; i++)
     {
-        vertsCopy[i] = new vec2(*this->vertices[i]);
+        vec2* offset = this->vertices[i] + this->Offset;
+        vertsCopy[i] = new vec2(*offset);
     }
 
     return this->vertices;
@@ -315,7 +346,7 @@ std::pair<float, float> FPolygon::Project(vec2* axis)
 {
     std::pair<float, float> res;
 
-    float initialValue = axis->DotProduct(this->vertices[0]);
+    float initialValue = axis->DotProduct(this->vertices[0]->Add(&this->Offset));
     res.first = initialValue;
     res.second = initialValue;
 
@@ -350,3 +381,5 @@ bool point_in_rect(FRectangle rect, FPosition point)
         return false;
     }
 }
+
+

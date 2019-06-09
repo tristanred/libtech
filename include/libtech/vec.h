@@ -8,7 +8,7 @@ public:
     vec2();
     vec2(float scale);
     vec2(float x, float y);
-    vec2(const vec2 & other);
+    vec2(const vec2& other);
 
     float x;
     float y;
@@ -16,14 +16,14 @@ public:
     float Length();
     vec2 Normalize();
 
-    void Add(float scalar);
-    void Subtract(float scalar);
-    void Multiply(float scalar);
-    void Divide(float scalar);
+    vec2* Add(float scalar);
+    vec2* Subtract(float scalar);
+    vec2* Multiply(float scalar);
+    vec2* Divide(float scalar);
 
-    void Add(vec2* other);
-    void Subtract(vec2* other);
-    void Multiply(vec2* other);
+    vec2* Add(vec2* other);
+    vec2* Subtract(vec2* other);
+    vec2* Multiply(vec2* other);
 
     float DotProduct(vec2* other);
 
@@ -34,6 +34,10 @@ public:
      */
     vec2 Perpendiculate();
 };
+
+vec2* operator+(vec2* lhs, const vec2& rhs);
+vec2 operator+(vec2& lhs, const vec2& rhs);
+
 
 // Alternate functions while the vec2's operator overloading are fixed.
 vec2 Add_Vectors(vec2* first, vec2* second);

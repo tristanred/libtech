@@ -146,9 +146,14 @@ public:
     FPolygon(const FPolygon &copy);
     ~FPolygon();
 
+    vec2 Offset;
+
     void Set(int polyCount, vec2* one, vec2* two, vec2* three...);
 
     void Clear();
+
+    vec2** GetVertices(int* length);
+    vec2** GetEdges(int* length);
 
     /**
      * \brief Get the bounds of the polygon in a rectangular bounding box
@@ -156,8 +161,10 @@ public:
      */
     FRectangle GetRectBounds();
 
-    vec2** GetVertices(int* length);
-    vec2** GetEdges(int* length);
+    /**
+     * Return a copy of this polygon aligned to the coordinates (0, 0)
+     */
+    FPolygon ZeroOffset();
 
     bool IsCollision(FPolygon* other);
 
