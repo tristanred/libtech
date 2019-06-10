@@ -16,14 +16,14 @@ public:
     float Length();
     vec2 Normalize();
 
-    vec2* Add(float scalar);
-    vec2* Subtract(float scalar);
-    vec2* Multiply(float scalar);
-    vec2* Divide(float scalar);
+    vec2 Add(float scalar);
+    vec2 Subtract(float scalar);
+    vec2 Multiply(float scalar);
+    vec2 Divide(float scalar);
 
-    vec2* Add(vec2* other);
-    vec2* Subtract(vec2* other);
-    vec2* Multiply(vec2* other);
+    vec2 Add(vec2* other);
+    vec2 Subtract(vec2* other);
+    vec2 Multiply(vec2* other);
 
     float DotProduct(vec2* other);
 

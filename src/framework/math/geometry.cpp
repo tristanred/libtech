@@ -226,6 +226,8 @@ FRectangle FPolygon::GetRectBounds()
         }
     }
 
+    result.X += this->Offset.x;
+    result.Y += this->Offset.y;
     return result;
 }
 
@@ -265,11 +267,10 @@ vec2** FPolygon::GetVertices(int* length)
 
     for(int i = 0; i < this->vertCount; i++)
     {
-        vec2* offset = this->vertices[i] + this->Offset;
-        vertsCopy[i] = new vec2(*offset);
+        vertsCopy[i] = this->vertices[i] + this->Offset;
     }
 
-    return this->vertices;
+    return vertsCopy;
 }
 
 vec2** FPolygon::GetEdges(int* length)
@@ -280,20 +281,20 @@ vec2** FPolygon::GetEdges(int* length)
 
     for(int i = 1; i < this->vertCount; i++)
     {
-        vec2* previous = this->vertices[i - 1];
-        vec2* current = this->vertices[i];
+        vec2 previous = this->vertices[i - 1]->Add(&this->Offset);
+        vec2 current = this->vertices[i]->Add(&this->Offset);
 
         vec2* edge = new vec2();
-        *edge = Sub_Vectors(current, previous);
+        *edge = Sub_Vectors(&current, &previous);
 
         edgesList[i - 1] = edge;
     }
 
-    vec2* previous = this->vertices[this->vertCount - 1];
-    vec2* current = this->vertices[0];
+    vec2 previous = this->vertices[this->vertCount - 1]->Add(&this->Offset);
+    vec2 current = this->vertices[0]->Add(&this->Offset);
 
     vec2* edge = new vec2();
-    *edge = Sub_Vectors(current, previous);
+    *edge = Sub_Vectors(&current, &previous);
 
     edgesList[(*length) - 1] = edge;
 
@@ -346,13 +347,14 @@ std::pair<float, float> FPolygon::Project(vec2* axis)
 {
     std::pair<float, float> res;
 
-    float initialValue = axis->DotProduct(this->vertices[0]->Add(&this->Offset));
+    vec2 v = this->vertices[0]->Add(&this->Offset);
+    float initialValue = axis->DotProduct(&v);
     res.first = initialValue;
     res.second = initialValue;
 
     for(int i = 0; i < this->vertCount; i++)
     {
-        float test = this->vertices[i]->DotProduct(axis);
+        float test = this->vertices[i]->Add(&this->Offset).DotProduct(axis);
 
         if(test < res.first)
         {

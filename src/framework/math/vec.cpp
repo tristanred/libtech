@@ -37,60 +37,39 @@ vec2 vec2::Normalize()
     return normalized;
 }
 
-vec2* vec2::Add(float scalar)
+vec2 vec2::Add(float scalar)
 {
-    this->x += scalar;
-    this->y += scalar;
-
-    return this;
+    return vec2(this->x + scalar, this->y + scalar);
 }
 
-vec2* vec2::Subtract(float scalar)
+vec2 vec2::Subtract(float scalar)
 {
-    this->x -= scalar;
-    this->y -= scalar;
-
-    return this;
+    return vec2(this->x - scalar, this->y - scalar);
 }
 
-vec2* vec2::Multiply(float scalar)
+vec2 vec2::Multiply(float scalar)
 {
-    this->x *= scalar;
-    this->y *= scalar;
-
-    return this;
+    return vec2(this->x * scalar, this->y * scalar);
 }
 
-vec2* vec2::Divide(float scalar)
+vec2 vec2::Divide(float scalar)
 {
-    this->x /= scalar;
-    this->y /= scalar;
-
-    return this;
+    return vec2(this->x / scalar, this->y / scalar);
 }
 
-vec2* vec2::Add(vec2* other)
+vec2 vec2::Add(vec2* other)
 {
-    this->x += other->x;
-    this->y += other->y;
-
-    return this;
+    return vec2(this->x + other->x, this->y + other->y);
 }
 
-vec2* vec2::Subtract(vec2* other)
+vec2 vec2::Subtract(vec2* other)
 {
-    this->x -= other->x;
-    this->y -= other->y;
-
-    return this;
+    return vec2(this->x - other->x, this->y - other->y);
 }
 
-vec2* vec2::Multiply(vec2* other)
+vec2 vec2::Multiply(vec2* other)
 {
-    this->x *= other->x;
-    this->y *= other->y;
-
-    return this;
+    return vec2(this->x * other->x, this->y * other->y);
 }
 
 float vec2::DotProduct(vec2* other)
