@@ -143,11 +143,13 @@ FPolygon::FPolygon(const FPolygon &copy)
 {
     this->vertCount = copy.vertCount;
     this->vertices = new vec2*[this->vertCount];
+    this->Offset = copy.Offset;
 
     for(int i = 0; i < this->vertCount; i++)
     {
-        // TODO : Does that really work ?
+        this->vertices[i] = new vec2();
         *this->vertices[i] = *copy.vertices[i];
+        //memcpy(this->vertices[i], copy.vertices[i], sizeof(vec2));
     }
 }
 
