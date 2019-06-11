@@ -148,7 +148,7 @@ public:
 
     vec2 Offset;
 
-    void Set(int polyCount, vec2* one, vec2* two, vec2* three...);
+    void Set(int vertexCount, vec2* one, vec2* two, vec2* three...);
 
     void Clear();
 

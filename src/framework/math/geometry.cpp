@@ -3,6 +3,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <cstdarg>
+#include <libtech/filelogger.h>
 
 #include "libtech/linkedlist.h"
 
@@ -149,7 +150,6 @@ FPolygon::FPolygon(const FPolygon &copy)
     {
         this->vertices[i] = new vec2();
         *this->vertices[i] = *copy.vertices[i];
-        //memcpy(this->vertices[i], copy.vertices[i], sizeof(vec2));
     }
 }
 
@@ -162,15 +162,22 @@ FPolygon::~FPolygon()
     delete(this->vertices);
 }
 
-void FPolygon::Set(int polyCount, vec2* one, vec2* two, vec2* three...)
+void FPolygon::Set(int vertexCount, vec2* one, vec2* two, vec2* three...)
 {
+    if (vertexCount < 3)
+    {
+        LogWarning("Trying to create a polygon with less than 3 vertex.");
+
+        return;
+    }
+
     // TODO : Currently taking vec pointers and adding them to the list
     // but they are not managed properly. FIX !!!!!!!!!!!!!!!!!!!!!!!!!
 
     this->Clear();
 
-    this->vertCount = polyCount;
-    this->vertices = new vec2*[polyCount];
+    this->vertCount = vertexCount;
+    this->vertices = new vec2*[vertexCount];
     this->vertices[0] = new vec2(*one);
     this->vertices[1] = new vec2(*two);
     this->vertices[2] = new vec2(*three);
@@ -178,7 +185,7 @@ void FPolygon::Set(int polyCount, vec2* one, vec2* two, vec2* three...)
     va_list vecs;
     va_start(vecs, three);
 
-    int vectexToAdd = polyCount - 3;
+    int vectexToAdd = vertexCount - 3;
     int index = 3;
     while(vectexToAdd > 0)
     {
