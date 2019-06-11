@@ -29,6 +29,11 @@ struct LIBTECH_CLASS FPosition
         Y = vec.y;
     }
 
+    vec2 AsVec()
+    {
+        return vec2(this->X, this->Y);
+    }
+
     bool operator==(const FPosition& other)
     {
         return this->X == other.X && this->Y == other.Y;
@@ -60,6 +65,11 @@ struct LIBTECH_CLASS FSize
     {
         Width = w;
         Height = h;
+    }
+
+    vec2 AsVec()
+    {
+        return vec2(this->Width, this->Height);
     }
 
     bool operator==(const FSize& other)
@@ -115,7 +125,7 @@ struct LIBTECH_CLASS FRectangle
     float Bottom();
 
     FPosition GetCenter();
-    FPosition GetPosition();
+    FPosition GetPosition(); // Get position of the origin
     FSize GetSize();
 
     void AlignCenterOn(FRectangle* target);
