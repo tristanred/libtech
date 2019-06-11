@@ -3,6 +3,7 @@
 #include <string>
 #include <string.h>
 #include <cstdarg>
+#include <assert.h>
 using namespace std;
 
 FileLogger* _globalLogger = NULL;
@@ -28,6 +29,10 @@ void LogTrace(const char* message, ...)
         va_end(argptr);
 
         _globalLogger->LogTrace(msg);
+
+#ifdef BREAK_ON_TRACE
+        assert(false);
+#endif
     }
 }
 
@@ -42,6 +47,10 @@ void LogMessage(const char* message, ...)
         va_end(argptr);
 
         _globalLogger->LogMessage(message);
+
+#ifdef BREAK_ON_MESSAGE
+        assert(false);
+#endif
     }
 }
 
@@ -56,6 +65,10 @@ void LogWarning(const char* message, ...)
         va_end(argptr);
 
         _globalLogger->LogWarning(message);
+
+#ifdef BREAK_ON_WARNING
+        assert(false);
+#endif
     }
 }
 
@@ -70,6 +83,10 @@ void LogError(const char* message, ...)
         va_end(argptr);
 
         _globalLogger->LogError(message);
+
+#ifdef BREAK_ON_ERROR
+        assert(false);
+#endif
     }
 }
 

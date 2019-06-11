@@ -6,6 +6,13 @@
 #include <cstdio>
 using namespace std;
 
+// We can use the following #define to have the logger automatically break if an 
+// event is raised.
+//#define BREAK_ON_TRACE
+//#define BREAK_ON_MESSAGE
+#define BREAK_ON_WARNING
+#define BREAK_ON_ERROR
+
 #define MSG_MAXBUF 2048
 
 enum LOG_LEVEL{
