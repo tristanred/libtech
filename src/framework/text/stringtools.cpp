@@ -74,7 +74,7 @@ LIBTECH_API char** string_split(const char* source, const char* delim, int* resu
 
     }
 
-    *result_count = splitParts.Count();
+    *result_count = (int)splitParts.Count();
     char** res = splitParts.GetListData();
 
     return res;
