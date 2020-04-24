@@ -141,7 +141,7 @@ void get_directory_files(const char* folderPath,
     dp = opendir(folderPath);
     if(dp != NULL)
     {
-        while(ep = readdir(dp))
+        while((ep = readdir(dp)))
         {
             if(is_dot_file(ep->d_name))
                 continue;
