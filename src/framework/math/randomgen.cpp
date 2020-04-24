@@ -1,9 +1,10 @@
 #include "libtech/randomgen.h"
+
 #include "libtech/mytime.h"
 
 RandomGen::RandomGen(int seed)
 {
-    if (seed == 0)
+    if(seed == 0)
     {
         srand(get_a_ticks());
     }
@@ -13,9 +14,7 @@ RandomGen::RandomGen(int seed)
     }
 }
 
-RandomGen::~RandomGen()
-{
-}
+RandomGen::~RandomGen() {}
 
 int RandomGen::GetRandom(int min, int outerMax)
 {
@@ -30,7 +29,7 @@ float RandomGen::GetRandomPercentage()
 int get_random_int(int min, int outerMax)
 {
     RandomGen rng;
-    
+
     return rng.GetRandom(min, outerMax);
 }
 

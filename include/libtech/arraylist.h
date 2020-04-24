@@ -1,19 +1,16 @@
 #pragma once
 
-#include <vector>
-#include <list>
-#include <functional>
 #include <algorithm>
 #include <cassert>
+#include <functional>
+#include <list>
+#include <vector>
 
 template <class T>
 class ArrayList
 {
 public:
-    ArrayList()
-    {
-        _container = new std::vector<T>();
-    };
+    ArrayList() { _container = new std::vector<T>(); };
 
     ArrayList(uint64_t initialSize)
     {
@@ -28,16 +25,13 @@ public:
         delete(_container);
     };
 
-    void Add(T item)
-    {
-        _container->push_back(item);
-    };
+    void Add(T item) { _container->push_back(item); };
 
     void AddRange(ArrayList<T>* items)
     {
         auto it = items->GetContainer()->begin();
 
-        while (it != items->GetContainer()->end())
+        while(it != items->GetContainer()->end())
         {
             T listItem = *it;
 
@@ -46,48 +40,46 @@ public:
             it++;
         }
     };
-    
+
     void Insert(T item, uint64_t pos)
     {
         _container->insert(_container->begin() + pos, item);
     };
-    
+
     void AddRangeFront(ArrayList<T>* items)
     {
         auto it = items->GetContainer()->begin();
-        
-        while (it != items->GetContainer()->end())
+
+        while(it != items->GetContainer()->end())
         {
             T listItem = *it;
-            
+
             _container->insert(_container->begin(), listItem);
-            
+
             it++;
         }
     };
 
     T Get(uint64_t index)
     {
-        if (index < _container->size())
+        if(index < _container->size())
         {
             return _container->at((const unsigned int)index);
         }
-        
+
         return 0;
     };
 
-    T& operator[] (uint64_t index)
-    {
-        return _container->at(index);
-    };
+    T& operator[](uint64_t index) { return _container->at(index); };
 
     T GetBy(std::function<bool(T)> predicate)
     {
-        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for(typename std::vector<T>::iterator it = this->_container->begin();
+            it != this->_container->end(); it++)
         {
             T element = *it;
 
-            if (predicate(element))
+            if(predicate(element))
             {
                 return element;
             }
@@ -116,11 +108,12 @@ public:
     {
         ArrayList<T>* retList = new ArrayList<T>();
 
-        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for(typename std::vector<T>::iterator it = this->_container->begin();
+            it != this->_container->end(); it++)
         {
             auto test = predicate(*it);
 
-            if (test)
+            if(test)
             {
                 retList->Add(*it);
             }
@@ -133,13 +126,14 @@ public:
     {
         T retValue = NULL;
 
-        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for(typename std::vector<T>::iterator it = this->_container->begin();
+            it != this->_container->end(); it++)
         {
             T val = *it;
 
             auto test = predicate(*it);
 
-            if (test)
+            if(test)
             {
                 retValue = val;
             }
@@ -150,11 +144,12 @@ public:
 
     bool Contains(std::function<bool(T)> predicate)
     {
-        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for(typename std::vector<T>::iterator it = this->_container->begin();
+            it != this->_container->end(); it++)
         {
             T element = *it;
 
-            if (predicate(element))
+            if(predicate(element))
             {
                 return true;
             }
@@ -165,11 +160,12 @@ public:
 
     bool ContainsItem(T item)
     {
-        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for(typename std::vector<T>::iterator it = this->_container->begin();
+            it != this->_container->end(); it++)
         {
             T element = *it;
 
-            if (element == item)
+            if(element == item)
             {
                 return true;
             }
@@ -180,7 +176,8 @@ public:
 
     void ForEach(std::function<void(T)> func)
     {
-        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for(typename std::vector<T>::iterator it = this->_container->begin();
+            it != this->_container->end(); it++)
         {
             T val = *it;
 
@@ -192,11 +189,12 @@ public:
     {
         uint64_t i = 0;
 
-        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for(typename std::vector<T>::iterator it = this->_container->begin();
+            it != this->_container->end(); it++)
         {
             T current = (*it);
 
-            if (current == item)
+            if(current == item)
             {
                 return i;
             }
@@ -240,11 +238,12 @@ public:
 
     void RemoveObject(T object)
     {
-        for (typename std::vector<T>::iterator it = this->_container->begin(); it != this->_container->end(); it++)
+        for(typename std::vector<T>::iterator it = this->_container->begin();
+            it != this->_container->end(); it++)
         {
             T current = (*it);
 
-            if (current == object)
+            if(current == object)
             {
                 _container->erase(it);
 
@@ -253,16 +252,13 @@ public:
         }
     };
 
-    void Clear()
-    {
-        _container->clear();
-    };
+    void Clear() { _container->clear(); };
 
     void DeleteElements(bool autoClear = true)
     {
         auto begin = this->_container->begin();
         auto end = this->_container->end();
-        while (begin != end)
+        while(begin != end)
         {
             T data = *begin;
 
@@ -271,26 +267,23 @@ public:
             begin++;
         }
 
-        if (autoClear == true)
+        if(autoClear == true)
         {
             this->Clear();
         }
     };
 
-    uint64_t Count()
-    {
-        return _container->size();
-    };
-    
+    uint64_t Count() { return _container->size(); };
+
     T* GetListData()
     {
         T* data = new T[(unsigned int)this->Count()];
-        
+
         for(uint64_t i = 0; i < this->Count(); i++)
         {
             data[i] = this->Get(i);
         }
-        
+
         return data;
     };
 
@@ -300,9 +293,8 @@ public:
 
         uint64_t totalItems = this->Count();
 
-        if (totalItems % width != 0)
+        if(totalItems % width != 0)
             return 0;
-
 
         uint64_t columnIndex = 0;
         uint64_t rowIndex = 0;
@@ -312,13 +304,13 @@ public:
         resultList[rowIndex] = row;
 
         auto it = this->GetContainer()->begin();
-        while (it != this->GetContainer()->end())
+        while(it != this->GetContainer()->end())
         {
             resultList[rowIndex][columnIndex] = (*it);
 
             columnIndex++;
 
-            if (columnIndex % width == 0)
+            if(columnIndex % width == 0)
             {
                 rowIndex++;
                 T* newRow = new T[width];
@@ -333,14 +325,10 @@ public:
         return resultList;
     };
 
-    std::vector<T>* GetContainer()
-    {
-        return _container;
-    };
+    std::vector<T>* GetContainer() { return _container; };
 
 protected:
     std::vector<T>* _container;
-
 };
 
 template <class T, class U>
@@ -348,7 +336,8 @@ ArrayList<U>* ListSelect(ArrayList<T>* input, std::function<U(T)> selector)
 {
     ArrayList<U>* outList = new ArrayList<U>();
 
-    for (typename std::vector<T>::iterator it = input->GetContainer()->begin(); it != input->GetContainer()->end(); it++)
+    for(typename std::vector<T>::iterator it = input->GetContainer()->begin();
+        it != input->GetContainer()->end(); it++)
     {
         T element = *it;
 
@@ -361,11 +350,14 @@ ArrayList<U>* ListSelect(ArrayList<T>* input, std::function<U(T)> selector)
 };
 
 template <class T, class Agg>
-Agg ListAggregate(ArrayList<T>* input, Agg initial, std::function<Agg(Agg, T)> func)
+Agg ListAggregate(ArrayList<T>* input,
+                  Agg initial,
+                  std::function<Agg(Agg, T)> func)
 {
     Agg aggregateValue = initial;
 
-    for (typename std::vector<T>::iterator it = input->GetContainer()->begin(); it != input->GetContainer()->end(); it++)
+    for(typename std::vector<T>::iterator it = input->GetContainer()->begin();
+        it != input->GetContainer()->end(); it++)
     {
         T element = *it;
 

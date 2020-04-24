@@ -1,8 +1,9 @@
 #include "libtech/binreader.h"
 
-#include <string>
-#include <string.h>
 #include <errno.h>
+#include <string.h>
+
+#include <string>
 
 binreader::binreader()
 {
@@ -10,7 +11,7 @@ binreader::binreader()
     loadedPath = NULL;
 }
 
-binreader::binreader(const char *filepath) : binreader()
+binreader::binreader(const char* filepath) : binreader()
 {
     this->Open(filepath);
 }
@@ -20,7 +21,7 @@ binreader::~binreader()
     this->Close();
 }
 
-void binreader::Open(const char *filepath)
+void binreader::Open(const char* filepath)
 {
     if(loadedPath != NULL && strcmp(loadedPath, filepath) == 0)
         return;
@@ -50,11 +51,11 @@ void binreader::Close()
     if(loadedPath != NULL)
     {
         // Not able to delete, flagged as heap corruption. TODO
-        //delete(loadedPath); // Currently leaking.
+        // delete(loadedPath); // Currently leaking.
     }
 }
 
-char *binreader::ReadBytes()
+char* binreader::ReadBytes()
 {
     if(fp != NULL)
     {
@@ -102,7 +103,6 @@ LIBTECH_API char* getfilebytes(const char* filepath, size_t* length)
 
         *length = reader.GetSize();
         return buf;
-
     }
     else
     {

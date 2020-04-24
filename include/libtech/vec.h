@@ -38,7 +38,6 @@ public:
 vec2* operator+(vec2* lhs, const vec2& rhs);
 vec2 operator+(vec2& lhs, const vec2& rhs);
 
-
 // Alternate functions while the vec2's operator overloading are fixed.
 vec2 Add_Vectors(vec2* first, vec2* second);
 vec2 Sub_Vectors(vec2* first, vec2* second);

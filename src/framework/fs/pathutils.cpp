@@ -1,7 +1,8 @@
 #include "libtech/pathutils.h"
 
-#include <string>
 #include <string.h>
+
+#include <string>
 
 char* get_file_name(const char* path)
 {
@@ -33,7 +34,7 @@ char* get_file_extension(const char* path)
 {
     const char* extPtr = strrchr(path, '.');
 
-    if (extPtr == NULL) // No dots found
+    if(extPtr == NULL)  // No dots found
     {
         char* emptyString = new char[1];
         strcpy(emptyString, "");
@@ -97,6 +98,6 @@ void sanitize_path_slashes(const char* original, char* sanitized)
             sanitized[i] = original[i];
         }
     }
-    
+
     sanitized[len] = '\0';
 }

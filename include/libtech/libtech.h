@@ -31,10 +31,9 @@
 #define _DEBUG
 #endif
 
-
 #endif
 
-
 // Common include
-#include "libtypes.h"
 #include <stddef.h>
+
+#include "libtypes.h"

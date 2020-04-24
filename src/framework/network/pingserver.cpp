@@ -2,9 +2,9 @@
 
 #ifdef _WIN32
 #pragma comment(lib, "Ws2_32.lib")
+#include <stdio.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <stdio.h>
 
 #define DEFAULT_BUFLEN 512
 
@@ -34,7 +34,8 @@ void startpingserver()
         }
 
         SOCKET ListenSocket = INVALID_SOCKET;
-        ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+        ListenSocket =
+            socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 
         if(ListenSocket == INVALID_SOCKET)
         {
@@ -78,7 +79,6 @@ void startpingserver()
         // Receive until the peer shuts down the connection
         do
         {
-
             iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
             if(iResult > 0)
             {
@@ -114,19 +114,12 @@ void startpingserver()
     }
 }
 
-void stoppingserver()
-{
-}
+void stoppingserver() {}
 #else
-void startpingserver()
-{
+void startpingserver(){
 
 };
 
-void stoppingserver()
-{
-
-}
+void stoppingserver() {}
 
 #endif
-

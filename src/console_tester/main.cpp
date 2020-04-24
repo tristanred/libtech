@@ -1,8 +1,6 @@
-#include <stdio.h>
-
 #include <libtech/mytime.h>
-
 #include <libtech/slots/ReelManager.h>
+#include <stdio.h>
 
 int main(int argc, char** argv)
 {

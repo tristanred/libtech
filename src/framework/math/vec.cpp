@@ -2,9 +2,7 @@
 
 #include <cmath>
 
-vec2::vec2()
-{
-}
+vec2::vec2() {}
 
 vec2::vec2(float scale)
 {
@@ -102,7 +100,7 @@ float vec2_len(vec2* v)
     return sqrt(pow(v->x, 2) + pow(v->y, 2));
 }
 
-vec2 vec2_normalize(vec2 * v)
+vec2 vec2_normalize(vec2* v)
 {
     vec2 res = *v;
     float length = vec2_len(v);

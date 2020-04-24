@@ -1,8 +1,7 @@
 #include "libtech/slots/LineSet.h"
 
-#include <stdlib.h>
-
 #include <libtech/stringtools.h>
+#include <stdlib.h>
 
 #include "pugixml.hpp"
 
@@ -20,7 +19,7 @@ LineSet::LineSet(int** linePatterns, int patternCount)
 
 LineSet::~LineSet()
 {
-    for (int i = 0; i < this->PatternsCount; i++)
+    for(int i = 0; i < this->PatternsCount; i++)
     {
         delete[] this->LinePatterns[i];
     }
@@ -38,13 +37,14 @@ LineSet* LineSet::CreateLinesetFromConfig(const char* configPath)
         return NULL;
     }
 
-    pugi::xpath_node_set lineNodes = doc.select_nodes("/linesetConfig/lineset[@id='0']/line");
+    pugi::xpath_node_set lineNodes =
+        doc.select_nodes("/linesetConfig/lineset[@id='0']/line");
 
     LineSet* newSet = new LineSet();
     newSet->PatternsCount = (int)lineNodes.size();
     newSet->LinePatterns = new int*[newSet->PatternsCount];
 
-    for(pugi::xpath_node node: lineNodes)
+    for(pugi::xpath_node node : lineNodes)
     {
         pugi::xml_node lineNode = node.node();
 
@@ -52,7 +52,8 @@ LineSet* LineSet::CreateLinesetFromConfig(const char* configPath)
 
         const char* lineData = lineNode.text().as_string();
         long int count = 0;
-        newSet->LinePatterns[lineIndex] = convert_string_to_int_list(lineData, &count);
+        newSet->LinePatterns[lineIndex] =
+            convert_string_to_int_list(lineData, &count);
     }
 
     return newSet;
@@ -65,7 +66,7 @@ LineSet* LineSet::Generate10Lines()
 
     newSet->LinePatterns = new int*[10];
 
-    for (int i = 0; i < newSet->PatternsCount; i++)
+    for(int i = 0; i < newSet->PatternsCount; i++)
     {
         newSet->LinePatterns[i] = new int[5];
     }

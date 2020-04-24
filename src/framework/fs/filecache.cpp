@@ -1,13 +1,14 @@
 #include "libtech/filecache.h"
 
-#include <string>
 #include <string.h>
+
+#include <string>
 
 #include "libtech/binreader.h"
 
 FileCache::FileCache(bool writeThrough)
 {
-    cache_entries = new std::list<FileCache_Entry *>();
+    cache_entries = new std::list<FileCache_Entry*>();
     update_filesystem = writeThrough;
 }
 
@@ -18,7 +19,7 @@ FileCache::~FileCache()
     while(begin != end)
     {
         FileCache_Entry* entry = *begin;
-        //delete(entry->file_name); // Leaking. TODO
+        // delete(entry->file_name); // Leaking. TODO
         delete(entry);
 
         begin++;
@@ -48,20 +49,23 @@ uint8_t* FileCache::ReadFileContents(const char* filepath, size_t* length)
         return NULL;
     }
 
-    // If the read was successful, enter it in the cache and return the contents.
+    // If the read was successful, enter it in the cache and return the
+    // contents.
     FileCache_Entry* created = new FileCache_Entry();
     created->file_name = new char[strlen(filepath)];
     strcpy(created->file_name, filepath);
     created->length = size;
     created->contents = content;
-    
+
     cache_entries->push_back(created);
 
     *length = size;
     return content;
 }
 
-void FileCache::WriteFileContents(const char* filepath, size_t length, uint8_t* content)
+void FileCache::WriteFileContents(const char* filepath,
+                                  size_t length,
+                                  uint8_t* content)
 {
     FileCache_Entry* found = findFileInCache(filepath);
 

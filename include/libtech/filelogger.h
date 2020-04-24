@@ -1,12 +1,12 @@
 #pragma once
 
-#include "libtech.h"
-
 #include <cstdarg>
 #include <cstdio>
+
+#include "libtech.h"
 using namespace std;
 
-// We can use the following #define to have the logger automatically break if an 
+// We can use the following #define to have the logger automatically break if an
 // event is raised.
 //#define BREAK_ON_TRACE
 //#define BREAK_ON_MESSAGE
@@ -15,7 +15,8 @@ using namespace std;
 
 #define MSG_MAXBUF 2048
 
-enum LOG_LEVEL{
+enum LOG_LEVEL
+{
     LOG_TRACE,
     LOG_MSG,
     LOG_WARN,

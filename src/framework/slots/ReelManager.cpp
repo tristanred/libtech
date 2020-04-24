@@ -1,15 +1,15 @@
 #include "libtech/slots/ReelManager.h"
 
-#include <stdlib.h>
-#include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "libtech/slots/LineSet.h"
-#include "libtech/slots/ReelStrip.h"
 #include "libtech/slots/Paytable.h"
-#include "libtech/slots/SymbolSet.h"
+#include "libtech/slots/ReelStrip.h"
 #include "libtech/slots/SlotWins.h"
+#include "libtech/slots/SymbolSet.h"
 
 ReelManager::ReelManager(int reels, int rows)
 {
@@ -20,7 +20,7 @@ ReelManager::ReelManager(int reels, int rows)
 
     this->ReelStops = new int[reels];
     this->ReelSymbols = new Symbol**[reels];
-    for (int i = 0; i < reels; i++)
+    for(int i = 0; i < reels; i++)
     {
         this->ReelSymbols[i] = new Symbol*[rows];
     }
@@ -42,30 +42,29 @@ ReelManager::ReelManager(int reels, int rows)
 ReelManager::~ReelManager()
 {
     this->CleanWins();
-    if (LineWins != NULL)
+    if(LineWins != NULL)
     {
         delete[] this->LineWins;
     }
 
-    if (this->ScatterWins != NULL)
+    if(this->ScatterWins != NULL)
     {
         delete(this->ScatterWins);
     }
 
     delete[] this->ReelStops;
 
-    for (int i = 0; i < this->Reels; i++)
+    for(int i = 0; i < this->Reels; i++)
     {
         delete(this->reelstrips[i]);
     }
     delete[] this->reelstrips;
 
-    for (int i = 0; i < this->Reels; i++)
+    for(int i = 0; i < this->Reels; i++)
     {
         delete[] this->ReelSymbols[i];
     }
     delete[] this->ReelSymbols;
-
 
     delete(this->paytable);
     delete(this->Lines);
@@ -91,23 +90,25 @@ void ReelManager::CreateDefaultObjects()
 {
     this->Symbols = SymbolSet::CreateFromConfig(SYMBOLS_CFG_PATH);
 
-    if (this->Symbols == NULL)
+    if(this->Symbols == NULL)
     {
         printf("Cannot load the Symbols config, aborting\n");
         return;
     }
 
-    this->reelstrips = ReelStrip::GenerateReelstripSetFromConfig(REELSTRIP_CFG_PATH, this->Symbols, this->Reels);
+    this->reelstrips = ReelStrip::GenerateReelstripSetFromConfig(
+        REELSTRIP_CFG_PATH, this->Symbols, this->Reels);
 
-    if (this->reelstrips == NULL)
+    if(this->reelstrips == NULL)
     {
         printf("Cannot load the reelstrips config, aborting\n");
         return;
     }
 
-    this->paytable = Paytable::GetPaytableFromConfig(PAYTABLE_CFG_PATH, this->Symbols);
+    this->paytable =
+        Paytable::GetPaytableFromConfig(PAYTABLE_CFG_PATH, this->Symbols);
 
-    if (this->paytable == NULL)
+    if(this->paytable == NULL)
     {
         printf("Cannot load the paytable config, aborting\n");
         return;
@@ -115,14 +116,14 @@ void ReelManager::CreateDefaultObjects()
 
     this->Lines = LineSet::CreateLinesetFromConfig(LINESET_CFG_PATH);
 
-    if (this->Lines == NULL)
+    if(this->Lines == NULL)
     {
         printf("Cannot load the lines config, aborting\n");
         return;
     }
 
     this->LineWins = new LineWin*[this->Lines->PatternsCount];
-    for (int i = 0; i < this->Lines->PatternsCount; i++)
+    for(int i = 0; i < this->Lines->PatternsCount; i++)
     {
         this->LineWins[i] = NULL;
     }
@@ -136,7 +137,7 @@ void ReelManager::CreateDefaultObjects()
  */
 void ReelManager::Spin()
 {
-    if (this->isLoaded == false)
+    if(this->isLoaded == false)
     {
         printf("ReelManager is not loaded.\n");
         return;
@@ -166,7 +167,7 @@ void ReelManager::Spin()
     return;
 #endif
 
-    for (int i = 0; i < this->Reels; i++)
+    for(int i = 0; i < this->Reels; i++)
     {
         int rsLen = this->reelstrips[i]->Length;
 
@@ -174,7 +175,8 @@ void ReelManager::Spin()
 
         for(int k = 0; k < this->Rows; k++)
         {
-            this->ReelSymbols[i][k] = this->reelstrips[i]->Symbols[(this->ReelStops[i] + k) % rsLen];
+            this->ReelSymbols[i][k] =
+                this->reelstrips[i]->Symbols[(this->ReelStops[i] + k) % rsLen];
         }
     }
 }
@@ -188,7 +190,7 @@ void ReelManager::Spin()
  */
 void ReelManager::AugmentSymbol(int reel, int row)
 {
-    if (this->isLoaded == false)
+    if(this->isLoaded == false)
     {
         printf("ReelManager is not loaded.\n");
         return;
@@ -217,7 +219,7 @@ void ReelManager::AugmentSymbol(int reel, int row)
  */
 void ReelManager::RespinSymbol(int reel, int row)
 {
-    if (this->isLoaded == false)
+    if(this->isLoaded == false)
     {
         printf("ReelManager is not loaded.\n");
         return;
@@ -240,7 +242,7 @@ void ReelManager::RespinSymbol(int reel, int row)
 
 void ReelManager::PrintCurrentCombination()
 {
-    if (this->isLoaded == false)
+    if(this->isLoaded == false)
     {
         printf("ReelManager is not loaded.\n");
         return;
@@ -249,10 +251,8 @@ void ReelManager::PrintCurrentCombination()
     for(int i = 0; i < this->Rows; i++)
     {
         printf("[%d, %d, %d, %d, %d]\n", this->ReelSymbols[0][i]->id,
-                                         this->ReelSymbols[1][i]->id,
-                                         this->ReelSymbols[2][i]->id,
-                                         this->ReelSymbols[3][i]->id,
-                                         this->ReelSymbols[4][i]->id);
+               this->ReelSymbols[1][i]->id, this->ReelSymbols[2][i]->id,
+               this->ReelSymbols[3][i]->id, this->ReelSymbols[4][i]->id);
     }
 }
 
@@ -267,7 +267,7 @@ void ReelManager::PrintCurrentCombination()
  */
 int ReelManager::CalculateWins()
 {
-    if (this->isLoaded == false)
+    if(this->isLoaded == false)
     {
         printf("ReelManager is not loaded.\n");
         return -1;
@@ -293,17 +293,17 @@ int ReelManager::CalculateWins()
         {
             totalWin += wins->winAmount;
 
-            wins->winLineIndex = i; // Hotfix winline
+            wins->winLineIndex = i;  // Hotfix winline
 
-            printf("WinLine %d : Length = %d, Won = %d", i, wins->count, wins->winAmount);
+            printf("WinLine %d : Length = %d, Won = %d", i, wins->count,
+                   wins->winAmount);
 
             printf(" (");
-            for (int k = 0; k < this->Reels; k++)
+            for(int k = 0; k < this->Reels; k++)
             {
                 printf("%d ", symbolsOnLine[k]->id);
             }
             printf(")\n");
-
         }
 
         this->LineWins[i] = wins;
@@ -316,7 +316,8 @@ int ReelManager::CalculateWins()
     {
         totalWin += scatterWin->winAmount;
 
-        printf("Scatter Win : Length = %d, Won %d\n", scatterWin->count, scatterWin->winAmount);
+        printf("Scatter Win : Length = %d, Won %d\n", scatterWin->count,
+               scatterWin->winAmount);
     }
     this->ScatterWins = scatterWin;
 
@@ -338,7 +339,7 @@ int ReelManager::CalculateWins()
  */
 LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
 {
-    if (this->isLoaded == false)
+    if(this->isLoaded == false)
     {
         printf("ReelManager is not loaded.\n");
         return NULL;
@@ -348,7 +349,7 @@ LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
     Symbol* lineWinSymbol = lineSymbols[0];
 
     // Lines can't start with a scatter
-    if (lineWinSymbol->isScatter)
+    if(lineWinSymbol->isScatter)
     {
         return NULL;
     }
@@ -370,7 +371,7 @@ LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
         Symbol* sym = lineSymbols[i];
 
         // Scatters break lines
-        if (sym->isScatter)
+        if(sym->isScatter)
         {
             break;
         }
@@ -387,7 +388,8 @@ LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
         }
 
         // If the line has a symbol sequence but the next one is a wild
-        // Increment the line length but do not change the identity of the winline to Wild.
+        // Increment the line length but do not change the identity of the
+        // winline to Wild.
         if(sym->isWild)
         {
             winLength = i + 1;
@@ -410,14 +412,15 @@ LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
     for(int i = 0; i < this->paytable->PrizeCount; i++)
     {
         PaytablePrize* prize = this->paytable->Prizes[i];
-        if(prize->SymbolCount == winLength && prize->SymbolID == lineWinSymbol->id)
+        if(prize->SymbolCount == winLength &&
+           prize->SymbolID == lineWinSymbol->id)
         {
             LineWin* win = new LineWin();
             win->count = winLength;
             win->winAmount = prize->PrizeWins;
             win->WinningSymbol = new Symbol();
             memcpy(win->WinningSymbol, lineWinSymbol, sizeof(Symbol));
-            win->winLineIndex = -1; // Don't know from here.
+            win->winLineIndex = -1;  // Don't know from here.
 
             return win;
         }
@@ -439,7 +442,7 @@ LineWin* ReelManager::CalculateLineWin(Symbol** lineSymbols)
  */
 ScatterWin* ReelManager::CalculateScatterWins()
 {
-    if (this->isLoaded == false)
+    if(this->isLoaded == false)
     {
         printf("ReelManager is not loaded.\n");
         return NULL;
@@ -473,12 +476,13 @@ ScatterWin* ReelManager::CalculateScatterWins()
     {
         PaytablePrize* prize = this->paytable->Prizes[i];
 
-        if(prize->SymbolID == scatterSymbol->id && prize->SymbolCount == scatterCount)
+        if(prize->SymbolID == scatterSymbol->id &&
+           prize->SymbolCount == scatterCount)
         {
             wins->winAmount = prize->PrizeWins;
             wins->count = scatterCount;
             wins->WinningScatter = scatterSymbol;
-            wins->winPositions = NULL; // Fuck it
+            wins->winPositions = NULL;  // Fuck it
 
             return wins;
         }
@@ -490,16 +494,16 @@ ScatterWin* ReelManager::CalculateScatterWins()
 
 void ReelManager::CleanWins()
 {
-    for (int i = 0; i < this->Lines->PatternsCount; i++)
+    for(int i = 0; i < this->Lines->PatternsCount; i++)
     {
-        if (this->LineWins[i] != NULL)
+        if(this->LineWins[i] != NULL)
         {
             delete(this->LineWins[i]);
             this->LineWins[i] = NULL;
         }
     }
 
-    if (this->ScatterWins != NULL)
+    if(this->ScatterWins != NULL)
     {
         delete(this->ScatterWins);
         this->ScatterWins = NULL;

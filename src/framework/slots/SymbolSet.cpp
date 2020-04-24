@@ -1,8 +1,9 @@
 #include "libtech/slots/SymbolSet.h"
 
 #include <stdlib.h>
-#include <string>
 #include <string.h>
+
+#include <string>
 
 #include "pugixml.hpp"
 
@@ -16,7 +17,7 @@ Symbol::Symbol()
 
 Symbol::~Symbol()
 {
-    //delete(this->name);
+    // delete(this->name);
 }
 
 Symbol::Symbol(int id)
@@ -51,19 +52,20 @@ SymbolSet* SymbolSet::CreateFromConfig(const char* configPath)
 {
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(configPath);
-    if (!result)
+    if(!result)
     {
         // File not found
         return NULL;
     }
 
-    pugi::xpath_node_set symbolNodes = doc.select_nodes("/symbolsetConfig/symbolset[@id='0']/symbol");
+    pugi::xpath_node_set symbolNodes =
+        doc.select_nodes("/symbolsetConfig/symbolset[@id='0']/symbol");
 
     SymbolSet* set = new SymbolSet();
     set->SymbolCount = (int)symbolNodes.size();
     set->SymbolList = new Symbol*[set->SymbolCount];
 
-    for (pugi::xpath_node node : symbolNodes)
+    for(pugi::xpath_node node : symbolNodes)
     {
         pugi::xml_node symbolNode = node.node();
 
@@ -75,15 +77,16 @@ SymbolSet* SymbolSet::CreateFromConfig(const char* configPath)
         set->SymbolList[symbolId]->name = new char[strlen(name)];
         strcpy(set->SymbolList[symbolId]->name, name);
 
-
-        set->SymbolList[symbolId]->isScatter = symbolNode.attribute("isScatter").as_bool();
-        set->SymbolList[symbolId]->isWild = symbolNode.attribute("isWild").as_bool();
+        set->SymbolList[symbolId]->isScatter =
+            symbolNode.attribute("isScatter").as_bool();
+        set->SymbolList[symbolId]->isWild =
+            symbolNode.attribute("isWild").as_bool();
     }
 
     return set;
 }
 
-SymbolSet *SymbolSet::CreateDefaultSet()
+SymbolSet* SymbolSet::CreateDefaultSet()
 {
     /**
      * Default set is 7 symbols

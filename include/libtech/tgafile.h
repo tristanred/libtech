@@ -2,13 +2,13 @@
 
 #include <string>
 
-//enum COLOR_MAP_TYPE
+// enum COLOR_MAP_TYPE
 //{
 //    NO_COLOR_MAP = 0,
 //    COLOR_MAP_PRESENT = 1,
 //};
 //
-//enum IMAGE_TYPE
+// enum IMAGE_TYPE
 //{
 //    NO_DATA = 0,
 //    COLOR_MAP = 1,
@@ -19,22 +19,24 @@
 //    RLE_GRAYSCALE = 11,
 //};
 
-struct TgaFileHeader {
-    char  idlength;
-    char  colourmaptype;
-    char  datatypecode;
+struct TgaFileHeader
+{
+    char idlength;
+    char colourmaptype;
+    char datatypecode;
     short colourmaporigin;
     short colourmaplength;
-    char  colourmapdepth;
+    char colourmapdepth;
     short x_origin;
     short y_origin;
     short width;
     short height;
-    char  bitsperpixel;
-    char  imagedescriptor;
+    char bitsperpixel;
+    char imagedescriptor;
 };
 
-struct TgaPix {
+struct TgaPix
+{
     unsigned char b, g, r, a;
 };
 
@@ -52,7 +54,10 @@ public:
 
     void Init(short int w, short int h);
 
-    void FillColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+    void FillColor(unsigned char r,
+                   unsigned char g,
+                   unsigned char b,
+                   unsigned char a);
     void FillColor(TgaPix* pixColor);
 
     TgaPix* Get(int x, int y);

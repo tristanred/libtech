@@ -11,7 +11,7 @@ public:
     ~Symbol();
 
     int id;
-    char* name; // Optional
+    char* name;  // Optional
     bool isWild;
     bool isScatter;
 };

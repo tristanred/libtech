@@ -1,7 +1,8 @@
 #include "libtech/functions.h"
 
-#include <math.h>
 #include <assert.h>
+#include <math.h>
+
 #include <string>
 
 #include "libtech/tgafile.h"
@@ -24,29 +25,30 @@ TgaFile* PlotSequenceToImage(float* curve, int curveLength)
     int lowestPoint = 0;
     int imageHeight;
 
-    // Find the highest and lowest point on the curve, round the number up to make sure we have +1 pixel
-    for (int i = 0; i < curveLength; i++)
+    // Find the highest and lowest point on the curve, round the number up to
+    // make sure we have +1 pixel
+    for(int i = 0; i < curveLength; i++)
     {
         int pt = (int)ceil(curve[i] * -1);
 
-        if (pt > highestPoint)
+        if(pt > highestPoint)
             highestPoint = pt;
 
-        if (pt < lowestPoint)
+        if(pt < lowestPoint)
             lowestPoint = pt;
     }
 
     imageHeight = abs(highestPoint) + abs(lowestPoint);
 
-    assert(imageHeight > 0); // Curve is probably malformed
+    assert(imageHeight > 0);  // Curve is probably malformed
 
     TgaFile* image = new TgaFile();
     image->Init(curveLength, imageHeight);
 
-    for (int i = 0; i < curveLength; i++)
+    for(int i = 0; i < curveLength; i++)
     {
         int pt = (int)curve[i] * -1;
-        //int baseLine = i + (curveLength * imageHeight / 2);
+        // int baseLine = i + (curveLength * imageHeight / 2);
 
         TgaPix* px = image->Get(i, (imageHeight / 2) + pt);
         px->a = 255;

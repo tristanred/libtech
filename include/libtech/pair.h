@@ -4,9 +4,7 @@ template <class T, class Y>
 class Pair
 {
 public:
-    Pair()
-    {
-    };
+    Pair(){};
 
     Pair(T item1, Y item2)
     {
@@ -14,9 +12,7 @@ public:
         this->Item2 = item2;
     }
 
-    ~Pair()
-    {
-    };
+    ~Pair(){};
 
     T Item1;
     Y Item2;

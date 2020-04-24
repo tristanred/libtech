@@ -1,32 +1,34 @@
 #include "libtech/fsutils.h"
 
-#include <iostream>
-#include <fstream>
-#include <string>
 #include <string.h>
-#include <list>
 
-#include "libtech/linkedlist.h"
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <string>
+
 #include "libtech/filelogger.h"
-#include "libtech/sysutils.h"
+#include "libtech/linkedlist.h"
 #include "libtech/stdutils.h"
+#include "libtech/sysutils.h"
 
 #ifdef _WIN32
 
 #include <Windows.h>
+
 #include "libtech/sysutils.h"
 
 #elif linux
 
-#include <sys/types.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 
 #elif __APPLE__
 
-#include <sys/types.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 
 #endif
 
@@ -57,7 +59,7 @@ char** get_lines_of_file(const char* filePath, int* count)
     return lines->GetLinear();
 }
 
-char* read_characters(const char * filePath, size_t* length)
+char* read_characters(const char* filePath, size_t* length)
 {
     std::ifstream reader(filePath, std::ios::binary | std::ios::ate);
 
@@ -80,7 +82,9 @@ void write_characters(const char* filePath, char* data, size_t length)
     writer.flush();
 }
 
-void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*>* aggregate)
+void get_directory_files(const char* folderPath,
+                         bool recursive,
+                         ArrayList<char*>* aggregate)
 {
 #ifdef _WIN32
     WIN32_FIND_DATAA ffd;
@@ -131,17 +135,17 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
     FindClose(hFind);
 #elif linux
 
-    DIR *dp;
-    struct dirent *ep;
+    DIR* dp;
+    struct dirent* ep;
 
     dp = opendir(folderPath);
-    if (dp != NULL)
+    if(dp != NULL)
     {
-        while (ep = readdir(dp))
+        while(ep = readdir(dp))
         {
             if(is_dot_file(ep->d_name))
                 continue;
-            
+
             if(ep->d_type == DT_DIR)
             {
                 // Is directory
@@ -149,8 +153,9 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
                 subDirectoryPath.append(folderPath);
                 subDirectoryPath.append("/");
                 subDirectoryPath.append(ep->d_name);
-                
-                get_directory_files(subDirectoryPath.c_str(), recursive, aggregate);
+
+                get_directory_files(subDirectoryPath.c_str(), recursive,
+                                    aggregate);
             }
             else if(ep->d_type == DT_REG)
             {
@@ -166,7 +171,7 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
             }
         }
 
-        closedir (dp);
+        closedir(dp);
     }
     else
     {
@@ -175,17 +180,17 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
 #elif __APPLE__
     struct dirent** namelist;
     int n = scandir(folderPath, &namelist, 0, alphasort);
-    if (n < 0)
+    if(n < 0)
     {
         perror("scandir");
     }
     else
     {
-        for (int i = 0; i < n; i++)
+        for(int i = 0; i < n; i++)
         {
             if(is_dot_file(namelist[i]->d_name))
                 continue;
-            
+
             if(namelist[i]->d_type == DT_DIR)
             {
                 std::string subDirectoryPath;
@@ -193,7 +198,8 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
                 subDirectoryPath.append("/");
                 subDirectoryPath.append(namelist[i]->d_name);
 
-                get_directory_files(subDirectoryPath.c_str(), recursive, aggregate);
+                get_directory_files(subDirectoryPath.c_str(), recursive,
+                                    aggregate);
             }
             else if(namelist[i]->d_type == DT_REG)
             {
@@ -206,12 +212,11 @@ void get_directory_files(const char* folderPath, bool recursive, ArrayList<char*
             {
                 // File type not regocnized
             }
-            
+
             free(namelist[i]);
-            
         }
     }
-    
+
     free(namelist);
 #endif
 }
@@ -229,9 +234,9 @@ char* find_subdir_file(const char* fileName, const char* folder)
         {
             char* returnCopy = new char[strlen(element) + 1];
             strcpy(returnCopy, element);
-            
+
             filesList.DeleteElements();
-            
+
             return returnCopy;
         }
     }
@@ -246,25 +251,24 @@ LIBTECH_API bool path_is_directory(const char* path)
 #ifdef _WIN32
 
     DWORD result = GetFileAttributesA(path);
-    
+
     if(result == INVALID_FILE_ATTRIBUTES)
     {
         // Error
         print_last_win32_error();
-        
+
         return false;
     }
-    
+
     if(result & FILE_ATTRIBUTE_DIRECTORY)
     {
         return true;
     }
-    
-    
+
 #elif defined(linux) || defined(__APPLE__)
-    
+
     struct stat s;
-    if( stat(path,&s) == 0 )
+    if(stat(path, &s) == 0)
     {
         if(s.st_mode & S_IFREG)
         {

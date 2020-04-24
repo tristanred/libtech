@@ -1,7 +1,8 @@
 #pragma once
 
-#include <random>
 #include <stdlib.h>
+
+#include <random>
 
 class RandomGen
 {
@@ -12,8 +13,8 @@ public:
     int GetRandom(int min = 0, int outerMax = RAND_MAX);
 
     float GetRandomPercentage();
-private:
 
+private:
 };
 
 int get_random_int(int min = 0, int outerMax = RAND_MAX);

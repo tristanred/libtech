@@ -1,12 +1,10 @@
 #include "libtech/slots/ReelStrip.h"
 
+#include <libtech/stringtools.h>
 #include <stdlib.h>
 #include <time.h>
 
-#include <libtech/stringtools.h>
-
 #include "libtech/slots/SymbolSet.h"
-
 #include "pugixml.hpp"
 
 ReelStrip::ReelStrip()
@@ -26,9 +24,11 @@ ReelStrip::~ReelStrip()
     delete[] this->Symbols;
 }
 
-ReelStrip** ReelStrip::GenerateReelstripSetFromConfig(const char* configPath, SymbolSet* symbols, int amount)
+ReelStrip** ReelStrip::GenerateReelstripSetFromConfig(const char* configPath,
+                                                      SymbolSet* symbols,
+                                                      int amount)
 {
-    if (amount == 0)
+    if(amount == 0)
     {
         return NULL;
     }
@@ -42,16 +42,17 @@ ReelStrip** ReelStrip::GenerateReelstripSetFromConfig(const char* configPath, Sy
     }
 
     ReelStrip** rs_set = new ReelStrip*[amount];
-    for (int i = 0; i < amount; i++)
+    for(int i = 0; i < amount; i++)
     {
         rs_set[i] = NULL;
     }
 
     // For now, read the reelstrip with id 0
-    pugi::xpath_node_set reelStripNodes = doc.select_nodes("/reelsetConfig/reelset[@id = '0']/reelstrip");
+    pugi::xpath_node_set reelStripNodes =
+        doc.select_nodes("/reelsetConfig/reelset[@id = '0']/reelstrip");
 
     int rs_index = 0;
-    for(pugi::xpath_node node: reelStripNodes)
+    for(pugi::xpath_node node : reelStripNodes)
     {
         pugi::xml_node reelStrip = node.node();
 
@@ -64,7 +65,7 @@ ReelStrip** ReelStrip::GenerateReelstripSetFromConfig(const char* configPath, Sy
         rs_set[rs_index]->Length = (int)numbersCount;
         rs_set[rs_index]->Symbols = new Symbol*[numbersCount];
 
-        for (int i = 0; i < numbersCount; i++)
+        for(int i = 0; i < numbersCount; i++)
         {
             int num = numbers[i];
 
@@ -102,7 +103,7 @@ ReelStrip* ReelStrip::GenerateRandomReelstrip(int length, SymbolSet* symbols)
     rs->Length = length;
     rs->Symbols = new Symbol*[length];
 
-    for (int i = 0; i < length; i++)
+    for(int i = 0; i < length; i++)
     {
         rs->Symbols[i] = symbols->SymbolList[rand() % symbols->SymbolCount];
     }

@@ -1,9 +1,10 @@
 #include "libtech/filelogger.h"
 
-#include <string>
-#include <string.h>
-#include <cstdarg>
 #include <assert.h>
+#include <string.h>
+
+#include <cstdarg>
+#include <string>
 using namespace std;
 
 FileLogger* _globalLogger = NULL;
@@ -148,7 +149,6 @@ void FileLogger::Open(const char* filepath)
 
     if(logFile != NULL)
     {
-
     }
 }
 
@@ -194,7 +194,7 @@ void FileLogger::LogError(const char* message, ...)
     this->Log(LOG_ERROR, msg);
 }
 
-void FileLogger::LogTrace(const char *message, ...)
+void FileLogger::LogTrace(const char* message, ...)
 {
     char msg[MSG_MAXBUF];
     va_list argptr;

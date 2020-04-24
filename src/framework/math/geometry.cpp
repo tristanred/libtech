@@ -1,9 +1,10 @@
 #include "libtech/geometry.h"
 
 #define _USE_MATH_DEFINES
-#include <math.h>
-#include <cstdarg>
 #include <libtech/filelogger.h>
+#include <math.h>
+
+#include <cstdarg>
 
 #include "libtech/linkedlist.h"
 
@@ -61,19 +62,19 @@ void FRectangle::AlignCenterOn(FRectangle* target)
 
 void FRectangle::PushInside(FRectangle* bounds)
 {
-    if (this->Width > bounds->Width || this->Height > bounds->Height)
-        return; // Current rect does not fit inside the bounds
+    if(this->Width > bounds->Width || this->Height > bounds->Height)
+        return;  // Current rect does not fit inside the bounds
 
-    if (this->Left() < bounds->Left())
+    if(this->Left() < bounds->Left())
         this->X = bounds->X;
 
-    if (this->Top() < bounds->Top())
+    if(this->Top() < bounds->Top())
         this->Y = bounds->Y;
 
-    if (this->Right() > bounds->Right())
+    if(this->Right() > bounds->Right())
         this->X = this->X - (this->Right() - bounds->Right());
 
-    if (this->Bottom() > bounds->Bottom())
+    if(this->Bottom() > bounds->Bottom())
         this->Y = this->Y - (this->Bottom() - bounds->Bottom());
 }
 
@@ -91,10 +92,8 @@ bool FRectangle::PointIsInside(vec2 point)
 
 bool FRectangle::Intersect(FRectangle* other)
 {
-    if (this->Left() < other->Right() &&
-        this->Right() > other->Left() &&
-        this->Top() < other->Bottom() &&
-        this->Bottom() > other->Top())
+    if(this->Left() < other->Right() && this->Right() > other->Left() &&
+       this->Top() < other->Bottom() && this->Bottom() > other->Top())
     {
         return true;
     }
@@ -140,7 +139,7 @@ FPolygon::FPolygon()
     this->Offset = vec2(0, 0);
 }
 
-FPolygon::FPolygon(const FPolygon &copy)
+FPolygon::FPolygon(const FPolygon& copy)
 {
     this->vertCount = copy.vertCount;
     this->vertices = new vec2*[this->vertCount];
@@ -164,7 +163,7 @@ FPolygon::~FPolygon()
 
 void FPolygon::Set(int vertexCount, vec2* one, vec2* two, vec2* three...)
 {
-    if (vertexCount < 3)
+    if(vertexCount < 3)
     {
         LogWarning("Trying to create a polygon with less than 3 vertex.");
 
@@ -337,15 +336,20 @@ bool FPolygon::IsCollision(FPolygon* other)
         std::pair<float, float> otherPoly_Projected = other->Project(&axis);
 
         float intervalDistance = 0;
-        if (thisPoly_Projected.first < otherPoly_Projected.first) {
-            intervalDistance =  otherPoly_Projected.first - thisPoly_Projected.second;
-        } else {
-            intervalDistance =  thisPoly_Projected.first - otherPoly_Projected.second;
+        if(thisPoly_Projected.first < otherPoly_Projected.first)
+        {
+            intervalDistance =
+                otherPoly_Projected.first - thisPoly_Projected.second;
+        }
+        else
+        {
+            intervalDistance =
+                thisPoly_Projected.first - otherPoly_Projected.second;
         }
 
         if(intervalDistance > 0)
         {
-            return false; // No collision is possible
+            return false;  // No collision is possible
         }
     }
 
@@ -380,10 +384,8 @@ std::pair<float, float> FPolygon::Project(vec2* axis)
 
 bool point_in_rect(FRectangle rect, FPosition point)
 {
-    if(point.X >= rect.Left() &&
-       point.Y >= rect.Top() &&
-       point.X <= rect.Right() &&
-       point.Y <= rect.Bottom())
+    if(point.X >= rect.Left() && point.Y >= rect.Top() &&
+       point.X <= rect.Right() && point.Y <= rect.Bottom())
     {
         return true;
     }
@@ -392,5 +394,3 @@ bool point_in_rect(FRectangle rect, FPosition point)
         return false;
     }
 }
-
-

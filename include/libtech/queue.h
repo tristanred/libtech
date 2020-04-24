@@ -1,17 +1,14 @@
 #pragma once
 
-#include <queue>
-#include <list>
 #include <functional>
+#include <list>
+#include <queue>
 
 template <class T>
 class Queue
 {
 public:
-    Queue()
-    {
-        this->_container = new std::list<T>();
-    };
+    Queue() { this->_container = new std::list<T>(); };
 
     ~Queue()
     {
@@ -19,16 +16,13 @@ public:
         delete(this->_container);
     };
 
-    void Push(T item)
-    {
-        _container->push_front(item);
-    };
+    void Push(T item) { _container->push_front(item); };
 
     void PushRange(Queue<T>* items)
     {
         auto it = items->GetContainer()->begin();
 
-        while (it != items->GetContainer()->end())
+        while(it != items->GetContainer()->end())
         {
             T listItem = *it;
 
@@ -63,11 +57,11 @@ public:
         auto begin = _container->begin();
         auto end = _container->end();
         int iterIndex = 0;
-        while (begin != end)
+        while(begin != end)
         {
             T obj = *begin;
 
-            if (iterIndex == index)
+            if(iterIndex == index)
                 return obj;
 
             begin++;
@@ -76,12 +70,9 @@ public:
         return NULL;
     };
 
-    std::list<T>* GetContainer()
-    {
-        return _container;
-    };
+    std::list<T>* GetContainer() { return _container; };
 
 private:
-    //std::queue<T>* _container;
+    // std::queue<T>* _container;
     std::list<T>* _container;
 };

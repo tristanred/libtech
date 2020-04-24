@@ -22,7 +22,7 @@ BlackjackGame::BlackjackGame()
     cards = new std::stack<card_info*>();
     this->RegenerateDecks();
 
-    for (int i = 0; i < BLJK_METERS_COUNT; i++)
+    for(int i = 0; i < BLJK_METERS_COUNT; i++)
     {
         this->meters[i] = 0;
     }
@@ -46,7 +46,7 @@ BlackjackGame::~BlackjackGame()
 
 void BlackjackGame::UpdateGame()
 {
-    switch (this->CurrentState)
+    switch(this->CurrentState)
     {
         case BLJK_GAME_START:
         {
@@ -150,7 +150,8 @@ void BlackjackGame::UpdateGame()
             }
 
             // If player wants to hit
-            if(rng->GetRandomPercentage() > 0.5 && this->Player->card_amount < MAX_CARD_NB)
+            if(rng->GetRandomPercentage() > 0.5 &&
+               this->Player->card_amount < MAX_CARD_NB)
             {
                 SetState(BLJK_PLAYER_HIT);
                 break;
@@ -248,7 +249,8 @@ void BlackjackGame::UpdateGame()
         }
         case BLJK_DEALER_CHOICE:
         {
-            if(count_cards(Dealer) < DEALER_SOFT_STOP && Dealer->card_amount < MAX_CARD_NB)
+            if(count_cards(Dealer) < DEALER_SOFT_STOP &&
+               Dealer->card_amount < MAX_CARD_NB)
             {
                 SetState(BLJK_DEALER_HIT);
             }
@@ -290,7 +292,7 @@ void BlackjackGame::UpdateGame()
             meters[METER_DEALER_BUST]++;
 
             SetState(BLJK_PLAYER_WIN);
-            
+
             break;
         }
         case BLJK_COMPARE_SCORES:
@@ -305,7 +307,7 @@ void BlackjackGame::UpdateGame()
             {
                 SetState(BLJK_PLAYER_WIN);
             }
-            else if (playerDifference == dealerDifference)
+            else if(playerDifference == dealerDifference)
             {
                 // Draw, rule ?
                 // For now player wins
@@ -335,7 +337,7 @@ void BlackjackGame::UpdateGame()
             CountGames++;
 
             SetState(BLJK_GAME_START);
-            
+
             break;
         }
         default:
@@ -349,7 +351,8 @@ void BlackjackGame::UpdateGame()
 void BlackjackGame::SetState(enum blackjack_states newState)
 {
 #ifdef _DEBUG
-    printf("%s -> %s\n", blackjack_states_names[this->CurrentState], blackjack_states_names[newState]);
+    printf("%s -> %s\n", blackjack_states_names[this->CurrentState],
+           blackjack_states_names[newState]);
 #endif
     this->PreviousState = this->CurrentState;
     this->CurrentState = newState;
@@ -397,10 +400,11 @@ void BlackjackGame::SaveMeters()
 {
     FILE* meterfile = fopen("meters.txt", "a");
     fprintf(meterfile, "--------------------\n");
-    
-    for (int i = 0; i < BLJK_METERS_COUNT; i++)
+
+    for(int i = 0; i < BLJK_METERS_COUNT; i++)
     {
-        fprintf(meterfile, "METER: %s = %d\n", blackjack_meters_names[i], this->meters[i]);
+        fprintf(meterfile, "METER: %s = %d\n", blackjack_meters_names[i],
+                this->meters[i]);
     }
 
     fprintf(meterfile, "--------------------\n");

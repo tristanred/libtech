@@ -6,8 +6,8 @@ TgaFile::TgaFile()
 {
     Header = new TgaFileHeader();
     Header->idlength = 0;
-    Header->colourmaptype = 0;// NO_COLOR_MAP;
-    Header->datatypecode = 2;// TRUE_COLOR;
+    Header->colourmaptype = 0;  // NO_COLOR_MAP;
+    Header->datatypecode = 2;   // TRUE_COLOR;
     Header->colourmaporigin = 0;
     Header->colourmaplength = 0;
     Header->colourmapdepth = 0;
@@ -19,12 +19,11 @@ TgaFile::TgaFile()
     Header->imagedescriptor = 32;
 }
 
-
 TgaFile::~TgaFile()
 {
     delete(Header);
 
-    for (int i = 0; i < Width * Height; i++)
+    for(int i = 0; i < Width * Height; i++)
     {
         TgaPix* px = Pixels[i];
 
@@ -43,7 +42,7 @@ void TgaFile::Init(short int w, short int h)
     Header->height = h;
 
     Pixels = new TgaPix*[Width * Height];
-    for (int i = 0; i < Width * Height; i++)
+    for(int i = 0; i < Width * Height; i++)
     {
         TgaPix* px = new TgaPix();
         px->a = 255;
@@ -71,7 +70,7 @@ void TgaFile::Save(std::string fileName)
     out.write(&Header->bitsperpixel, 1);
     out.write(&Header->imagedescriptor, 1);
 
-    for (int i = 0; i < Width * Height; i++)
+    for(int i = 0; i < Width * Height; i++)
     {
         char* pixelData = (char*)Pixels[i];
         out.write(pixelData, sizeof(TgaPix));
@@ -82,7 +81,7 @@ void TgaFile::Save(std::string fileName)
 
 void TgaFile::Clear()
 {
-    for (int i = 0; i < Width * Height; i++)
+    for(int i = 0; i < Width * Height; i++)
     {
         TgaPix* px = Pixels[i];
         px->a = 255;
@@ -92,9 +91,12 @@ void TgaFile::Clear()
     }
 }
 
-void TgaFile::FillColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+void TgaFile::FillColor(unsigned char r,
+                        unsigned char g,
+                        unsigned char b,
+                        unsigned char a)
 {
-    for (int i = 0; i < Width * Height; i++)
+    for(int i = 0; i < Width * Height; i++)
     {
         TgaPix* px = Pixels[i];
         px->a = a;
@@ -104,9 +106,9 @@ void TgaFile::FillColor(unsigned char r, unsigned char g, unsigned char b, unsig
     }
 }
 
-void TgaFile::FillColor(TgaPix * pixColor)
+void TgaFile::FillColor(TgaPix* pixColor)
 {
-    for (int i = 0; i < Width * Height; i++)
+    for(int i = 0; i < Width * Height; i++)
     {
         TgaPix* px = Pixels[i];
         px->a = pixColor->a;
@@ -121,7 +123,7 @@ TgaPix* TgaFile::Get(int x, int y)
     return Pixels[x + (y * Width)];
 }
 
-void TgaFile::Set(TgaPix * px, int x, int y)
+void TgaFile::Set(TgaPix* px, int x, int y)
 {
     TgaPix* pixel = this->Get(x, y);
     pixel->a = px->a;

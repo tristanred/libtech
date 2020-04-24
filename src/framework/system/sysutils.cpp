@@ -14,8 +14,8 @@
 
 #endif
 
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 char* get_working_directory()
 {
@@ -57,7 +57,7 @@ LIBTECH_API bool is_dot_file(char* dirName)
 {
     int res1 = strcmp(".", dirName);
     int res2 = strcmp("..", dirName);
-    
+
     return (res1 == 0) || (res2 == 0);
 }
 
@@ -80,14 +80,9 @@ char* get_win32_error_text(DWORD errorCode)
 {
     char* msg = new char[512];
 
-    FormatMessageA(
-        FORMAT_MESSAGE_FROM_SYSTEM |
-        FORMAT_MESSAGE_IGNORE_INSERTS,
-        NULL,
-        errorCode,
-        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        msg,
-        0, NULL);
+    FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                   NULL, errorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                   msg, 0, NULL);
 
     return msg;
 }

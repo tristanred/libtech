@@ -1,8 +1,9 @@
 #pragma once
 
+#include <utility>
+
 #include "libtech.h"
 #include "vec.h"
-#include <utility>
 
 class FPolygon;
 
@@ -29,10 +30,7 @@ struct LIBTECH_CLASS FPosition
         Y = vec.y;
     }
 
-    vec2 AsVec()
-    {
-        return vec2(this->X, this->Y);
-    }
+    vec2 AsVec() { return vec2(this->X, this->Y); }
 
     bool operator==(const FPosition& other)
     {
@@ -67,25 +65,16 @@ struct LIBTECH_CLASS FSize
         Height = h;
     }
 
-    vec2 AsVec()
-    {
-        return vec2(this->Width, this->Height);
-    }
+    vec2 AsVec() { return vec2(this->Width, this->Height); }
 
     bool operator==(const FSize& other)
     {
         return this->Width == other.Width && this->Height == other.Height;
     }
 
-    bool operator!=(const FSize& other)
-    {
-        return (*this == other) == false;
-    }
+    bool operator!=(const FSize& other) { return (*this == other) == false; }
 
-    bool Zero()
-    {
-        return this->Width == 0 && this->Height == 0;
-    }
+    bool Zero() { return this->Width == 0 && this->Height == 0; }
 };
 
 struct LIBTECH_CLASS FRectangle
@@ -125,7 +114,7 @@ struct LIBTECH_CLASS FRectangle
     float Bottom();
 
     FPosition GetCenter();
-    FPosition GetPosition(); // Get position of the origin
+    FPosition GetPosition();  // Get position of the origin
     FSize GetSize();
 
     void AlignCenterOn(FRectangle* target);
@@ -140,7 +129,8 @@ struct LIBTECH_CLASS FRectangle
 
     bool operator==(const FRectangle& other)
     {
-        return this->X == other.X && this->Y == other.Y && this->Width == other.Width && this->Height == other.Height;
+        return this->X == other.X && this->Y == other.Y &&
+               this->Width == other.Width && this->Height == other.Height;
     }
 
     bool operator!=(const FRectangle& other)
@@ -153,7 +143,7 @@ class LIBTECH_CLASS FPolygon
 {
 public:
     FPolygon();
-    FPolygon(const FPolygon &copy);
+    FPolygon(const FPolygon& copy);
     ~FPolygon();
 
     vec2 Offset;

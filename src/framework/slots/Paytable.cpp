@@ -13,7 +13,7 @@ Paytable::Paytable()
 
 Paytable::~Paytable()
 {
-    for (int i = 0; i < this->PrizeCount; i++)
+    for(int i = 0; i < this->PrizeCount; i++)
     {
         delete(this->Prizes[i]);
     }
@@ -21,7 +21,8 @@ Paytable::~Paytable()
     delete[] this->Prizes;
 }
 
-Paytable* Paytable::GetPaytableFromConfig(const char* configPath, SymbolSet* symbols)
+Paytable* Paytable::GetPaytableFromConfig(const char* configPath,
+                                          SymbolSet* symbols)
 {
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(configPath);
@@ -31,13 +32,14 @@ Paytable* Paytable::GetPaytableFromConfig(const char* configPath, SymbolSet* sym
         return NULL;
     }
 
-    pugi::xpath_node_set prizesNodes = doc.select_nodes("/paytableConfig/prizes/symbolPrize");
+    pugi::xpath_node_set prizesNodes =
+        doc.select_nodes("/paytableConfig/prizes/symbolPrize");
 
     Paytable* pt = new Paytable();
     pt->PrizeCount = (int)prizesNodes.size();
     pt->Prizes = new PaytablePrize*[pt->PrizeCount];
 
-    for(pugi::xpath_node node: prizesNodes)
+    for(pugi::xpath_node node : prizesNodes)
     {
         pugi::xml_node prizeNode = node.node();
 
@@ -46,7 +48,8 @@ Paytable* Paytable::GetPaytableFromConfig(const char* configPath, SymbolSet* sym
         pt->Prizes[xmlIndex] = new PaytablePrize();
         pt->Prizes[xmlIndex]->SymbolID = prizeNode.attribute("symId").as_int();
         pt->Prizes[xmlIndex]->PrizeWins = prizeNode.attribute("wins").as_int();
-        pt->Prizes[xmlIndex]->SymbolCount = prizeNode.attribute("count").as_int();
+        pt->Prizes[xmlIndex]->SymbolCount =
+            prizeNode.attribute("count").as_int();
     }
 
     return pt;
@@ -180,6 +183,4 @@ PaytablePrize::PaytablePrize()
     this->PrizeWins = 0;
 }
 
-PaytablePrize::~PaytablePrize()
-{
-}
+PaytablePrize::~PaytablePrize() {}

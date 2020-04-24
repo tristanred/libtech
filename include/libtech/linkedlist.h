@@ -3,7 +3,7 @@
 #include "libtech.h"
 #include "libtech/linkedlist.h"
 
-template<class T>
+template <class T>
 class LIST_NODE
 {
 public:
@@ -16,34 +16,25 @@ public:
         next = NULL;
     }
 
-    ~LIST_NODE()
-    {
-
-    }
+    ~LIST_NODE() {}
 };
 
-template<class T>
+template <class T>
 class LinkedList
 {
 public:
-    LinkedList()
-    {
-        _first = NULL;
-    }
+    LinkedList() { _first = NULL; }
 
-    ~LinkedList()
-    {
-
-    }
+    ~LinkedList() {}
 
     unsigned int Size()
     {
-        if (_first == NULL)
+        if(_first == NULL)
             return 0;
 
         unsigned int count = 0;
         LIST_NODE<T>* next = _first;
-        while (next != NULL)
+        while(next != NULL)
         {
             count++;
 
@@ -56,9 +47,9 @@ public:
     void Add(T element)
     {
         LIST_NODE<T>* next = _first;
-        while (next != NULL)
+        while(next != NULL)
         {
-            if (next->next == NULL)
+            if(next->next == NULL)
             {
                 LIST_NODE<T>* newNode = new LIST_NODE<T>();
                 newNode->data = element;
@@ -90,7 +81,7 @@ public:
             count++;
 
             if(current == NULL)
-                return; // Index bigger than size
+                return;  // Index bigger than size
         }
 
         T nextItem = current->next;
@@ -98,21 +89,18 @@ public:
         previous->next = nextItem;
     }
 
-    void Remove(T element)
-    {
-
-    }
+    void Remove(T element) {}
 
     T Get(unsigned int index)
     {
-        if (_first == NULL)
+        if(_first == NULL)
             return NULL;
 
         unsigned int count = 0;
         LIST_NODE<T>* next = _first;
-        while (next != NULL)
+        while(next != NULL)
         {
-            if (count == index)
+            if(count == index)
             {
                 return next->data;
             }
@@ -141,6 +129,7 @@ public:
 
         return list;
     }
+
 private:
     LIST_NODE<T>* _first;
 };

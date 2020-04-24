@@ -1,15 +1,12 @@
 #include "libtech/shaderloader.h"
+
 #include <libtech/binreader.h>
 
-ShaderLoader::ShaderLoader()
-{
-}
+ShaderLoader::ShaderLoader() {}
 
-ShaderLoader::~ShaderLoader()
-{
-}
+ShaderLoader::~ShaderLoader() {}
 
-char *ShaderLoader::LoadShader(char *path)
+char* ShaderLoader::LoadShader(char* path)
 {
     char* contents = NULL;
 

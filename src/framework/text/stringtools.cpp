@@ -1,8 +1,10 @@
 #include "libtech/stringtools.h"
 
-#include <string>
-#include <string.h>
 #include <ctype.h>
+#include <string.h>
+
+#include <string>
+
 #include "libtech/arraylist.h"
 
 LIBTECH_API int* convert_string_to_int_list(const char* line, long int* count)
@@ -42,7 +44,7 @@ LIBTECH_API int* convert_string_to_int_list(const char* line, long int* count)
 
         currentIndex++;
     }
-    if (numberReadingIndex > 0)
+    if(numberReadingIndex > 0)
     {
         int read_num = atoi(numberReading);
         number_list.Add(read_num);
@@ -52,7 +54,9 @@ LIBTECH_API int* convert_string_to_int_list(const char* line, long int* count)
     return number_list.GetListData();
 }
 
-LIBTECH_API char** string_split(const char* source, const char* delim, int* result_count)
+LIBTECH_API char** string_split(const char* source,
+                                const char* delim,
+                                int* result_count)
 {
     // Basic helper function around strtok for strings.
     // Might leak a bunch of memory with the copies but this
@@ -71,7 +75,6 @@ LIBTECH_API char** string_split(const char* source, const char* delim, int* resu
         splitParts.Add(tokenCopy);
 
         token = strtok(NULL, delim);
-
     }
 
     *result_count = (int)splitParts.Count();

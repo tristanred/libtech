@@ -1,6 +1,7 @@
 #pragma once
 
 #include <libtech/libtech.h>
+
 #include "SlotWins.h"
 
 class ReelStrip;
@@ -30,7 +31,7 @@ public:
 
     int* ReelStops;
 
-    Symbol*** ReelSymbols; // Symbol*[Reels][Rows]
+    Symbol*** ReelSymbols;  // Symbol*[Reels][Rows]
 
     ReelStrip** reelstrips;
 
@@ -59,7 +60,6 @@ public:
     // Information methods
     void PrintCurrentCombination();
 
-
     // Wins & Reporting
     int CalculateWins();
 
@@ -74,5 +74,4 @@ private:
     LineWin** LineWins;
     ScatterWin* ScatterWins;
     int wonAmount;
-
 };
