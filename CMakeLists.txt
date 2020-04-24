@@ -10,10 +10,13 @@ else()
     set(ARCH x86)
 endif()
 
+# Support standard is c++ 11. Open to upgrade suggestions.
 set (CMAKE_CXX_STANDARD 11)
 
+# Libtech Feature switches
 option(LIBTECH_SUPPORT_OPENGL "Build OpenGL Components" OFF)
 option(LIBTECH_BUILD_TOOLS "Builds libtech test projects" ON)
+option(LIBTECH_BUILD_TESTS "Builds libtech unit tests" ON)
 
 file(GLOB_RECURSE LIBRARY_HEADERS "include/*.h")
 file(GLOB_RECURSE LIBRARY_SOURCES "src/framework/*.cpp")
@@ -55,9 +58,14 @@ include_directories("src/console_tester")
 add_subdirectory("lib/pugixml")
 include_directories("lib/pugixml/src")
 
+IF(LIBTECH_BUILD_TESTS)
+
+    add_subdirectory("lib/googletest")
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+ENDIF(LIBTECH_BUILD_TESTS)
 
 add_library(LIBTECH STATIC ${LIBRARY_HEADERS} ${LIBRARY_SOURCES} ${PUGI_SRC})
-
 target_compile_definitions(LIBTECH PRIVATE LIBTECH_EXPORTS)
 
 IF(LIBTECH_SUPPORT_OPENGL)
@@ -78,9 +86,23 @@ IF(LIBTECH_BUILD_TOOLS)
     add_executable(ConsoleTester ${CON_TESTER_HEADERS} ${CON_TESTER_SOURCES})
     target_link_libraries(ConsoleTester LIBTECH)
 
+    target_link_libraries(LIBTECH gtest)
+    #add_test(NAME example_test COMMAND example)
+
     IF(WIN32)
         set_target_properties(ConsoleTester PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$(ProjectDir)/$(Configuration)")
     ELSEIF(UNIX)
         target_compile_options(ConsoleTester PRIVATE -Wall)
     ENDIF(WIN32)
 ENDIF(LIBTECH_BUILD_TOOLS)
+
+IF(LIBTECH_BUILD_TESTS)
+
+    file(GLOB_RECURSE UNITTESTS_HEADERS "tests/*.h")
+    file(GLOB_RECURSE UNITTESTS_SOURCES "tests/*.cpp")
+
+    add_executable(LibtechTests ${UNITTESTS_HEADERS} ${UNITTESTS_SOURCES})
+    target_link_libraries(LibtechTests LIBTECH)
+    target_link_libraries(LibtechTests gtest)
+
+ENDIF(LIBTECH_BUILD_TESTS)
