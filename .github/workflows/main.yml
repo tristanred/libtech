@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -39,15 +39,14 @@ jobs:
       run: |
         cmake --build build --config Release
 
-    - name: Run Tests-Linux
-      if: ${{ runner.os == 'Linux' }}
+    - name: Run Tests
+      if: runner.os == 'Linux' || runner.os == 'macOS'
       run: |
         cd build
         ./LibtechTests
 
-
     - name: Run Tests-Windows
-      if: ${{ runner.os == 'Windows' }}
+      if: runner.os == 'Windows'
       run: |
         cd build/Release
         ./LibtechTests.exe
