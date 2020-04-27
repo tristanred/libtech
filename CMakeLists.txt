@@ -61,7 +61,7 @@ include_directories("lib/pugixml/src")
 IF(LIBTECH_BUILD_TESTS)
 
     add_subdirectory("lib/googletest")
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    #set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 ENDIF(LIBTECH_BUILD_TESTS)
 
