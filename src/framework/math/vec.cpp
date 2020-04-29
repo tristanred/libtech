@@ -30,7 +30,7 @@ float vec2::Length()
 vec2 vec2::Normalize()
 {
     vec2 normalized = vec2(*this);
-    normalized.Divide(normalized.Length());
+    normalized = normalized.Divide(normalized.Length());
 
     return normalized;
 }
