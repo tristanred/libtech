@@ -18,37 +18,37 @@ double rad2deg(double rad)
     return (rad * 180) / M_PI;
 }
 
-float FRectangle::Left()
+float FRectangle::Left() const
 {
     return this->X;
 }
 
-float FRectangle::Top()
+float FRectangle::Top() const
 {
     return this->Y;
 }
 
-float FRectangle::Right()
+float FRectangle::Right() const
 {
     return this->X + this->Width;
 }
 
-float FRectangle::Bottom()
+float FRectangle::Bottom() const
 {
     return this->Y + this->Height;
 }
 
-FPosition FRectangle::GetCenter()
+FPosition FRectangle::GetCenter() const
 {
     return FPosition(this->X + (this->Width / 2), this->Y + (this->Height / 2));
 }
 
-FPosition FRectangle::GetPosition()
+FPosition FRectangle::GetPosition() const
 {
     return FPosition(this->X, this->Y);
 }
 
-void FRectangle::AlignCenterOn(FRectangle* target)
+void FRectangle::AlignCenterOn(const FRectangle* target)
 {
     FPosition centerPos = target->GetCenter();
     FPosition myCenter = this->GetCenter();
@@ -60,7 +60,7 @@ void FRectangle::AlignCenterOn(FRectangle* target)
     this->Y += diffY;
 }
 
-void FRectangle::PushInside(FRectangle* bounds)
+void FRectangle::PushInside(const FRectangle* bounds)
 {
     if(this->Width > bounds->Width || this->Height > bounds->Height)
         return;  // Current rect does not fit inside the bounds
@@ -78,19 +78,19 @@ void FRectangle::PushInside(FRectangle* bounds)
         this->Y = this->Y - (this->Bottom() - bounds->Bottom());
 }
 
-bool FRectangle::PointIsInside(FPosition point)
+bool FRectangle::PointIsInside(FPosition point) const
 {
     return point_in_rect(*this, point);
 }
 
-bool FRectangle::PointIsInside(vec2 point)
+bool FRectangle::PointIsInside(vec2 point) const
 {
     FPosition pos = FPosition(point);
 
     return point_in_rect(*this, pos);
 }
 
-bool FRectangle::Intersect(FRectangle* other)
+bool FRectangle::Intersect(const FRectangle* other) const
 {
     if(this->Left() < other->Right() && this->Right() > other->Left() &&
        this->Top() < other->Bottom() && this->Bottom() > other->Top())
@@ -101,12 +101,12 @@ bool FRectangle::Intersect(FRectangle* other)
     return false;
 }
 
-FSize FRectangle::GetSize()
+FSize FRectangle::GetSize() const
 {
     return FSize(this->Width, this->Height);
 }
 
-FPolygon FRectangle::AsPolygon()
+FPolygon FRectangle::AsPolygon() const
 {
     vec2 p1;
     vec2 p2;
@@ -210,7 +210,7 @@ void FPolygon::Clear()
     }
 }
 
-FRectangle FPolygon::GetRectBounds()
+FRectangle FPolygon::GetRectBounds() const
 {
     FRectangle result;
 
@@ -239,7 +239,7 @@ FRectangle FPolygon::GetRectBounds()
     return result;
 }
 
-FPolygon FPolygon::ZeroOffset()
+FPolygon FPolygon::ZeroOffset() const
 {
     FPolygon result = FPolygon(*this);
 
@@ -267,7 +267,7 @@ FPolygon FPolygon::ZeroOffset()
     return result;
 }
 
-vec2** FPolygon::GetVertices(int* length)
+vec2** FPolygon::GetVertices(int* length) const
 {
     *length = this->vertCount;
 
@@ -281,7 +281,7 @@ vec2** FPolygon::GetVertices(int* length)
     return vertsCopy;
 }
 
-vec2** FPolygon::GetEdges(int* length)
+vec2** FPolygon::GetEdges(int* length) const
 {
     *length = this->vertCount;
 
@@ -309,7 +309,7 @@ vec2** FPolygon::GetEdges(int* length)
     return edgesList;
 }
 
-bool FPolygon::IsCollision(FPolygon* other)
+bool FPolygon::IsCollision(const FPolygon* other) const
 {
     int myEdgesCount = 0;
     vec2** myEdges = this->GetEdges(&myEdgesCount);
@@ -356,7 +356,7 @@ bool FPolygon::IsCollision(FPolygon* other)
     return true;
 }
 
-std::pair<float, float> FPolygon::Project(vec2* axis)
+std::pair<float, float> FPolygon::Project(vec2* axis) const
 {
     std::pair<float, float> res;
 

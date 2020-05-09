@@ -22,7 +22,7 @@ vec2::vec2(const vec2& other)
     this->y = other.y;
 }
 
-float vec2::Length()
+float vec2::Length() const
 {
     return sqrt(pow(this->x, 2) + pow(this->y, 2));
 }
@@ -35,42 +35,42 @@ vec2 vec2::Normalize()
     return normalized;
 }
 
-vec2 vec2::Add(float scalar)
+vec2 vec2::Add(float scalar) const
 {
     return vec2(this->x + scalar, this->y + scalar);
 }
 
-vec2 vec2::Subtract(float scalar)
+vec2 vec2::Subtract(float scalar) const
 {
     return vec2(this->x - scalar, this->y - scalar);
 }
 
-vec2 vec2::Multiply(float scalar)
+vec2 vec2::Multiply(float scalar) const
 {
     return vec2(this->x * scalar, this->y * scalar);
 }
 
-vec2 vec2::Divide(float scalar)
+vec2 vec2::Divide(float scalar) const
 {
     return vec2(this->x / scalar, this->y / scalar);
 }
 
-vec2 vec2::Add(vec2* other)
+vec2 vec2::Add(const vec2* other) const
 {
     return vec2(this->x + other->x, this->y + other->y);
 }
 
-vec2 vec2::Subtract(vec2* other)
+vec2 vec2::Subtract(const vec2* other) const
 {
     return vec2(this->x - other->x, this->y - other->y);
 }
 
-vec2 vec2::Multiply(vec2* other)
+vec2 vec2::Multiply(const vec2* other) const
 {
     return vec2(this->x * other->x, this->y * other->y);
 }
 
-float vec2::DotProduct(vec2* other)
+float vec2::DotProduct(const vec2* other) const
 {
     return (this->x * other->x) + (this->y * other->y);
 }

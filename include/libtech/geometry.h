@@ -108,24 +108,24 @@ struct LIBTECH_CLASS FRectangle
         this->Height = size.Height;
     }
 
-    float Left();
-    float Top();
-    float Right();
-    float Bottom();
+    float Left() const;
+    float Top() const;
+    float Right() const;
+    float Bottom() const;
 
-    FPosition GetCenter();
-    FPosition GetPosition();  // Get position of the origin
-    FSize GetSize();
+    FPosition GetCenter() const;
+    FPosition GetPosition() const;  // Get position of the origin
+    FSize GetSize() const;
 
-    void AlignCenterOn(FRectangle* target);
-    void PushInside(FRectangle* bounds);
+    void AlignCenterOn(const FRectangle* target);
+    void PushInside(const FRectangle* bounds);
 
-    bool PointIsInside(FPosition point);
-    bool PointIsInside(vec2 point);
+    bool PointIsInside(const FPosition point) const;
+    bool PointIsInside(const vec2 point) const;
 
-    bool Intersect(FRectangle* other);
+    bool Intersect(const FRectangle* other) const;
 
-    FPolygon AsPolygon();
+    FPolygon AsPolygon() const;
 
     bool operator==(const FRectangle& other)
     {
@@ -152,23 +152,23 @@ public:
 
     void Clear();
 
-    vec2** GetVertices(int* length);
-    vec2** GetEdges(int* length);
+    vec2** GetVertices(int* length) const;
+    vec2** GetEdges(int* length) const;
 
     /**
      * \brief Get the bounds of the polygon in a rectangular bounding box
      * \return Rectangular box containing this polygon.
      */
-    FRectangle GetRectBounds();
+    FRectangle GetRectBounds() const;
 
     /**
      * Return a copy of this polygon aligned to the coordinates (0, 0)
      */
-    FPolygon ZeroOffset();
+    FPolygon ZeroOffset() const;
 
-    bool IsCollision(FPolygon* other);
+    bool IsCollision(const FPolygon* other) const;
 
-    std::pair<float, float> Project(vec2* axis);
+    std::pair<float, float> Project(vec2* axis) const;
 
 private:
     int vertCount;

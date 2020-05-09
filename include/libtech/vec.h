@@ -13,19 +13,19 @@ public:
     float x;
     float y;
 
-    float Length();
+    float Length() const;
     vec2 Normalize();
 
-    vec2 Add(float scalar);
-    vec2 Subtract(float scalar);
-    vec2 Multiply(float scalar);
-    vec2 Divide(float scalar);
+    vec2 Add(float scalar) const;
+    vec2 Subtract(float scalar) const;
+    vec2 Multiply(float scalar) const;
+    vec2 Divide(float scalar) const;
 
-    vec2 Add(vec2* other);
-    vec2 Subtract(vec2* other);
-    vec2 Multiply(vec2* other);
+    vec2 Add(const vec2* other) const;
+    vec2 Subtract(const vec2* other) const;
+    vec2 Multiply(const vec2* other) const;
 
-    float DotProduct(vec2* other);
+    float DotProduct(const vec2* other) const;
 
     /**
      * \brief Return a vector perpendicular to this one.
