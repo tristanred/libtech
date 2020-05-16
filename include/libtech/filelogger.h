@@ -10,8 +10,8 @@ using namespace std;
 // event is raised.
 //#define BREAK_ON_TRACE
 //#define BREAK_ON_MESSAGE
-#define BREAK_ON_WARNING
-#define BREAK_ON_ERROR
+//#define BREAK_ON_WARNING
+//#define BREAK_ON_ERROR
 
 #define MSG_MAXBUF 2048
 
